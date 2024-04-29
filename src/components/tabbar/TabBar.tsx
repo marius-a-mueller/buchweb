@@ -1,12 +1,15 @@
-import { MenuItem } from "./MenuItem"
-import { Button } from "@mui/material";
+import { AppBar, Container, Toolbar } from '@mui/material';
+import { MenuItem } from './MenuItem';
 
 export const TabBar = () => {
-    return (
-        <div>
-            <Button variant="outlined">Home</Button>
-            <MenuItem name="About" />
-            <MenuItem name="Contact" />
-        </div>
-    )
-}
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <MenuItem name="Suche" />
+          <MenuItem name="Neues Buch" />
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};

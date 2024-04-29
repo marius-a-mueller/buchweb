@@ -1,5 +1,5 @@
-import { Container } from "@mui/material";
+import { Button } from '@mui/material';
 
 export const MenuItem = (props: { name: string }) => {
-  return <Container>{props.name}</Container>;
+  return <Button color="secondary">{props.name}</Button>;
 };
