@@ -1,3 +1,5 @@
+import { Container } from "@mui/material";
+
 export const MenuItem = (props: { name: string }) => {
-  return <div>{props.name}</div>;
+  return <Container>{props.name}</Container>;
 };

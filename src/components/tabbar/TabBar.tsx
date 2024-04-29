@@ -1,9 +1,10 @@
 import { MenuItem } from "./MenuItem"
+import { Button } from "@mui/material";
 
 export const TabBar = () => {
     return (
         <div>
-            <MenuItem name="Home" />
+            <Button variant="outlined">Home</Button>
             <MenuItem name="About" />
             <MenuItem name="Contact" />
         </div>
