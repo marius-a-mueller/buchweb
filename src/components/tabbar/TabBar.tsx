@@ -1,25 +1,27 @@
-import { AppBar, Container, Toolbar } from '@mui/material';
+import { AppBar, Container, Toolbar, Box } from '@mui/material';
 import { MenuItem } from './MenuItem';
-import BookIcon from '@mui/icons-material/Book';
 import MenuDropdown from './MenuDropdown';
-
-// Importiere dein Bild
 import HKALogo from './HKALogo.png';
+import Login from './Login';
 
 export const TabBar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BookIcon fontSize="large" color="secondary" />
-          <MenuItem name="Suche" link="search" />
-          <MenuItem name="Neues Buch" link="new" />
-          <MenuDropdown />
-          <img
-            src={HKALogo}
-            alt="Beschreibung des Bildes"
-            style={{ width: '215px', marginLeft: '650px' }}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+            <img
+              src={HKALogo}
+              alt="HKA Logo"
+              style={{ width: '200px', marginRight: '20px' }}
+            />
+            <MenuItem name="Suche" link="search" />
+            <MenuItem name="Neues Buch" link="new" />
+            <MenuDropdown />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Login />
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
