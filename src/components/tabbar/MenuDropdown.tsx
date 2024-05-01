@@ -9,7 +9,11 @@ export default function MenuDropdown() {
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
-          <Button variant="outlined" color='secondary'{...bindTrigger(popupState)}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            {...bindTrigger(popupState)}
+          >
             Diagramme
           </Button>
           <Menu {...bindMenu(popupState)}>

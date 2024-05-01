@@ -11,11 +11,15 @@ export const TabBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <BookIcon fontSize="large" color='secondary' />
-          <MenuItem name="Suche" />
-          <MenuItem name="Neues Buch" />
+          <BookIcon fontSize="large" color="secondary" />
+          <MenuItem name="Suche" link="search" />
+          <MenuItem name="Neues Buch" link="new" />
           <MenuDropdown />
-          <img src={HKALogo} alt="Beschreibung des Bildes" style={{ width: '215px', marginLeft: '650px' }} />
+          <img
+            src={HKALogo}
+            alt="Beschreibung des Bildes"
+            style={{ width: '215px', marginLeft: '650px' }}
+          />
         </Toolbar>
       </Container>
     </AppBar>
