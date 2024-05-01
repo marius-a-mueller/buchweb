@@ -1,4 +1,4 @@
-import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 import { TabBar } from './components/tabbar/TabBar';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { Home } from './pages/Home';
@@ -6,6 +6,7 @@ import { NotFound } from './pages/NotFound';
 import { Search } from './pages/Search';
 import { New } from './pages/New';
 import React from 'react';
+import { getTheme } from './theme';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -22,15 +23,7 @@ function App() {
     []
   );
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
+  const theme = React.useMemo(() => getTheme(mode), [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
