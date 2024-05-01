@@ -4,6 +4,8 @@ import MenuDropdown from './MenuDropdown';
 import HKALogo from '../../assets/HKALogo.png';
 import Login from './Login';
 import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 
 export const TabBar = () => {
   return (
@@ -18,9 +20,9 @@ export const TabBar = () => {
                 style={{ width: '200px', marginRight: '20px' }}
               />
             </Link>
-            <MenuItem name="Suche" link="search" />
-            <MenuItem name="Neues Buch" link="new" />
-            <MenuDropdown />
+            <MenuItem name="Suche" link="search" icon={<SearchIcon />} />
+            <MenuItem name="Neues Buch" link="new"icon={<AutoStoriesIcon />} />
+            <MenuDropdown/>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Login />
