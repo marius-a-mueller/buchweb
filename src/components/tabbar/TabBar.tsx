@@ -6,7 +6,7 @@ import Login from './Login';
 
 export const TabBar = () => {
   return (
-    <AppBar position="static" color="default">
+    <AppBar position="static">
     <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
