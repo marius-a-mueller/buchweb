@@ -33,8 +33,8 @@ export default function Login() {
             autoFocus
             margin="dense"
             id="name"
-            label="Email-Adresse"
-            type="email"
+            label="nutzername"
+            type="nutzername"
             fullWidth
             variant="standard"
           />
