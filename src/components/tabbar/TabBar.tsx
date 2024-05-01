@@ -1,16 +1,35 @@
-import { AppBar, Container, Toolbar, Box } from '@mui/material';
+import {
+  AppBar,
+  Container,
+  Toolbar,
+  Box,
+  IconButton,
+  useTheme,
+} from '@mui/material';
 import { MenuItem } from './MenuItem';
 import MenuDropdown from './MenuDropdown';
 import HKALogo from '../../assets/HKALogo.png';
 import Login from './Login';
 import { Link } from 'react-router-dom';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import React from 'react';
+import { ColorModeContext } from '../../App';
 
 export const TabBar = () => {
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexGrow: 1,
+            }}
+          >
             <Link to="/">
               <img
                 src={HKALogo}
@@ -24,6 +43,17 @@ export const TabBar = () => {
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Login />
+            <IconButton
+              sx={{ ml: 1 }}
+              onClick={colorMode.toggleColorMode}
+              color="inherit"
+            >
+              {theme.palette.mode === 'dark' ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>

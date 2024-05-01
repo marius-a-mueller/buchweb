@@ -13,6 +13,7 @@ export default function MenuDropdown() {
             variant="outlined"
             color="secondary"
             {...bindTrigger(popupState)}
+            sx={{ margin: '5px' }}
           >
             Diagramme
           </Button>
