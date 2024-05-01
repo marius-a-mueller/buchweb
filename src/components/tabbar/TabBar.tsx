@@ -5,6 +5,7 @@ import MenuDropdown from './MenuDropdown';
 
 // Importiere dein Bild
 import HKALogo from './HKALogo.png';
+import Login from './Login';
 
 export const TabBar = () => {
   return (
@@ -15,6 +16,7 @@ export const TabBar = () => {
           <MenuItem name="Suche" />
           <MenuItem name="Neues Buch" />
           <MenuDropdown />
+          <Login />
           <img src={HKALogo} alt="Beschreibung des Bildes" style={{ width: '215px', marginLeft: '650px' }} />
         </Toolbar>
       </Container>
