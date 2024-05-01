@@ -11,6 +11,8 @@ import MenuDropdown from './MenuDropdown';
 import HKALogo from '../../assets/HKALogo.png';
 import Login from './Login';
 import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import React from 'react';
@@ -37,8 +39,8 @@ export const TabBar = () => {
                 style={{ width: '200px', marginRight: '20px' }}
               />
             </Link>
-            <MenuItem name="Suche" link="search" />
-            <MenuItem name="Neues Buch" link="new" />
+            <MenuItem name="Suche" link="search" icon={<SearchIcon />} />
+            <MenuItem name="Neues Buch" link="new" icon={<AutoStoriesIcon />} />
             <MenuDropdown />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
