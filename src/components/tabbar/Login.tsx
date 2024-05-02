@@ -33,7 +33,7 @@ export default function Login() {
             autoFocus
             margin="dense"
             id="name"
-            label="nutzername"
+            label="Nutzername"
             type="nutzername"
             fullWidth
             variant="standard"
