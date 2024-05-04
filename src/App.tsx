@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
 import { Search } from './pages/Search';
-import { New } from './pages/New';
+import  NewBookFrom  from './pages/NewBookFrom';
 import React from 'react';
 import { getTheme } from './theme';
 
@@ -33,7 +33,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="search" element={<Search />} />
-            <Route path="new" element={<New />} />
+            <Route path="new" element={<NewBookFrom />} />
 
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
