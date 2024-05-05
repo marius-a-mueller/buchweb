@@ -46,15 +46,31 @@ export const Search = () => {
           defaultValue="Rating"
           sx={{ width: '80ch', textAlign: 'center' }}
         />
+        <Box sx={{ width: '80ch', textAlign: 'center' }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Art</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={art}
+          label="Art"
+          onChange={handleChange}
+        >
+          <MenuItem value={1}>Kindle</MenuItem>
+          <MenuItem value={2}>Druckausgabe</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
         <Box
           sx={{
             width: 135,
             height: 100,
             borderRadius: 1,
             border: '1px solid',
-            borderColor: 'grey',
+            borderColor: '#c2c2c2',
             bgcolor: 'transparent',
             marginRight: '580px',
+            marginTop: '10px',
             marginBottom: '10px',
           }}
         >
@@ -63,22 +79,6 @@ export const Search = () => {
             <FormControlLabel control={<Checkbox defaultChecked color="secondary"/>} label="TypeScript" />
           </FormGroup>
         </Box>
-        <div>
-      <FormControl sx={{marginRight: '620px' }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Art</InputLabel>
-        <Select
-          labelId="demo-simple-select-autowidth-label"
-          id="demo-simple-select-autowidth"
-          value={art}
-          onChange={handleChange}
-          autoWidth
-          label="Age"
-        >
-          <MenuItem value={1}>Kindle</MenuItem>
-          <MenuItem value={2}>Druckausgabe</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
         <Button variant="contained" color="secondary" startIcon={<SearchIcon />} sx={{ marginTop: '10px' }}>
           Suche
         </Button>
