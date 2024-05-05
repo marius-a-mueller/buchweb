@@ -5,7 +5,15 @@ import {
   Grid,
   Paper,
   Typography,
+  Switch,
+  FormControlLabel,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  SelectChangeEvent,
 } from '@mui/material';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 
 interface Book {
   isbn: string;
@@ -20,7 +28,7 @@ interface Book {
   titel: string;
 }
 
-const NewBookForm = () => {
+const NewBookFrom = () => {
   const [book, setBook] = useState<Book>({
     isbn: '',
     rating: 0,
@@ -35,22 +43,36 @@ const NewBookForm = () => {
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = event.target;
-    if (type === "checkbox") {
-      setBook((prev) => ({
-        ...prev,
-        schlagwoerter: checked
-          ? [...prev.schlagwoerter, name]
-          : prev.schlagwoerter.filter(keyword => keyword !== name)
-      }));
-    } else if (name === 'lieferbar') {
-      setBook((prev) => ({ ...prev, [name]: checked }));
-    } else {
-      setBook((prev) => ({ ...prev, [name]: type === 'number' ? parseFloat(value) : value }));
-    }
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
+    setBook((prev) => ({ ...prev, [name]: value }));
     validateField(name, value);
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = event.target;
+    
+  if (name === 'lieferbar') {
+    setBook(prev => ({
+      ...prev,
+      [name]: checked 
+    }));
+    validateField(name, String(checked)); 
+  } else if (type === "checkbox") {
+    setBook(prev => ({
+      ...prev,
+      schlagwoerter: checked
+        ? [...prev.schlagwoerter, name]
+        : prev.schlagwoerter.filter(keyword => keyword !== name)
+    }));
+  } else {
+    setBook(prev => ({
+      ...prev,
+      [name]: type === 'number' ? parseFloat(value) : value
+    }));
+    validateField(name, value);
+  }
+};
 
 
   const validateField = (name: string, value: string) => {
@@ -72,7 +94,17 @@ const NewBookForm = () => {
 
   return (
     <Paper style={{ padding: 20, maxWidth: 800, margin: "auto" }}>
-      <Typography variant="h6" component="h2">
+      <Typography 
+      variant="h6"
+      component="h2"
+      style={{
+        fontSize: '1.5rem',
+        fontWeight: 'bold',
+        fontFamily: 'Arial, sans-serif',
+        textAlign: 'center',
+        marginBottom: '20px'
+      }}
+    >
         Neues Buch hinzufügen
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -166,8 +198,32 @@ const NewBookForm = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Buch hinzufügen
+            <FormControl fullWidth>
+              <InputLabel id="art-label">Art</InputLabel>
+              <Select
+                labelId="art-label"
+                id="art"
+                name="art"
+                value={book.art}
+                label="Art"
+                onChange={handleSelectChange}
+                error={!!errors.art}
+              >
+                <MenuItem value="Roman">Kindle</MenuItem>
+                <MenuItem value="Sachbuch">Druckausgabe</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Switch checked={book.lieferbar} onChange={handleChange} name="lieferbar" />}
+              label="Lieferbar"
+              labelPlacement="start"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="secondary" startIcon={<LibraryBooksRoundedIcon />} fullWidth>
+              Buch hinzugügen
             </Button>
           </Grid>
         </Grid>
@@ -176,4 +232,4 @@ const NewBookForm = () => {
   );
 };
 
-export default NewBookForm;
+export default NewBookFrom;

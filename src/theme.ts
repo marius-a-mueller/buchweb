@@ -1,5 +1,5 @@
 import { createTheme, Theme } from '@mui/material/styles';
-import { grey, red } from '@mui/material/colors';
+import { grey, red, green } from '@mui/material/colors';
 
 export const getTheme = (mode: 'light' | 'dark'): Theme => {
   return createTheme({
@@ -12,5 +12,23 @@ export const getTheme = (mode: 'light' | 'dark'): Theme => {
         main: red[600],
       },
     },
+    components: {
+      MuiSwitch: {
+        styleOverrides: {
+          switchBase: {
+            color: red[600], 
+            '&.Mui-checked': {
+              color: green[500], 
+            },
+            '&.Mui-checked + .MuiSwitch-track': {
+              backgroundColor: green[500], 
+            },
+          },
+          track: {
+            backgroundColor: red[600], 
+          },
+        },
+      }, 
+    },   
   });
 };
