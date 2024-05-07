@@ -5,11 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link } from 'react-router-dom';
 
-export default function MenuDropdown(props: {
-  link: string;
-}) {
+export default function MenuDropdown() {
   return (
-    <Link to={props.link.toLowerCase()}>
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
@@ -28,6 +25,5 @@ export default function MenuDropdown(props: {
         </React.Fragment>
       )}
     </PopupState>
-    </Link>
   );
 }

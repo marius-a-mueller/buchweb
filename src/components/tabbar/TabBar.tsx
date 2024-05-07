@@ -41,7 +41,7 @@ export const TabBar = () => {
             </Link>
             <MenuItem name="Suche" link="search" icon={<SearchIcon />} />
             <MenuItem name="Neues Buch" link="new" icon={<AutoStoriesIcon />} />
-            <MenuDropdown link="barchart" />
+            <MenuDropdown />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Login />
