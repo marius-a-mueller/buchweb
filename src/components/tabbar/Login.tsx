@@ -48,8 +48,8 @@ export default function Login() {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Abbrechen</Button>
-          <Button onClick={handleClose}>Login</Button>
+          <Button color= 'secondary' onClick={handleClose}>Abbrechen</Button>
+          <Button color='secondary' onClick={handleClose}>Login</Button>
         </DialogActions>
       </Dialog>
     </div>
