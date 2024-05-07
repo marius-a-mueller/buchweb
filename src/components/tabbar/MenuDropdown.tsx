@@ -22,8 +22,8 @@ export default function MenuDropdown(props: {
             Diagramme
           </Button>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={popupState.close}>Säulendiagramm</MenuItem>
-            <MenuItem onClick={popupState.close}>Balkendiagramm</MenuItem>
+            <MenuItem component={Link} to="/barchart" onClick={popupState.close}>Säulendiagramm</MenuItem>
+            <MenuItem component={Link} to="/columnchart" onClick={popupState.close}>Balkendiagramm</MenuItem>
           </Menu>
         </React.Fragment>
       )}
