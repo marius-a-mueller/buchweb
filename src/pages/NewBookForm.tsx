@@ -107,7 +107,7 @@ const NewBookForm = () => {
     autoComplete="off"
     onSubmit={handleSubmit}
   >
-    <Typography variant="h6" component="h2" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }}>
+    <Typography variant="h6" component="h2" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold', marginTop: "15px" }}>
       Neues Buch hinzufügen
     </Typography>
     <TextField
@@ -191,11 +191,14 @@ const NewBookForm = () => {
         <MenuItem value="Druckausgabe">Druckausgabe</MenuItem>
       </Select>
     </FormControl>
-    <FormControlLabel
-      control={<Switch checked={book.lieferbar} onChange={handleChange} name="lieferbar" />}
-      label="Lieferbar"
-      labelPlacement="start"
-    />
+    <FormControlLabel 
+  control={<Switch checked={book.lieferbar} onChange={handleChange} name="lieferbar" />}
+  label="Lieferbar"
+  labelPlacement="start"
+  sx={{
+    marginRight: 'auto',
+  }}
+/>
     <Button type="submit" variant="contained" color="secondary" startIcon={<LibraryBooksRoundedIcon />} sx={{ mt: 2 }}>
       Buch hinzufügen
     </Button>
