@@ -7,6 +7,8 @@ import { Search } from './pages/Search';
 import  NewBookFrom  from './pages/NewBookForm';
 import React from 'react';
 import { getTheme } from './theme';
+import { BarChart } from './pages/BarChart';
+import { ColumnChart } from './pages/ColumnChart';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -34,6 +36,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="search" element={<Search />} />
             <Route path="new" element={<NewBookFrom />} />
+            <Route path="barchart" element={<BarChart />} />
+            <Route path="columnchart" element={<ColumnChart />} />
 
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
