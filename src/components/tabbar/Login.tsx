@@ -6,6 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
+import LoginIcon from '@mui/icons-material/Login';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Login() {
   const [open, setOpen] = useState(false);
@@ -20,7 +22,7 @@ export default function Login() {
 
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="secondary" startIcon={<LoginIcon />} onClick={handleClickOpen}>
         Login
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -48,8 +50,8 @@ export default function Login() {
           />
         </DialogContent>
         <DialogActions>
-          <Button color= 'secondary' onClick={handleClose}>Abbrechen</Button>
-          <Button color='secondary' onClick={handleClose}>Login</Button>
+          <Button variant="outlined" color='secondary' startIcon={<CloseIcon />} onClick={handleClose}>Abbrechen</Button>
+          <Button variant="contained" color='secondary' endIcon={<LoginIcon />}onClick={handleClose}>Login</Button>
         </DialogActions>
       </Dialog>
     </div>
