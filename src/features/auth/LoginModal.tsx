@@ -10,15 +10,18 @@ import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuth } from './hooks/useAuth';
+import { Alert } from '@mui/material';
 
 export function LoginModal() {
   const { login, logout, isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
+  const [showError, setShowError] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
+    setShowError('');
     setUsername('');
     setPassword('');
   };
@@ -29,11 +32,16 @@ export function LoginModal() {
 
   const handleLogin = async () => {
     console.info(`Login mit ${username} und ${password}`);
-    const loginSucceeded = await login({ username, password });
-    if (loginSucceeded) {
-      setOpen(false);
-    } else {
-      console.error('Login fehlgeschlagen');
+    try {
+      const loginSucceeded = await login({ username, password });
+      if (loginSucceeded) {
+        setOpen(false);
+        setShowError('');
+      } else {
+        setShowError('Login fehlgeschlagen!');
+      }
+    } catch (error) {
+      setShowError('Keine Verbindung zum Server!');
     }
   };
 
@@ -93,6 +101,9 @@ export function LoginModal() {
             fullWidth
             variant="standard"
           />
+          {showError !== '' ? (
+            <Alert severity="error">{showError}</Alert>
+          ) : null}
         </DialogContent>
         <DialogActions>
           <Button

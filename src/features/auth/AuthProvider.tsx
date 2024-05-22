@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     )}&password=${encodeURIComponent(password)}`;
 
     const response = await instance.post('/auth/login', requestData);
-    //console.log(response);
+    console.log(response);
     if (response.status !== 200) return false;
     setToken(response.data.access_token);
     setWritePermission(true);
