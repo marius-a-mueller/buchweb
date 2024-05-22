@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link } from 'react-router-dom';
 
-export default function MenuDropdown() {
+export function MenuDropdown() {
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
@@ -19,8 +19,20 @@ export default function MenuDropdown() {
             Diagramme
           </Button>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem component={Link} to="/barchart" onClick={popupState.close}>Säulendiagramm</MenuItem>
-            <MenuItem component={Link} to="/columnchart" onClick={popupState.close}>Balkendiagramm</MenuItem>
+            <MenuItem
+              component={Link}
+              to="/barchart"
+              onClick={popupState.close}
+            >
+              Säulendiagramm
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="/columnchart"
+              onClick={popupState.close}
+            >
+              Balkendiagramm
+            </MenuItem>
           </Menu>
         </React.Fragment>
       )}

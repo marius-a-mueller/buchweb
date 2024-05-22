@@ -6,17 +6,17 @@ import {
   IconButton,
   useTheme,
 } from '@mui/material';
-import { MenuItem } from './MenuItem';
-import MenuDropdown from './MenuDropdown';
-import HKALogo from '../../assets/HKALogo.png';
-import Login from './Login';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import React from 'react';
-import { ColorModeContext } from '../../App';
+import { ColorModeContext } from '@/App';
+import { MenuItem } from './MenuItem';
+import { MenuDropdown } from './MenuDropdown';
+import HKALogo from '@/assets/HKALogo.png';
+import { LoginModal } from '@/features/auth';
 
 export const TabBar = () => {
   const theme = useTheme();
@@ -44,7 +44,7 @@ export const TabBar = () => {
             <MenuDropdown />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Login />
+            <LoginModal />
             <IconButton
               sx={{ ml: 1 }}
               onClick={colorMode.toggleColorMode}
