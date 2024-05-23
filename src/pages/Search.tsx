@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
 import { useState } from 'react';
 import { BookTable, BookTableRow } from '@/features/search';
-import { SearchForm } from '@/features/search/SearchForm';
+import { SearchForm } from '@/features/search';
 
 const Search = () => {
-  const [rows, setBookTableRows] = useState<BookTableRow[]>([]);
+  const [rows, setRows] = useState<BookTableRow[]>([]);
   return (
     <>
       <Box
@@ -18,7 +18,7 @@ const Search = () => {
       >
         <SearchForm
           setBookTableRows={(results: BookTableRow[]) => {
-            setBookTableRows(results);
+            setRows(results);
           }}
         ></SearchForm>
       </Box>

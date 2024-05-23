@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BookTableRow } from './BookTable';
 import SearchIcon from '@mui/icons-material/Search';
 import {
@@ -14,21 +14,16 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
-import axios from 'axios';
+import { searchBooks } from './api/searchBooks';
 
 interface SearchFormProps {
   setBookTableRows: (rows: BookTableRow[]) => void;
 }
 
-interface BookType {
-  isbn: string;
-  titel: string;
-}
-
 const SearchForm = (props: SearchFormProps) => {
   const { setBookTableRows } = props;
   const [art, setArt] = useState('');
-  const [, setBooks] = useState<BookType[]>([]);
+  //const [, setBooks] = useState<BookType[]>([]);
   const [searchIsbn, setSearchIsbn] = useState('');
   const [searchTitel, setSearchTitel] = useState('');
   const [selectedRatingOption, setSelectedRatingOption] = useState('');
@@ -42,65 +37,36 @@ const SearchForm = (props: SearchFormProps) => {
 
   const handleSearch = async () => {
     setLoading(true);
-
-    try {
-      let apiUrl = 'https://localhost:3000/rest';
-      const searchParams = [
-        { term: 'isbn', value: searchIsbn },
-        { term: 'titel', value: searchTitel },
-        { term: 'rating', value: selectedRatingOption },
-        { term: 'art', value: art },
-        { term: 'javascript', value: isJavaScript },
-        { term: 'typescript', value: isTypeScript },
-      ];
-
-      const appendSearchTerm = (
-        apiUrl: string,
-        searchTerm: string,
-        searchValue: string | boolean
-      ) => {
-        return searchValue
-          ? `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}${searchTerm}=${searchValue}`
-          : apiUrl;
-      };
-
-      searchParams.forEach((param) => {
-        apiUrl = appendSearchTerm(apiUrl, param.term, param.value);
-      });
-
-      const response = await axios.get(apiUrl);
-
-      if (response.status !== 200) {
-        throw new Error('Failed to fetch data');
-      }
-
-      const data = response.data;
-      console.log('Fetched books:', data);
-      setBooks(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error('Failed to fetch data', error);
-    } finally {
-      setLoading(false);
-    }
+    const searchParams = [
+      { term: 'isbn', value: searchIsbn },
+      { term: 'titel', value: searchTitel },
+      { term: 'rating', value: selectedRatingOption },
+      { term: 'art', value: art },
+      { term: 'javascript', value: isJavaScript },
+      { term: 'typescript', value: isTypeScript },
+    ];
+    const rows = await searchBooks({ searchParams });
+    setBookTableRows(rows?.length ? rows : []);
+    setLoading(false);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://localhost:3000/rest');
-        if (response.status !== 200) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = response.data;
-        console.log('Fetched books on load:', data);
-        setBooks(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error('Failed to fetch data', error);
-      }
-    };
+  //useEffect(() => {
+  //const fetchData = async () => {
+  //try {
+  //const response = await axios.get('https://localhost:3000/rest');
+  //if (response.status !== 200) {
+  //throw new Error('Failed to fetch data');
+  //}
+  //const data = response.data;
+  //console.log('Fetched books on load:', data);
+  //setBooks(Array.isArray(data) ? data : []);
+  //} catch (error) {
+  //console.error('Failed to fetch data', error);
+  //}
+  //};
 
-    fetchData();
-  }, []);
+  //fetchData();
+  //}, []);
 
   return (
     <>
