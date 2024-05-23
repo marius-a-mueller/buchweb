@@ -18,7 +18,7 @@ import { MenuDropdown } from './MenuDropdown';
 import HKALogo from '@/assets/HKALogo.png';
 import { LoginModal } from '@/features/auth';
 
-export const TabBar = () => {
+const TabBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   return (
@@ -62,3 +62,5 @@ export const TabBar = () => {
     </AppBar>
   );
 };
+
+export { TabBar };

@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,20 +12,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-export interface Book {
+interface BookType {
   isbn: string;
   titel: string;
 }
 
-export const Search = () => {
-  const [art, setArt] = React.useState('');
-  const [, setBooks] = React.useState<Book[]>([]);
+const Search = () => {
+  const [art, setArt] = useState('');
+  const [, setBooks] = useState<BookType[]>([]);
   const [searchIsbn, setSearchIsbn] = useState('');
   const [searchTitel, setSearchTitel] = useState('');
   const [selectedRatingOption, setSelectedRatingOption] = useState('');
   const [isJavaScript, setIsJavaScript] = useState(false);
   const [isTypeScript, setIsTypeScript] = useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setArt(event.target.value);
@@ -46,8 +45,14 @@ export const Search = () => {
         { term: 'typescript', value: isTypeScript },
       ];
 
-      const appendSearchTerm = (apiUrl: string, searchTerm: string, searchValue: string | boolean) => {
-        return searchValue ? `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}${searchTerm}=${searchValue}` : apiUrl;
+      const appendSearchTerm = (
+        apiUrl: string,
+        searchTerm: string,
+        searchValue: string | boolean
+      ) => {
+        return searchValue
+          ? `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}${searchTerm}=${searchValue}`
+          : apiUrl;
       };
 
       searchParams.forEach((param) => {
@@ -97,8 +102,16 @@ export const Search = () => {
       noValidate
       autoComplete="off"
     >
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Suchformular</h1>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+        Suchformular
+      </h1>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         <TextField
           id="isbn-input"
           label="ISBN"
@@ -149,11 +162,33 @@ export const Search = () => {
           }}
         >
           <FormGroup>
-            <FormControlLabel control={<Checkbox checked={isJavaScript} onChange={(e) => setIsJavaScript(e.target.checked)} color="secondary" />} label="JavaScript" />
-            <FormControlLabel control={<Checkbox checked={isTypeScript} onChange={(e) => setIsTypeScript(e.target.checked)} color="secondary" />} label="TypeScript" />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isJavaScript}
+                  onChange={(e) => setIsJavaScript(e.target.checked)}
+                  color="secondary"
+                />
+              }
+              label="JavaScript"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isTypeScript}
+                  onChange={(e) => setIsTypeScript(e.target.checked)}
+                  color="secondary"
+                />
+              }
+              label="TypeScript"
+            />
           </FormGroup>
         </Box>
-        <Button variant="contained" color="secondary" startIcon={<SearchIcon />} sx={{ marginTop: '10px' }}
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<SearchIcon />}
+          sx={{ marginTop: '10px' }}
           onClick={handleSearch}
           disabled={loading}
         >
@@ -164,4 +199,4 @@ export const Search = () => {
   );
 };
 
-export default Search;
+export { Search };

@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link } from 'react-router-dom';
 
-export function MenuDropdown() {
+const MenuDropdown = () => {
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
@@ -38,4 +38,6 @@ export function MenuDropdown() {
       )}
     </PopupState>
   );
-}
+};
+
+export { MenuDropdown };
