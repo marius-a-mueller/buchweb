@@ -11,6 +11,7 @@ import { BarChart } from '@/pages/BarChart';
 import { ColumnChart } from '@/pages/ColumnChart';
 import { useAuth } from '@/features/auth';
 import { Forbidden } from '@/pages/Forbidden';
+import { BookDetail } from '@/pages/BookDetail';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -44,6 +45,7 @@ function App() {
             />
             <Route path="barchart" element={<BarChart />} />
             <Route path="columnchart" element={<ColumnChart />} />
+            <Route path="book/:id" element={<BookDetail />} />
 
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
