@@ -12,6 +12,7 @@ import { ColumnChart } from '@/pages/ColumnChart';
 import { useAuth } from './features/auth';
 import { Forbidden } from './pages/Forbidden';
 
+
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
@@ -44,7 +45,7 @@ function App() {
             />
             <Route path="barchart" element={<BarChart />} />
             <Route path="columnchart" element={<ColumnChart />} />
-
+            
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
                 routes for. */}

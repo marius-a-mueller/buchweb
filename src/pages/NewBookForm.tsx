@@ -74,14 +74,23 @@ const NewBookForm = () => {
 };
 
 
-  const validateField = (name: string, value: string) => {
-    let errorMsg = '';
-    if (!value) errorMsg = 'Dieses Feld ist erforderlich';
-    if (name === 'isbn' && value && !/^\d{10,13}$/.test(value)) errorMsg = 'Muss eine gültige ISBN sein (10 oder 13 Ziffern)';
-    if (name === 'rating' && (parseFloat(value) < 0 || parseFloat(value) > 5)) errorMsg = 'Bewertung muss zwischen 0 und 5 liegen';
-    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
-  };
+const validateField = (name: string, value: string) => {
+  let errorMsg = '';
+  if (!value) errorMsg = 'Dieses Feld ist erforderlich';
 
+  if (name === 'isbn') {
+    const isbnPattern = /^(?:\d{10}|\d{13}|\d{3}-\d{1}-\d{3}-\d{5}-\d{1})$/;
+    if (!isbnPattern.test(value)) {
+      errorMsg = 'Muss eine gültige ISBN sein (10 oder 13 Ziffern, ggf. mit Trennzeichen)';
+    }
+  }
+
+  if (name === 'rating' && (parseFloat(value) < 0 || parseFloat(value) > 5)) {
+    errorMsg = 'Bewertung muss zwischen 0 und 5 liegen';
+  }
+  
+  setErrors((prev) => ({ ...prev, [name]: errorMsg }));
+};
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!Object.values(errors).some(x => x) && Object.values(book).every(x => x)) {

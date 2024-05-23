@@ -10,12 +10,83 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
+export interface Book {
+  isbn: string;
+  titel: string;
+}
 
 export const Search = () => {
   const [art, setArt] = React.useState('');
+  const [, setBooks] = React.useState<Book[]>([]);
+  const [searchIsbn, setSearchIsbn] = useState('');
+  const [searchTitel, setSearchTitel] = useState('');
+  const [selectedRatingOption, setSelectedRatingOption] = useState('');
+  const [isJavaScript, setIsJavaScript] = useState(false);
+  const [isTypeScript, setIsTypeScript] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+
   const handleChange = (event: SelectChangeEvent) => {
     setArt(event.target.value);
   };
+
+  const handleSearch = async () => {
+    setLoading(true);
+
+    try {
+      let apiUrl = 'https://localhost:3000/rest';
+      const searchParams = [
+        { term: 'isbn', value: searchIsbn },
+        { term: 'titel', value: searchTitel },
+        { term: 'rating', value: selectedRatingOption },
+        { term: 'art', value: art },
+        { term: 'javascript', value: isJavaScript },
+        { term: 'typescript', value: isTypeScript },
+      ];
+
+      const appendSearchTerm = (apiUrl: string, searchTerm: string, searchValue: string | boolean) => {
+        return searchValue ? `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}${searchTerm}=${searchValue}` : apiUrl;
+      };
+
+      searchParams.forEach((param) => {
+        apiUrl = appendSearchTerm(apiUrl, param.term, param.value);
+      });
+
+      const response = await axios.get(apiUrl);
+
+      if (response.status !== 200) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const data = response.data;
+      console.log('Fetched books:', data);
+      setBooks(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Failed to fetch data', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://localhost:3000/rest');
+        if (response.status !== 200) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = response.data;
+        console.log('Fetched books on load:', data);
+        setBooks(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Failed to fetch data', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Box
@@ -31,36 +102,39 @@ export const Search = () => {
         <TextField
           id="isbn-input"
           label="ISBN"
-          defaultValue="ISBN"
+          value={searchIsbn}
+          onChange={(e) => setSearchIsbn(e.target.value)}
           sx={{ width: '80ch', textAlign: 'center' }}
         />
         <TextField
           id="title-input"
           label="Titel"
-          defaultValue="Titel"
+          value={searchTitel}
+          onChange={(e) => setSearchTitel(e.target.value)}
           sx={{ width: '80ch', textAlign: 'center' }}
         />
         <TextField
           id="rating-input"
           label="Rating"
-          defaultValue="Rating"
+          value={selectedRatingOption}
+          onChange={(e) => setSelectedRatingOption(e.target.value)}
           sx={{ width: '80ch', textAlign: 'center' }}
         />
         <Box sx={{ width: '80ch', textAlign: 'center' }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Art</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={art}
-          label="Art"
-          onChange={handleChange}
-        >
-          <MenuItem value={1}>Kindle</MenuItem>
-          <MenuItem value={2}>Druckausgabe</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Art</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={art}
+              label="Art"
+              onChange={handleChange}
+            >
+              <MenuItem value={'KINDLE'}>Kindle</MenuItem>
+              <MenuItem value={'DRUCKAUSGABE'}>Druckausgabe</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <Box
           sx={{
             width: 135,
@@ -75,11 +149,14 @@ export const Search = () => {
           }}
         >
           <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked color="secondary"/>} label="JavaScript" />
-            <FormControlLabel control={<Checkbox defaultChecked color="secondary"/>} label="TypeScript" />
+            <FormControlLabel control={<Checkbox checked={isJavaScript} onChange={(e) => setIsJavaScript(e.target.checked)} color="secondary" />} label="JavaScript" />
+            <FormControlLabel control={<Checkbox checked={isTypeScript} onChange={(e) => setIsTypeScript(e.target.checked)} color="secondary" />} label="TypeScript" />
           </FormGroup>
         </Box>
-        <Button variant="contained" color="secondary" startIcon={<SearchIcon />} sx={{ marginTop: '10px' }}>
+        <Button variant="contained" color="secondary" startIcon={<SearchIcon />} sx={{ marginTop: '10px' }}
+          onClick={handleSearch}
+          disabled={loading}
+        >
           Suche
         </Button>
       </div>
