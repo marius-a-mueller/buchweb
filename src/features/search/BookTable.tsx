@@ -210,3 +210,4 @@ const BookTable = (props: BookTableProps) => {
 };
 
 export { BookTable };
+export type { BookTableProps, BookTableRow };
