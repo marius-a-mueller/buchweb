@@ -3,7 +3,7 @@ import { AxiosInstance } from '@/util/AxiosInstance';
 
 interface SearchParameter {
   term: string;
-  value: string | boolean;
+  value: string | boolean | number;
 }
 
 interface SearchBooksParams {
@@ -17,7 +17,7 @@ const searchBooks = async (props: SearchBooksParams) => {
   const appendSearchTerm = (
     apiUrl: string,
     searchTerm: string,
-    searchValue: string | boolean
+    searchValue: string | boolean | number
   ) => {
     return searchValue
       ? `${apiUrl}${apiUrl.includes('?') ? '&' : '?'}${searchTerm}=${searchValue}`

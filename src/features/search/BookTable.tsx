@@ -118,7 +118,7 @@ const BookTable = (props: BookTableProps) => {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -147,7 +147,12 @@ const BookTable = (props: BookTableProps) => {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.title}>
+            <TableRow
+              key={row.title}
+              onClick={(e) => {
+                console.log(e);
+              }}
+            >
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>

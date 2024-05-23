@@ -10,9 +10,11 @@ import {
   FormGroup,
   InputLabel,
   MenuItem,
+  Rating,
   Select,
   SelectChangeEvent,
   TextField,
+  Typography,
 } from '@mui/material';
 import { searchBooks } from './api/searchBooks';
 
@@ -26,7 +28,7 @@ const SearchForm = (props: SearchFormProps) => {
   //const [, setBooks] = useState<BookType[]>([]);
   const [searchIsbn, setSearchIsbn] = useState('');
   const [searchTitel, setSearchTitel] = useState('');
-  const [selectedRatingOption, setSelectedRatingOption] = useState('');
+  const [selectedRatingOption, setSelectedRatingOption] = useState(0);
   const [isJavaScript, setIsJavaScript] = useState(false);
   const [isTypeScript, setIsTypeScript] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -45,28 +47,15 @@ const SearchForm = (props: SearchFormProps) => {
       { term: 'javascript', value: isJavaScript },
       { term: 'typescript', value: isTypeScript },
     ];
-    const rows = await searchBooks({ searchParams });
-    setBookTableRows(rows?.length ? rows : []);
+    try {
+      const rows = await searchBooks({ searchParams });
+      setBookTableRows(rows?.length ? rows : []);
+    } catch (error) {
+      console.error(error);
+      setBookTableRows([]);
+    }
     setLoading(false);
   };
-
-  //useEffect(() => {
-  //const fetchData = async () => {
-  //try {
-  //const response = await axios.get('https://localhost:3000/rest');
-  //if (response.status !== 200) {
-  //throw new Error('Failed to fetch data');
-  //}
-  //const data = response.data;
-  //console.log('Fetched books on load:', data);
-  //setBooks(Array.isArray(data) ? data : []);
-  //} catch (error) {
-  //console.error('Failed to fetch data', error);
-  //}
-  //};
-
-  //fetchData();
-  //}, []);
 
   return (
     <>
@@ -94,13 +83,6 @@ const SearchForm = (props: SearchFormProps) => {
           onChange={(e) => setSearchTitel(e.target.value)}
           sx={{ width: '100%', textAlign: 'center' }}
         />
-        <TextField
-          id="rating-input"
-          label="Rating"
-          value={selectedRatingOption}
-          onChange={(e) => setSelectedRatingOption(e.target.value)}
-          sx={{ width: '100%', textAlign: 'center' }}
-        />
         <Box sx={{ width: '100%', textAlign: 'center' }}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Art</InputLabel>
@@ -116,6 +98,22 @@ const SearchForm = (props: SearchFormProps) => {
               <MenuItem value={'DRUCKAUSGABE'}>Druckausgabe</MenuItem>
             </Select>
           </FormControl>
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            marginBottom: '20px',
+          }}
+        >
+          <Typography component="legend">Bewertung</Typography>
+          <Rating
+            name="rating"
+            value={selectedRatingOption}
+            size="large"
+            onChange={(_, newValue) => {
+              setSelectedRatingOption(newValue === null ? 0 : newValue);
+            }}
+          />
         </Box>
         <Box
           sx={{
@@ -154,6 +152,7 @@ const SearchForm = (props: SearchFormProps) => {
             />
           </FormGroup>
         </Box>
+
         <Button
           variant="contained"
           color="secondary"
