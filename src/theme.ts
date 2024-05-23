@@ -13,22 +13,35 @@ export const getTheme = (mode: 'light' | 'dark'): Theme => {
       },
     },
     components: {
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            ...(mode === 'light'
+              ? {
+                  backgroundColor: grey[200],
+                }
+              : {
+                  backgroundColor: grey[800],
+                }),
+          },
+        },
+      },
       MuiSwitch: {
         styleOverrides: {
           switchBase: {
-            color: red[600], 
+            color: red[600],
             '&.Mui-checked': {
-              color: green[500], 
+              color: green[500],
             },
             '&.Mui-checked + .MuiSwitch-track': {
-              backgroundColor: green[500], 
+              backgroundColor: green[500],
             },
           },
           track: {
-            backgroundColor: red[600], 
+            backgroundColor: red[600],
           },
         },
-      }, 
-    },   
+      },
+    },
   });
 };

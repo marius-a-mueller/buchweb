@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { BookTable } from '@/features/ui/search';
 
 interface BookType {
   isbn: string;
@@ -94,108 +95,120 @@ const Search = () => {
   }, []);
 
   return (
-    <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '80ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
-        Suchformular
-      </h1>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+    <>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '100%' },
+          width: '60%',
         }}
+        noValidate
+        autoComplete="off"
       >
-        <TextField
-          id="isbn-input"
-          label="ISBN"
-          value={searchIsbn}
-          onChange={(e) => setSearchIsbn(e.target.value)}
-          sx={{ width: '80ch', textAlign: 'center' }}
-        />
-        <TextField
-          id="title-input"
-          label="Titel"
-          value={searchTitel}
-          onChange={(e) => setSearchTitel(e.target.value)}
-          sx={{ width: '80ch', textAlign: 'center' }}
-        />
-        <TextField
-          id="rating-input"
-          label="Rating"
-          value={selectedRatingOption}
-          onChange={(e) => setSelectedRatingOption(e.target.value)}
-          sx={{ width: '80ch', textAlign: 'center' }}
-        />
-        <Box sx={{ width: '80ch', textAlign: 'center' }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Art</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={art}
-              label="Art"
-              onChange={handleChange}
-            >
-              <MenuItem value={'KINDLE'}>Kindle</MenuItem>
-              <MenuItem value={'DRUCKAUSGABE'}>Druckausgabe</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box
-          sx={{
-            width: 135,
-            height: 100,
-            borderRadius: 1,
-            border: '1px solid',
-            borderColor: '#c2c2c2',
-            bgcolor: 'transparent',
-            marginRight: '580px',
-            marginTop: '10px',
-            marginBottom: '10px',
+        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+          Suchformular
+        </h1>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isJavaScript}
-                  onChange={(e) => setIsJavaScript(e.target.checked)}
-                  color="secondary"
-                />
-              }
-              label="JavaScript"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isTypeScript}
-                  onChange={(e) => setIsTypeScript(e.target.checked)}
-                  color="secondary"
-                />
-              }
-              label="TypeScript"
-            />
-          </FormGroup>
-        </Box>
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<SearchIcon />}
-          sx={{ marginTop: '10px' }}
-          onClick={handleSearch}
-          disabled={loading}
-        >
-          Suche
-        </Button>
-      </div>
-    </Box>
+          <TextField
+            id="isbn-input"
+            label="ISBN"
+            value={searchIsbn}
+            onChange={(e) => setSearchIsbn(e.target.value)}
+            sx={{ width: '100%', textAlign: 'center' }}
+          />
+          <TextField
+            id="title-input"
+            label="Titel"
+            value={searchTitel}
+            onChange={(e) => setSearchTitel(e.target.value)}
+            sx={{ width: '100%', textAlign: 'center' }}
+          />
+          <TextField
+            id="rating-input"
+            label="Rating"
+            value={selectedRatingOption}
+            onChange={(e) => setSelectedRatingOption(e.target.value)}
+            sx={{ width: '100%', textAlign: 'center' }}
+          />
+          <Box sx={{ width: '100%', textAlign: 'center' }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Art</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={art}
+                label="Art"
+                onChange={handleChange}
+              >
+                <MenuItem value={''}>Keine Auswahl</MenuItem>
+                <MenuItem value={'KINDLE'}>Kindle</MenuItem>
+                <MenuItem value={'DRUCKAUSGABE'}>Druckausgabe</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <Box
+            sx={{
+              //width: 135,
+              //height: 100,
+              borderRadius: 1,
+              border: '1px solid',
+              borderColor: '#c2c2c2',
+              bgcolor: 'transparent',
+              //marginRight: '580px',
+              margin: '10px',
+              padding: '10px',
+              //marginBottom: '10px',
+            }}
+          >
+            <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isJavaScript}
+                    onChange={(e) => setIsJavaScript(e.target.checked)}
+                    color="secondary"
+                  />
+                }
+                label="JavaScript"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isTypeScript}
+                    onChange={(e) => setIsTypeScript(e.target.checked)}
+                    color="secondary"
+                  />
+                }
+                label="TypeScript"
+              />
+            </FormGroup>
+          </Box>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<SearchIcon />}
+            sx={{ marginBottom: '20px' }}
+            onClick={handleSearch}
+            disabled={loading}
+          >
+            Suche
+          </Button>
+        </div>
+      </Box>
+      <Box sx={{ width: '60%' }}>
+        <BookTable
+          rows={[
+            { title: 'Dracula', author: 'Bram Stoker', bookDate: '21.02.16' },
+          ]}
+        ></BookTable>
+      </Box>
+    </>
   );
 };
 
