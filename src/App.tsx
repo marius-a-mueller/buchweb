@@ -39,7 +39,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="search/" element={<Search />} />
-            <Route path="book/:bookId" element={<Home />} />
+            <Route path="book/:id" element={<BookDetail />} />
             <Route
               path="new"
               element={writePermission ? <NewBookForm /> : <Forbidden />}
