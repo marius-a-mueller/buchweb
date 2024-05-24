@@ -15,6 +15,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { TableHead } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
+import { useNavigate } from 'react-router-dom';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -27,7 +28,7 @@ interface TablePaginationActionsProps {
 }
 
 interface BookTableRow {
-  id: number;
+  id: string;
   isbn: string;
   title: string;
   rating: string;
@@ -114,6 +115,7 @@ const BookTable = (props: BookTableProps) => {
   const [page, setPage] = useState(0);
   const [selectedRow, setSelectedRow] = useState({});
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const navigate = useNavigate();
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
 
   console.log({ selectedRow });
@@ -155,7 +157,10 @@ const BookTable = (props: BookTableProps) => {
             <TableRow
               hover={true}
               key={row.title}
-              onClick={() => setSelectedRow(row)}
+              onClick={() => {
+                setSelectedRow(row);
+                navigate('/book/' + row.id);
+              }}
               sx={{
                 cursor: 'pointer',
                 '&:last-child td, &:last-child th': { border: 0 },
