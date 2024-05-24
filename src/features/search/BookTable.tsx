@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -15,6 +15,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import { TableHead } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
+import { useNavigate } from 'react-router-dom';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -27,9 +28,13 @@ interface TablePaginationActionsProps {
 }
 
 interface BookTableRow {
+  id: string;
+  isbn: string;
   title: string;
-  author: string;
-  bookDate: string;
+  rating: string;
+  type: string;
+  price: string;
+  inStock: boolean;
 }
 
 interface BookTableProps {
@@ -106,37 +111,21 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
   );
 };
 
-//function createData(name: string, calories: number, fat: number) {
-//return { name, calories, fat };
-//}
-
-//const rows = [
-//createData('Cupcake', 305, 3.7),
-//createData('Donut', 452, 25.0),
-//createData('Eclair', 262, 16.0),
-//createData('Frozen yoghurt', 159, 6.0),
-//createData('Gingerbread', 356, 16.0),
-//createData('Honeycomb', 408, 3.2),
-//createData('Ice cream sandwich', 237, 9.0),
-//createData('Jelly Bean', 375, 0.0),
-//createData('KitKat', 518, 26.0),
-//createData('Lollipop', 392, 0.2),
-//createData('Marshmallow', 318, 0),
-//createData('Nougat', 360, 19.0),
-//createData('Oreo', 437, 18.0),
-//].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
 const BookTable = (props: BookTableProps) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { rows } = props;
+  const [page, setPage] = useState(0);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const navigate = useNavigate();
+  const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+
+  console.log({ selectedRow });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    _: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
@@ -150,13 +139,14 @@ const BookTable = (props: BookTableProps) => {
   };
 
   return (
-    <TableContainer component={Paper} elevation={12}>
+    <TableContainer component={Paper} elevation={12} sx={{ margin: '20px' }}>
       <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell>Titel</TableCell>
-            <TableCell>Autor</TableCell>
-            <TableCell align="right">Erscheinungsdatum</TableCell>
+            <TableCell align="right">Art</TableCell>
+            <TableCell align="right">Preis</TableCell>
+            <TableCell align="right">Sterne</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -164,32 +154,47 @@ const BookTable = (props: BookTableProps) => {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.title}>
+            <TableRow
+              hover={true}
+              key={row.title}
+              onClick={() => {
+                setSelectedRow(row);
+                navigate('/book/' + row.id);
+              }}
+              sx={{
+                cursor: 'pointer',
+                '&:last-child td, &:last-child th': { border: 0 },
+              }}
+            >
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.author}
+                {row.type}
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
-                {row.bookDate}
+                {row.price}
+              </TableCell>
+              <TableCell style={{ width: 160 }} align="right">
+                {row.rating}
               </TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
+            <TableRow hover style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
             </TableRow>
           )}
         </TableBody>
         <TableFooter>
-          <TableRow>
+          <TableRow sx={{ width: '100%' }}>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
+              sx={{ width: '100%' }}
               slotProps={{
                 select: {
                   inputProps: {
@@ -210,3 +215,4 @@ const BookTable = (props: BookTableProps) => {
 };
 
 export { BookTable };
+export type { BookTableProps, BookTableRow };

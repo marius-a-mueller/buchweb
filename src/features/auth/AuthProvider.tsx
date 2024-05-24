@@ -1,11 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-const instance = axios.create({
-  baseURL: 'https://localhost:3000',
-  timeout: 1000,
-});
+import { AxiosInstance } from '@/util/AxiosInstance';
 
 interface LoginType {
   username: string;
@@ -33,12 +28,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [writePermission, setWritePermission] = useState(false);
 
   const login = async ({ username, password }: LoginType) => {
-    console.log('GetResponse');
     const requestData = `username=${encodeURIComponent(
       username
     )}&password=${encodeURIComponent(password)}`;
 
-    const response = await instance.post('/auth/login', requestData);
+    const response = await AxiosInstance.post('/auth/login', requestData);
     console.log(response);
     if (response.status !== 200) return false;
     setToken(response.data.access_token);
