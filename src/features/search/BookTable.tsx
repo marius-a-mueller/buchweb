@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -27,6 +27,8 @@ interface TablePaginationActionsProps {
 }
 
 interface BookTableRow {
+  id: number;
+  isbn: string;
   title: string;
   rating: string;
   type: string;
@@ -109,9 +111,12 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
 };
 
 const BookTable = (props: BookTableProps) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = useState(0);
+  const [selectedRow, setSelectedRow] = useState({});
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+
+  console.log({ selectedRow });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -137,7 +142,7 @@ const BookTable = (props: BookTableProps) => {
         <TableHead>
           <TableRow>
             <TableCell>Titel</TableCell>
-            <TableCell>Art</TableCell>
+            <TableCell align="right">Art</TableCell>
             <TableCell align="right">Preis</TableCell>
             <TableCell align="right">Sterne</TableCell>
           </TableRow>
@@ -148,9 +153,12 @@ const BookTable = (props: BookTableProps) => {
             : rows
           ).map((row) => (
             <TableRow
+              hover={true}
               key={row.title}
-              onClick={(e) => {
-                console.log(e);
+              onClick={() => setSelectedRow(row)}
+              sx={{
+                cursor: 'pointer',
+                '&:last-child td, &:last-child th': { border: 0 },
               }}
             >
               <TableCell component="th" scope="row">
@@ -168,7 +176,7 @@ const BookTable = (props: BookTableProps) => {
             </TableRow>
           ))}
           {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
+            <TableRow hover style={{ height: 53 * emptyRows }}>
               <TableCell colSpan={6} />
             </TableRow>
           )}

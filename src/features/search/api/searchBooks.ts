@@ -37,6 +37,8 @@ const searchBooks = async (props: SearchBooksParams) => {
   console.log('Fetched books: ', books);
   for (const book in books) {
     rows.push({
+      id: books[book]._links.self.href.split('/').pop() as number,
+      isbn: books[book].isbn,
       title: books[book].titel.titel,
       type: books[book].art,
       rating: books[book].rating,
