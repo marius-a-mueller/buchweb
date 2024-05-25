@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 
