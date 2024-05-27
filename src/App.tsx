@@ -7,7 +7,7 @@ import { Search } from '@/pages/Search';
 import { NewBookForm } from '@/pages/NewBookForm';
 import React from 'react';
 import { getTheme } from '@/theme';
-import { BarChart } from '@/pages/BarChart';
+import { BookBarChart } from '@/pages/BookBarChart';
 import { ColumnChart } from '@/pages/ColumnChart';
 import { useAuth } from '@/features/auth';
 import { Forbidden } from '@/pages/Forbidden';
@@ -44,7 +44,7 @@ function App() {
               path="new"
               element={writePermission ? <NewBookForm /> : <Forbidden />}
             />
-            <Route path="barchart" element={<BarChart />} />
+            <Route path="barchart" element={<BookBarChart />} />
             <Route path="columnchart" element={<ColumnChart />} />
             <Route path="book/:id" element={<BookDetail />} />
 
