@@ -37,12 +37,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (response.status !== 200) return false;
     setToken(response.data.access_token);
     setWritePermission(true);
+    AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
     return true;
   };
 
   const logout = () => {
     setToken('');
     setWritePermission(false);
+    delete AxiosInstance.defaults.headers.common['Authorization'];
   };
 
   const isLoggedIn = () => {
