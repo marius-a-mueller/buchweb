@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, CircularProgress, Typography,Button, Paper, Container, Grid, Rating, Chip } from '@mui/material';
+import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import {BookEditForm } from './BookEditForm';
@@ -113,8 +114,8 @@ const BookDetail = () => {
               />
           </Grid>
           <Grid item xs={12} sm={8}>
-            <Typography gutterBottom variant="h5" component="div">
-              {book.titel}
+            <Typography gutterBottom variant="h5" component="div" sx={{ color: 'secondary', display: 'flex', alignItems: 'center' }}>
+             {book.titel}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               ISBN: {book.isbn}
@@ -153,7 +154,11 @@ const BookDetail = () => {
               </Typography>
               <Box sx={{ mt: 1 }}>
                   {book.schlagwoerter.map((tag) => (
-                    <Chip key={tag} label={tag} sx={{ mr: 1, mb: 1 }} />
+                    <Chip 
+                    key={tag} 
+                    label={tag} 
+                    icon={<LocalOfferIcon />}
+                    sx={{ mr: 1, mb: 1 }} />
                   ))}
                 </Box>
             <Button variant="contained" color="secondary" onClick={() => setEditMode(true)} sx={{ mt: 2 }}>

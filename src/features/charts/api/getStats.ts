@@ -3,7 +3,6 @@ import { AxiosInstance } from '@/util/AxiosInstance';
 const getStats = async () => {
   const url = '/rest/';
 
-
   const response = await AxiosInstance.get(url);
 
   if (response.status !== 200) return [];
@@ -12,9 +11,7 @@ const getStats = async () => {
   const ratings: number[] = [];
   console.log('Fetched books: ', books);
   for (const book in books) {
-    ratings.push(
-      books[book].rating,
-    );
+    ratings.push(books[book].rating);
   }
   return ratings;
 };
