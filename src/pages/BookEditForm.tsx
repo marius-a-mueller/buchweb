@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Box, TextField, Button, MenuItem } from '@mui/material';
+import { Box, TextField, Button, MenuItem, Grid, Typography, Paper, Container } from '@mui/material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-
 
 interface BookDetailProps {
   id: number;
@@ -89,7 +88,13 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
   };
  
   return (
-    <>
+    <Container maxWidth="md">
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
+        <Typography variant="h4" gutterBottom align="center">
+          Buch bearbeiten
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
       <TextField
         fullWidth
         label="Titel"
@@ -98,6 +103,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         fullWidth
         label="ISBN"
@@ -109,6 +116,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
           readOnly: true,
         }}
       />
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         fullWidth
         label="Preis"
@@ -118,6 +127,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      <Grid item xs={12}>
       <TextField
         fullWidth
         label="Art"
@@ -126,6 +137,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      <Grid item xs={12}>
       <TextField
         fullWidth
         label="Homepage"
@@ -134,6 +147,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         fullWidth
         label="Bewertung"
@@ -143,6 +158,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      <Grid item xs={12} sm={6}>
       <TextField
         select
         fullWidth
@@ -155,6 +172,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         <MenuItem value="true">Ja</MenuItem>
         <MenuItem value="false">Nein</MenuItem>
       </TextField>
+      </Grid>
+      <Grid item xs={12}>
       <TextField
         fullWidth
         label="Erscheinungsdatum"
@@ -165,6 +184,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         margin="normal"
         InputLabelProps={{ shrink: true }}
       />
+      </Grid>
+      <Grid item xs={12}>
       <TextField
         fullWidth
         label="Schlagwörter"
@@ -173,6 +194,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         onChange={handleChange}
         margin="normal"
       />
+      </Grid>
+      </Grid>
       <Box display="flex" justifyContent="space-between" mt={2}>
         <Button variant="contained" color="secondary" onClick={handleSave}>
           Speichern
@@ -181,7 +204,8 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
           Abbrechen
         </Button>
       </Box>
-    </>
+      </Paper>
+    </Container>
   );
 };
 

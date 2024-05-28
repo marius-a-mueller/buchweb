@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, CircularProgress, Typography,Button } from '@mui/material';
+import { Box, CircularProgress, Typography,Button, Paper, Container, Grid, Rating, Chip } from '@mui/material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import {BookEditForm } from './BookEditForm';
@@ -94,12 +94,25 @@ const BookDetail = () => {
   }
 
   return (
-    <Box display="flex" justifyContent="center" mt={5}>
-      <Box>
+    <Container maxWidth="md" sx={{ mt: 5 }}>
+    <Paper elevation={3} sx={{ padding: 3 }}>
         {editMode ? (
           <BookEditForm book={book} onSave={handleSave} etag={etag} />
         ) : (
           <>
+          <Grid container spacing={3}>
+           <Grid item xs={12} sm={4}>
+             <Box 
+             component="img"
+             sx={{
+               width: '100%',
+               borderRadius: 1,
+             }}
+             src={`https://via.placeholder.com/150?text=${book.titel}`}
+             alt={`Cover von ${book.titel}`}
+              />
+          </Grid>
+          <Grid item xs={12} sm={8}>
             <Typography gutterBottom variant="h5" component="div">
               {book.titel}
             </Typography>
@@ -112,14 +125,16 @@ const BookDetail = () => {
             <Typography variant="body2" color="text.secondary" paragraph>
               Art: {book.art}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Homepage:{' '}
-              <a href={book.homepage} target="_blank" rel="noopener noreferrer">
-                {book.homepage}
-              </a>
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Bewertung: {book.rating}/5
+            <Typography variant="body2" color="text.secondary" >
+              Bewertung: 
+              <Rating
+              name="book-rating"
+              value={book.rating}
+              readOnly
+              precision={0.5}
+              sx={{ fontSize: '1.5rem', verticalAlign: 'middle', ml: 0.5 }}
+            />
+              ({book.rating}/5)
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Lieferbar: {book.lieferbar ? 'Ja' : 'Nein'}
@@ -128,15 +143,28 @@ const BookDetail = () => {
               Erscheinungsdatum: {new Date(book.datum).toLocaleDateString()}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Schlagwörter: {book.schlagwoerter.join(', ')}
+              Homepage:{' '}
+              <a href={book.homepage} target="_blank" rel="noopener noreferrer">
+                {book.homepage}
+              </a>
             </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Schlagwörter:
+              </Typography>
+              <Box sx={{ mt: 1 }}>
+                  {book.schlagwoerter.map((tag) => (
+                    <Chip key={tag} label={tag} sx={{ mr: 1, mb: 1 }} />
+                  ))}
+                </Box>
             <Button variant="contained" color="secondary" onClick={() => setEditMode(true)} sx={{ mt: 2 }}>
               Bearbeiten
             </Button>
+          </Grid>
+        </Grid>
           </>
         )}
-      </Box>
-    </Box>
+      </Paper>
+    </Container>
   );
 };
 
