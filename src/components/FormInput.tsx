@@ -8,11 +8,11 @@ type InputParams = {
 
 const FormInput: FC<InputParams> = ({ name, ...otherParams }) => {
   const theme = useTheme();
+  const color = theme.palette.primary.dark;
   const {
     control,
     formState: { errors },
   } = useFormContext();
-  const color = theme.palette.primary.dark;
 
   return (
     <Controller
@@ -44,7 +44,6 @@ const FormInput: FC<InputParams> = ({ name, ...otherParams }) => {
           helperText={
             errors[name] ? (errors[name]?.message as unknown as string) : ''
           }
-          required
         />
       )}
     />

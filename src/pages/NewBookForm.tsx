@@ -5,10 +5,11 @@ import { boolean, object, string, TypeOf, union } from 'zod';
 import { FormInput } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
+import { FormDropdown } from '@/components';
 
 const newBookSchema = object({
   isbn: string().regex(
-    new RegExp('^(?:d{10}|d{13}|d{3}-d{1}-d{3}-d{5}-d{1})$'),
+    /^(?:\d{10}|\d{13}|\d{3}-\d{1}-\d{3}-\d{5}-\d{1})$/,
     'Kein gültiges ISBN-Format'
   ),
   titel: string().min(1, 'Titel ist erforderlich'),
@@ -24,7 +25,7 @@ const newBookSchema = object({
       ),
       'Ungültige URL'
     ),
-    string().url().optional(),
+    string().max(0),
   ]),
   lieferbar: boolean(),
   schlagwoerter: string().array(),
@@ -63,10 +64,11 @@ const NewBookForm: FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          width: '80ch',
           '& .MuiTextField-root': { m: 1, width: '80ch' },
           '& .MuiFormControl-root': { m: 1, width: '80ch' },
-          '& .MuiButton-root': { m: 1, width: '80ch' },
           '& .MuiSwitch-root': { m: 1, width: '6ch' },
+          '& .MuiButton-root': { m: 1, mb: 10, width: '40ch' },
         }}
         noValidate
         autoComplete="off"
@@ -91,6 +93,11 @@ const NewBookForm: FC = () => {
         <FormInput label="Rabatt" type="number" name="rabatt" />
         <FormInput label="" type="date" name="datum" />
         <FormInput label="Homepage" type="text" name="homepage" />
+        <FormDropdown
+          name="schlagwoerter"
+          label="Schlagwörter"
+          options={['JavaScript', 'TypeScript']}
+        />
         {/* <FormControl>
           <InputLabel id="art-label">Art</InputLabel>
           <Select
@@ -124,7 +131,6 @@ const NewBookForm: FC = () => {
           variant="contained"
           color="secondary"
           startIcon={<LibraryBooksRoundedIcon />}
-          sx={{ mt: 2 }}
         >
           Buch hinzufügen
         </Button>
