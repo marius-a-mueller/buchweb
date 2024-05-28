@@ -1,241 +1,141 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  TextField,
-  Box,
-  Typography,
-  Switch,
-  FormControlLabel,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  SelectChangeEvent,
-} from '@mui/material';
+import { FC } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
+import { boolean, object, string, TypeOf, union } from 'zod';
+import { FormInput } from '@/components';
+import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
+import { FormDropdown } from '@/components';
 
-interface BookDtoType {
-  isbn: string;
-  rating: number;
-  art: string;
-  preis: number;
-  rabatt: number;
-  lieferbar: boolean;
-  datum: string;
-  homepage: string;
-  schlagwoerter: string[];
-  titel: string;
-}
+const newBookSchema = object({
+  isbn: string().regex(
+    /^(?:\d{10}|\d{13}|\d{3}-\d{1}-\d{3}-\d{5}-\d{1})$/,
+    'Kein gültiges ISBN-Format'
+  ),
+  titel: string().min(1, 'Titel ist erforderlich'),
+  art: string(),
+  rating: string().min(0).max(5),
+  preis: string().min(0, 'Preis darf nicht negativ sein'),
+  rabatt: string().min(0),
+  datum: string().optional(),
+  homepage: union([
+    string().regex(
+      new RegExp(
+        '^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?'
+      ),
+      'Ungültige URL'
+    ),
+    string().max(0),
+  ]),
+  lieferbar: boolean(),
+  schlagwoerter: string().array(),
+});
 
-const NewBookForm = () => {
-  const [book, setBook] = useState<BookDtoType>({
+type bookType = TypeOf<typeof newBookSchema>;
+
+const NewBookForm: FC = () => {
+  const defaultValues: bookType = {
     isbn: '',
-    rating: 0,
+    titel: '',
+    rating: '0',
     art: '',
-    preis: 0,
-    rabatt: 0,
+    preis: '0',
+    rabatt: '0',
     lieferbar: false,
     datum: '',
     homepage: '',
     schlagwoerter: [],
-    titel: '',
+  };
+
+  const methods = useForm<bookType>({
+    resolver: zodResolver(newBookSchema),
+    defaultValues,
   });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    const { name, value } = event.target;
-    setBook((prev) => ({ ...prev, [name]: value }));
-    validateField(name, value);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = event.target;
-
-    if (name === 'lieferbar') {
-      setBook((prev) => ({
-        ...prev,
-        [name]: checked,
-      }));
-      validateField(name, String(checked));
-    } else if (type === 'checkbox') {
-      setBook((prev) => ({
-        ...prev,
-        schlagwoerter: checked
-          ? [...prev.schlagwoerter, name]
-          : prev.schlagwoerter.filter((keyword) => keyword !== name),
-      }));
-    } else {
-      setBook((prev) => ({
-        ...prev,
-        [name]: type === 'number' ? parseFloat(value) : value,
-      }));
-      validateField(name, value);
-    }
-  };
-
-  const validateField = (name: string, value: string) => {
-    let errorMsg = '';
-    if (!value) errorMsg = 'Dieses Feld ist erforderlich';
-
-    if (name === 'isbn') {
-      const isbnPattern = /^(?:\d{10}|\d{13}|\d{3}-\d{1}-\d{3}-\d{5}-\d{1})$/;
-      if (!isbnPattern.test(value)) {
-        errorMsg =
-          'Muss eine gültige ISBN sein (10 oder 13 Ziffern, ggf. mit Trennzeichen)';
-      }
-    }
-
-    if (name === 'rating' && (parseFloat(value) < 0 || parseFloat(value) > 5)) {
-      errorMsg = 'Bewertung muss zwischen 0 und 5 liegen';
-    }
-
-    setErrors((prev) => ({ ...prev, [name]: errorMsg }));
-  };
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (
-      !Object.values(errors).some((x) => x) &&
-      Object.values(book).every((x) => x)
-    ) {
-      console.log('Buch gespeichert:', book);
-    } else {
-      console.log('Bitte korrigieren Sie die Fehler im Formular.');
-    }
+  const onHandleSubmit = (values: bookType) => {
+    console.log(values);
   };
 
   return (
-    <Box
-      component="form"
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        '& .MuiTextField-root': { m: 1, width: '80ch' },
-        '& .MuiFormControl-root': { m: 1, width: '80ch' },
-        '& .MuiButton-root': { m: 1, width: '80ch' },
-        '& .MuiSwitch-root': { m: 1, width: '6ch' },
-      }}
-      noValidate
-      autoComplete="off"
-      onSubmit={handleSubmit}
-    >
-      <Typography
-        variant="h6"
-        component="h2"
+    <FormProvider {...methods}>
+      <Box
+        component="form"
         sx={{
-          mb: 2,
-          textAlign: 'center',
-          fontWeight: 'bold',
-          marginTop: '15px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '80ch',
+          '& .MuiTextField-root': { m: 1, width: '80ch' },
+          '& .MuiFormControl-root': { m: 1, width: '80ch' },
+          '& .MuiSwitch-root': { m: 1, width: '6ch' },
+          '& .MuiButton-root': { m: 1, mb: 10, width: '40ch' },
         }}
+        noValidate
+        autoComplete="off"
+        onSubmit={methods.handleSubmit(onHandleSubmit)}
       >
-        Neues Buch hinzufügen
-      </Typography>
-      <TextField
-        label="ISBN"
-        name="isbn"
-        value={book.isbn}
-        onChange={handleChange}
-        error={!!errors.isbn}
-        helperText={errors.isbn || '10 oder 13 Ziffern'}
-        required
-      />
-      <TextField
-        label="Titel"
-        name="titel"
-        value={book.titel}
-        onChange={handleChange}
-        error={!!errors.titel}
-        helperText={errors.titel}
-        required
-      />
-      <TextField
-        label="Bewertung"
-        type="number"
-        name="rating"
-        value={book.rating}
-        onChange={handleChange}
-        error={!!errors.rating}
-        helperText={errors.rating || '0 bis 5'}
-        required
-      />
-      <TextField
-        label="Preis"
-        type="number"
-        name="preis"
-        value={book.preis}
-        onChange={handleChange}
-        error={!!errors.preis}
-        helperText={errors.preis}
-        required
-      />
-      <TextField
-        label="Rabatt"
-        type="number"
-        name="rabatt"
-        value={book.rabatt}
-        onChange={handleChange}
-        error={!!errors.rabatt}
-        helperText={errors.rabatt || 'Rabatt in Prozent'}
-        required
-      />
-      <TextField
-        label="Erscheinungsdatum"
-        type="date"
-        name="datum"
-        value={book.datum}
-        onChange={handleChange}
-        InputLabelProps={{ shrink: true }}
-        helperText={errors.datum}
-        required
-      />
-      <TextField
-        label="Homepage"
-        name="homepage"
-        value={book.homepage}
-        onChange={handleChange}
-        error={!!errors.homepage}
-        helperText={errors.homepage || 'URL der Buch-Homepage'}
-        required
-      />
-      <FormControl>
-        <InputLabel id="art-label">Art</InputLabel>
-        <Select
-          labelId="art-label"
-          id="art-select"
-          name="art"
-          value={book.art}
-          onChange={handleSelectChange}
-          label="Art"
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{
+            mb: 2,
+            textAlign: 'center',
+            fontWeight: 'bold',
+            marginTop: '15px',
+          }}
         >
-          <MenuItem value="Kindle">Kindle</MenuItem>
-          <MenuItem value="Druckausgabe">Druckausgabe</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={book.lieferbar}
-            onChange={handleChange}
-            name="lieferbar"
-          />
-        }
-        label="Lieferbar"
-        labelPlacement="start"
-        sx={{
-          marginRight: 'auto',
-        }}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="secondary"
-        startIcon={<LibraryBooksRoundedIcon />}
-        sx={{ mt: 2 }}
-      >
-        Buch hinzufügen
-      </Button>
-    </Box>
+          Neues Buch hinzufügen
+        </Typography>
+        <FormInput label="ISBN" type="text" name="isbn" required />
+        <FormInput label="Titel" type="text" name="titel" required />
+        <FormInput label="Bewertung" type="number" name="rating" />
+        <FormInput label="Preis" type="number" name="preis" />
+        <FormInput label="Rabatt" type="number" name="rabatt" />
+        <FormInput label="" type="date" name="datum" />
+        <FormInput label="Homepage" type="text" name="homepage" />
+        <FormDropdown
+          name="schlagwoerter"
+          label="Schlagwörter"
+          options={['JavaScript', 'TypeScript']}
+        />
+        {/* <FormControl>
+          <InputLabel id="art-label">Art</InputLabel>
+          <Select
+            labelId="art-label"
+            id="art-select"
+            name="art"
+            value={book.art}
+            onChange={handleSelectChange}
+            label="Art"
+          >
+            <MenuItem value="Kindle">Kindle</MenuItem>
+            <MenuItem value="Druckausgabe">Druckausgabe</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={book.lieferbar}
+              onChange={handleChange}
+              name="lieferbar"
+            />
+          }
+          label="Lieferbar"
+          labelPlacement="start"
+          sx={{
+            marginRight: 'auto',
+          }}
+        /> */}
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          startIcon={<LibraryBooksRoundedIcon />}
+        >
+          Buch hinzufügen
+        </Button>
+      </Box>
+    </FormProvider>
   );
 };
 
