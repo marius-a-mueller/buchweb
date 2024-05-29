@@ -27,7 +27,7 @@ const BookDetail = () => {
   const [editMode, setEditMode] = useState(false);
   const [, setEditedBook] = useState<BookDetailProps | null>(null);
   const [etag, setEtag] = useState<string | null>(null);
-  const { token } = useAuth();
+  const { token, isLoggedIn } = useAuth();
   console.log(id);
 
   useEffect(() => {
@@ -161,9 +161,11 @@ const BookDetail = () => {
                     sx={{ mr: 1, mb: 1 }} />
                   ))}
                 </Box>
+                {isLoggedIn() && (
             <Button variant="contained" color="secondary" onClick={() => setEditMode(true)} sx={{ mt: 2 }}>
               Bearbeiten
             </Button>
+          )}
           </Grid>
         </Grid>
           </>
