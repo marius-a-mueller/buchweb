@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import App from '@/App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './features/auth';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AuthProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
+    </LocalizationProvider>
   </React.StrictMode>
 );
