@@ -6,7 +6,7 @@ export const getTheme = (mode: 'light' | 'dark'): Theme => {
     palette: {
       mode,
       primary: {
-        main: grey[50],
+        main: grey[500],
       },
       secondary: {
         main: red[600],

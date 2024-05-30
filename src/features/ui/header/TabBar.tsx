@@ -22,7 +22,7 @@ const TabBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   return (
-    <AppBar position="static">
+    <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box
