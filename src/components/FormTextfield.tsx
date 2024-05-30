@@ -2,11 +2,11 @@ import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-type InputParams = {
+type RhfTextfieldProps = {
   name: string;
-} & TextFieldProps;
+} & Partial<TextFieldProps>;
 
-const FormInput: FC<InputParams> = ({ name, ...otherParams }) => {
+const FormTextfield: FC<RhfTextfieldProps> = ({ name, ...otherProps }) => {
   const theme = useTheme();
   const color = theme.palette.primary.dark;
   const {
@@ -22,7 +22,7 @@ const FormInput: FC<InputParams> = ({ name, ...otherParams }) => {
       render={({ field }) => (
         <TextField
           {...field}
-          {...otherParams}
+          {...otherProps}
           sx={{
             '& label.Mui-focused': { color },
             '& .MuiInput-underline:after': {
@@ -50,4 +50,4 @@ const FormInput: FC<InputParams> = ({ name, ...otherParams }) => {
   );
 };
 
-export { FormInput };
+export { FormTextfield };

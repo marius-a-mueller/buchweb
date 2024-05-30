@@ -39,7 +39,7 @@ const SearchForm = (props: SearchFormProps) => {
 
   const handleSearch = async () => {
     setLoading(true);
-    const searchParams = [
+    const searchProps = [
       { term: 'isbn', value: searchIsbn },
       { term: 'titel', value: searchTitel },
       { term: 'rating', value: selectedRatingOption },
@@ -48,7 +48,7 @@ const SearchForm = (props: SearchFormProps) => {
       { term: 'typescript', value: isTypeScript },
     ];
     try {
-      const rows = await searchBooks({ searchParams });
+      const rows = await searchBooks({ searchProps });
       setBookTableRows(rows?.length ? rows : []);
     } catch (error) {
       console.error(error);

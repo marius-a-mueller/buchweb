@@ -1,13 +1,18 @@
-import { Rating, RatingProps, Typography } from '@mui/material';
+import {
+  FormControlLabel,
+  Switch,
+  SwitchProps,
+  Typography,
+} from '@mui/material';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-type RhfRatingProps = {
+type RhfSwitchProps = {
   name: string;
   label: string;
-} & Partial<RatingProps>;
+} & Partial<SwitchProps>;
 
-const FormRating: FC<RhfRatingProps> = ({ name, label, ...otherProps }) => {
+const FormSwitch: FC<RhfSwitchProps> = ({ name, label, ...otherProps }) => {
   const {
     control,
     formState: { errors },
@@ -18,12 +23,11 @@ const FormRating: FC<RhfRatingProps> = ({ name, label, ...otherProps }) => {
       name={name}
       render={({ field }) => (
         <>
-          <Typography>{label}</Typography>
-          <Rating
-            name={name}
-            value={Number(field.value)}
-            onChange={(_, value) => field.onChange(value)}
-            {...otherProps}
+          <FormControlLabel
+            control={<Switch {...otherProps} />}
+            checked={Boolean(field.value)}
+            onChange={() => field.onChange(!field.value)}
+            label={label}
           />
           {errors[name] && (
             <Typography color="error">
@@ -36,4 +40,4 @@ const FormRating: FC<RhfRatingProps> = ({ name, label, ...otherProps }) => {
   );
 };
 
-export { FormRating };
+export { FormSwitch };

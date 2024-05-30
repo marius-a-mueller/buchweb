@@ -6,12 +6,12 @@ interface SearchParameter {
   value: string | boolean | number;
 }
 
-interface SearchBooksParams {
-  searchParams: SearchParameter[];
+interface SearchBooksProps {
+  searchProps: SearchParameter[];
 }
 
-const searchBooks = async (props: SearchBooksParams) => {
-  const { searchParams } = props;
+const searchBooks = async (props: SearchBooksProps) => {
+  const { searchProps } = props;
   let url = '/rest/';
 
   const appendSearchTerm = (
@@ -24,7 +24,7 @@ const searchBooks = async (props: SearchBooksParams) => {
       : apiUrl;
   };
 
-  searchParams.forEach((param) => {
+  searchProps.forEach((param) => {
     url = appendSearchTerm(url, param.term, param.value);
   });
 
@@ -50,4 +50,4 @@ const searchBooks = async (props: SearchBooksParams) => {
 };
 
 export { searchBooks };
-export type { SearchBooksParams };
+export type { SearchBooksProps };

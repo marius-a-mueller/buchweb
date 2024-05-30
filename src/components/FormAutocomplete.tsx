@@ -1,18 +1,24 @@
-import { Autocomplete, Chip, TextField, useTheme } from '@mui/material';
+import {
+  Autocomplete,
+  AutocompleteProps,
+  Chip,
+  TextField,
+  useTheme,
+} from '@mui/material';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-type DropdownParams = {
+type RhfAutocompleteProps = {
   name: string;
   label: string;
   options: string[];
-};
+} & Partial<AutocompleteProps<string, true, false, true>>;
 
-const FormDropdown: FC<DropdownParams> = ({
+const FormAutocomplete: FC<RhfAutocompleteProps> = ({
   name,
   label,
   options,
-  ...otherParams
+  ...otherProps
 }) => {
   const theme = useTheme();
   const color = theme.palette.primary.dark;
@@ -36,15 +42,15 @@ const FormDropdown: FC<DropdownParams> = ({
           options={options}
           defaultValue={undefined}
           freeSolo
-          {...otherParams}
+          {...otherProps}
           renderTags={(value: readonly string[]) =>
             value.map((option: string) => (
               <Chip variant="outlined" label={option} key={option} />
             ))
           }
-          renderInput={(params) => (
+          renderInput={(props) => (
             <TextField
-              {...params}
+              {...props}
               name={name}
               inputRef={ref}
               variant="filled"
@@ -74,4 +80,4 @@ const FormDropdown: FC<DropdownParams> = ({
   );
 };
 
-export { FormDropdown };
+export { FormAutocomplete };

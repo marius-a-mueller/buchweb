@@ -3,6 +3,7 @@ import {
   Radio,
   RadioGroup,
   RadioGroupProps,
+  Typography,
 } from '@mui/material';
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -17,22 +18,32 @@ const FormRadioGroup: FC<RhfRadioGroupProps> = ({
   options,
   ...otherProps
 }) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => (
-        <RadioGroup {...field} {...otherProps}>
-          {options.map((option) => (
-            // <Radio key={option} value={option} />
-            <FormControlLabel
-              value={option}
-              control={<Radio color="primary" />}
-              label={option}
-            />
-          ))}
-        </RadioGroup>
+        <>
+          <RadioGroup {...field} {...otherProps}>
+            {options.map((option) => (
+              <FormControlLabel
+                value={option}
+                key={option}
+                control={<Radio color="primary" />}
+                label={option}
+              />
+            ))}
+          </RadioGroup>
+          {errors[name] && (
+            <Typography color="error">
+              {errors[name]?.message?.toString()}
+            </Typography>
+          )}
+        </>
       )}
     />
   );

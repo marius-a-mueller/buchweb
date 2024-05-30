@@ -2,12 +2,16 @@ import { FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { boolean, date, number, object, string, TypeOf, union } from 'zod';
-import { FormInput } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
-import { FormDropdown } from '@/components';
-import { FormDatePicker } from '@/components';
-import { FormRating } from '@/components/FormRating';
+import {
+  FormAutocomplete,
+  FormDatePicker,
+  FormRating,
+  FormRadioGroup,
+  FormTextfield,
+  FormSwitch,
+} from '@/components';
 
 const newBookSchema = object({
   isbn: string().regex(
@@ -15,7 +19,7 @@ const newBookSchema = object({
     'Kein gültiges ISBN-Format'
   ),
   titel: string().min(1, 'Titel ist erforderlich'),
-  art: string(),
+  art: string().min(1, 'Art ist erforderlich'),
   rating: number(),
   preis: string().regex(/^[^-]/, 'Preis muss positiv sein'),
   rabatt: string().min(0),
@@ -88,56 +92,31 @@ const NewBookForm: FC = () => {
         >
           Neues Buch hinzufügen
         </Typography>
-        <FormInput label="ISBN" type="text" name="isbn" required />
-        <FormInput label="Titel" type="text" name="titel" required />
-        <FormInput
+        <FormTextfield label="ISBN" type="text" name="isbn" required />
+        <FormTextfield label="Titel" type="text" name="titel" required />
+        <FormTextfield
           label="Preis"
           type="number"
           name="preis"
           InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
         />
-        <FormInput
+        <FormTextfield
           label="Rabatt"
           type="number"
           name="rabatt"
           InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
         />
         <FormDatePicker label="Datum" name="datum" />
-        <FormInput label="Homepage" type="text" name="homepage" />
-        <FormDropdown
+        <FormTextfield label="Homepage" type="text" name="homepage" />
+        <FormAutocomplete
           name="schlagwoerter"
           label="Schlagwörter"
           options={['JavaScript', 'TypeScript']}
         />
-        <FormRating name="rating" />
-        {/* <FormControl>
-          <InputLabel id="art-label">Art</InputLabel>
-          <Select
-            labelId="art-label"
-            id="art-select"
-            name="art"
-            value={book.art}
-            onChange={handleSelectChange}
-            label="Art"
-          >
-            <MenuItem value="Kindle">Kindle</MenuItem>
-            <MenuItem value="Druckausgabe">Druckausgabe</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={book.lieferbar}
-              onChange={handleChange}
-              name="lieferbar"
-            />
-          }
-          label="Lieferbar"
-          labelPlacement="start"
-          sx={{
-            marginRight: 'auto',
-          }}
-        /> */}
+        <FormRating name="rating" label="Bewertung" size="large" />
+        <FormRadioGroup row name="art" options={['Kindle', 'Druckausgabe']} />
+        <FormSwitch name="lieferbar" label="Lieferbar" />
+
         <Button
           type="submit"
           variant="contained"
