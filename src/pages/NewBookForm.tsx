@@ -1,11 +1,13 @@
 import { FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { boolean, object, string, TypeOf, union } from 'zod';
+import { boolean, date, number, object, string, TypeOf, union } from 'zod';
 import { FormInput } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import { FormDropdown } from '@/components';
+import { FormDatePicker } from '@/components';
+import { FormRating } from '@/components/FormRating';
 
 const newBookSchema = object({
   isbn: string().regex(
@@ -14,10 +16,10 @@ const newBookSchema = object({
   ),
   titel: string().min(1, 'Titel ist erforderlich'),
   art: string(),
-  rating: string().min(0).max(5),
-  preis: string().min(0, 'Preis darf nicht negativ sein'),
+  rating: number(),
+  preis: string().regex(/^[^-]/, 'Preis muss positiv sein'),
   rabatt: string().min(0),
-  datum: string().optional(),
+  datum: date(),
   homepage: union([
     string().regex(
       new RegExp(
@@ -37,12 +39,12 @@ const NewBookForm: FC = () => {
   const defaultValues: bookType = {
     isbn: '',
     titel: '',
-    rating: '0',
+    rating: 0,
     art: '',
     preis: '0',
     rabatt: '0',
     lieferbar: false,
-    datum: '',
+    datum: new Date(),
     homepage: '',
     schlagwoerter: [],
   };
@@ -88,16 +90,26 @@ const NewBookForm: FC = () => {
         </Typography>
         <FormInput label="ISBN" type="text" name="isbn" required />
         <FormInput label="Titel" type="text" name="titel" required />
-        <FormInput label="Bewertung" type="number" name="rating" />
-        <FormInput label="Preis" type="number" name="preis" />
-        <FormInput label="Rabatt" type="number" name="rabatt" />
-        <FormInput label="" type="date" name="datum" />
+        <FormInput
+          label="Preis"
+          type="number"
+          name="preis"
+          InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
+        />
+        <FormInput
+          label="Rabatt"
+          type="number"
+          name="rabatt"
+          InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
+        />
+        <FormDatePicker label="Datum" name="datum" />
         <FormInput label="Homepage" type="text" name="homepage" />
         <FormDropdown
           name="schlagwoerter"
           label="Schlagwörter"
           options={['JavaScript', 'TypeScript']}
         />
+        <FormRating name="rating" />
         {/* <FormControl>
           <InputLabel id="art-label">Art</InputLabel>
           <Select
