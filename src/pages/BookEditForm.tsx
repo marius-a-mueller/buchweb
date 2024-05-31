@@ -130,13 +130,17 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
       </Grid>
       <Grid item xs={12}>
       <TextField
+        select
         fullWidth
         label="Art"
         name="art"
         value={editedBook.art}
         onChange={handleChange}
         margin="normal"
-      />
+      >
+        <MenuItem value="KINDLE">KINDLE</MenuItem>
+        <MenuItem value="DRUCKAUSGABE">DRUCKAUSGABE</MenuItem>
+      </TextField>
       </Grid>
       <Grid item xs={12}>
       <TextField
