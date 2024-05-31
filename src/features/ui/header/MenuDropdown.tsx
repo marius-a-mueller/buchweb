@@ -28,10 +28,10 @@ const MenuDropdown = () => {
             </MenuItem>
             <MenuItem
               component={Link}
-              to="/columnchart"
+              to="/piechart"
               onClick={popupState.close}
             >
-              Balkendiagramm
+              Kuchendiagramm
             </MenuItem>
           </Menu>
         </React.Fragment>

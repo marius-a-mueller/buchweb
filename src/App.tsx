@@ -8,10 +8,10 @@ import { NewBookForm } from '@/pages/NewBookForm';
 import React from 'react';
 import { getTheme } from '@/theme';
 import { BookBarChart } from '@/pages/BookBarChart';
-import { ColumnChart } from '@/pages/ColumnChart';
 import { useAuth } from '@/features/auth';
 import { Forbidden } from '@/pages/Forbidden';
 import { BookDetail } from '@/pages/BookDetail';
+import { BookPieChart } from './pages/BookPieChart';
 
 export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
@@ -45,7 +45,7 @@ function App() {
               element={writePermission ? <NewBookForm /> : <Forbidden />}
             />
             <Route path="barchart" element={<BookBarChart />} />
-            <Route path="columnchart" element={<ColumnChart />} />
+            <Route path="piechart" element={<BookPieChart />} />
             <Route path="book/:id" element={<BookDetail />} />
 
             {/* Using path="*"" means "match anything", so this route

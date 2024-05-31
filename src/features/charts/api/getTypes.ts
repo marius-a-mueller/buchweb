@@ -1,6 +1,6 @@
 import { AxiosInstance } from '@/util/AxiosInstance';
 
-const getStats = async () => {
+const getTypes = async () => {
   const url = '/rest/';
 
   const response = await AxiosInstance.get(url);
@@ -8,13 +8,13 @@ const getStats = async () => {
   if (response.status !== 200) return [];
   const books = response.data._embedded.buecher;
 
-  const ratings: number[] = [];
+  const types: string[] = [];
 
   console.log('Fetched books: ', books);
   for (const book in books) {
-    ratings.push(books[book].rating);
+    types.push(books[book].art);
   }
-  return ratings;
+  return types;
 };
 
-export { getStats };
+export { getTypes };

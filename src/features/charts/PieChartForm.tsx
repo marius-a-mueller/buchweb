@@ -1,19 +1,19 @@
-import { BarChart } from '@mui/x-charts/BarChart';
 import { Box, Typography, Paper } from '@mui/material';
-import { getStats } from './api/getStats';
+import { getTypes } from './api/getTypes';
 import { useState, useEffect } from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
 
-const BarChartForm = () => {
-  const [ratings, setRatings] = useState<number[]>([]);
+const PieChartForm = () => {
+  const [types, setTypes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);
       try {
-        const tempRatings = await getStats();
-        console.log('Fetched ratings: ', tempRatings);
-        setRatings(tempRatings);
+        const tempTypes = await getTypes();
+        console.log('Fetched types: ', tempTypes);
+        setTypes(tempTypes);
       } catch (error) {
         console.error('Error fetching book details:', error);
       } finally {
@@ -24,13 +24,13 @@ const BarChartForm = () => {
     fetchBook();
   }, []);
 
-  const countRating = (i: number) => {
+  const countType = function (typ: string) {
     let count = 0;
-    for (const rating of ratings) {
-      if (rating === i) {
+    types.forEach((typen) => {
+      if (typen === typ) {
         count++;
       }
-    }
+    });
     return count;
   };
 
@@ -51,37 +51,24 @@ const BarChartForm = () => {
           }}
         >
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            BarChart for Books
+            PieChart for Books
           </Typography>
-          <BarChart
-            xAxis={[
-              {
-                label: 'Bewertungen',
-                scaleType: 'band',
-                data: ['1', '2', '3', '4', '5'],
-              },
-            ]}
-            yAxis={[
-              {
-                label: 'Anzahl Bewertungen',
-                scaleType: 'linear',
-                tickMinStep: 1,
-              },
-            ]}
+          <PieChart
             loading={loading}
             series={[
               {
                 data: [
-                  countRating(1),
-                  countRating(2),
-                  countRating(3),
-                  countRating(4),
-                  countRating(5),
+                  { id: 0, value: countType('KINDLE'), label: 'Kindle' },
+                  {
+                    id: 1,
+                    value: countType('DRUCKAUSGABE'),
+                    label: 'Druckausgabe',
+                  },
                 ],
               },
             ]}
             width={400}
-            height={300}
+            height={200}
           />
         </Paper>
       </Box>
@@ -89,4 +76,4 @@ const BarChartForm = () => {
   );
 };
 
-export { BarChartForm };
+export { PieChartForm };
