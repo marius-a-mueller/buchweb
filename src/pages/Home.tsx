@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { Container, Box, Typography, Grid, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
@@ -88,6 +89,7 @@ const Home = () => {
             <Typography variant="h6" gutterBottom sx={{ textAlign: 'center', marginBottom: '8px' }}>
               Diagramme
             </Typography>
+            <EqualizerIcon />
             <Typography variant="body2" color="textSecondary" gutterBottom sx={{ textAlign: 'center', mt: 1, flexGrow: 1 }}>
               Erhalte Einblicke in die Lesegewohnheiten unserer Nutzer mit unseren interaktiven Charts. Entdecke Trends, beliebte Genres und vieles mehr!
             </Typography>
