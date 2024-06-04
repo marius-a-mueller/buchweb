@@ -204,7 +204,7 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         <Button variant="contained" color="secondary" onClick={handleSave}>
           Speichern
         </Button>
-        <Button variant="outlined" onClick={() => onSave(book)}>
+        <Button variant="outlined" color="secondary" onClick={() => onSave(book)}>
           Abbrechen
         </Button>
       </Box>
