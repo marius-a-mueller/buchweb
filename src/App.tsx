@@ -4,7 +4,7 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { Home } from '@/pages/Home';
 import { NotFound } from '@/pages/NotFound';
 import { Search } from '@/pages/Search';
-import { NewBookForm } from '@/pages/NewBookForm';
+import { NewBook } from '@/pages/NewBook';
 import React from 'react';
 import { getTheme } from '@/theme';
 import { BookBarChart } from '@/pages/BookBarChart';
@@ -42,7 +42,7 @@ function App() {
             <Route path="book/:id" element={<BookDetail />} />
             <Route
               path="new"
-              element={writePermission ? <NewBookForm /> : <Forbidden />}
+              element={writePermission ? <NewBook /> : <Forbidden />}
             />
             <Route path="barchart" element={<BookBarChart />} />
             <Route path="piechart" element={<BookPieChart />} />
