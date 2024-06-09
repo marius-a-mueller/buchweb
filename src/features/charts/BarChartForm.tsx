@@ -2,6 +2,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { Box, Typography, Paper } from '@mui/material';
 import { getStats } from './api/getStats';
 import { useState, useEffect } from 'react';
+import './Chart.css';
 
 const BarChartForm = () => {
   const [ratings, setRatings] = useState<number[]>([]);
@@ -80,7 +81,7 @@ const BarChartForm = () => {
                 ],
               },
             ]}
-            width={400}
+            className='chart'
             height={300}
           />
         </Paper>

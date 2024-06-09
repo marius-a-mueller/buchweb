@@ -5,7 +5,13 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link } from 'react-router-dom';
 
-const MenuDropdown = () => {
+type MenuDropDownProps = {
+  label: string;
+};
+
+const MenuDropdown = ({
+  label
+}: MenuDropDownProps) => {
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
@@ -16,7 +22,7 @@ const MenuDropdown = () => {
             {...bindTrigger(popupState)}
             sx={{ margin: '5px' }}
           >
-            Diagramme
+            {label}
           </Button>
           <Menu {...bindMenu(popupState)}>
             <MenuItem

@@ -2,6 +2,7 @@ import { Box, Typography, Paper } from '@mui/material';
 import { getTypes } from './api/getTypes';
 import { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
+import './Chart.css';
 
 const PieChartForm = () => {
   const [types, setTypes] = useState<string[]>([]);
@@ -67,7 +68,7 @@ const PieChartForm = () => {
                 ],
               },
             ]}
-            width={400}
+            className='chart'
             height={200}
           />
         </Paper>

@@ -32,7 +32,7 @@ const TabBar = () => {
               <img
                 src={HKALogo}
                 alt="HKA Logo"
-                className="logo" // Verwende die CSS-Klasse anstelle des Style-Props
+                className="logo"
               />
             </Link>
             <Box className="desktopOnly">
@@ -46,13 +46,13 @@ const TabBar = () => {
                 link="new"
                 icon={<AutoStoriesIcon />}
               />
-              <MenuDropdown />
+              <MenuDropdown label='Diagramme' />
             </Box>
           </Box>
           <Box className="boxSecondary">
             <LoginModal />
             <IconButton
-              className="iconButton" // Verwende die CSS-Klasse anstelle des Style-Props
+              className="iconButton"
               onClick={colorMode.toggleColorMode}
               color="inherit"
             >
@@ -70,34 +70,3 @@ const TabBar = () => {
 };
 
 export { TabBar };
-
-/*          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? 'long-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <More />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            MenuListProps={{
-              'aria-labelledby': 'long-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === 'Pyxis'}
-                onClick={handleClose}
-              >
-                {option}
-              </MenuItem>
-            ))}
-
-          </Menu>*/
