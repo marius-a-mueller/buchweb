@@ -16,6 +16,7 @@ import LastPageIcon from '@mui/icons-material/LastPage';
 import { TableHead } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
+import './BookTable.css';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -139,7 +140,7 @@ const BookTable = (props: BookTableProps) => {
   };
 
   return (
-    <TableContainer component={Paper} elevation={12} sx={{ margin: '20px' }}>
+    <TableContainer component={Paper} elevation={12} className="tableWrapper">
       <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
@@ -169,13 +170,13 @@ const BookTable = (props: BookTableProps) => {
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
+              <TableCell className="tableEntry" align="right">
                 {row.type}
               </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
+              <TableCell className="tableEntry" align="right">
                 {row.price}
               </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
+              <TableCell className="tableEntry" align="right">
                 {row.rating}
               </TableCell>
             </TableRow>
