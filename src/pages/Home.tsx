@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { Link } from 'react-router-dom';
+import { MenuDropdown } from '@/features/ui/header/MenuDropdown';
 
 const Home = () => {
   const props = useParams();
@@ -93,9 +94,7 @@ const Home = () => {
             <Typography variant="body2" color="textSecondary" gutterBottom sx={{ textAlign: 'center', mt: 1, flexGrow: 1 }}>
               Erhalte Einblicke in die Lesegewohnheiten unserer Nutzer mit unseren interaktiven Charts. Entdecke Trends, beliebte Genres und vieles mehr!
             </Typography>
-            <Button color="secondary" variant="outlined" fullWidth>
-              Mehr dazu
-            </Button>
+            <MenuDropdown label='Mehr dazu' />
           </Box>
         </Grid>
       </Grid>
