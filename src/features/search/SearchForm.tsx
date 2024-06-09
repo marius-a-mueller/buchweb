@@ -67,6 +67,7 @@ const SearchForm = (props: SearchFormProps) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          gap: '1rem'
         }}
       >
         <TextField

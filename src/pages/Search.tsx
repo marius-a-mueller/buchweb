@@ -9,10 +9,7 @@ const Search = () => {
     <>
       <Box
         component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '100%' },
-          width: '60%',
-        }}
+        className='searchForm'
         noValidate
         autoComplete="off"
       >
@@ -22,7 +19,7 @@ const Search = () => {
           }}
         ></SearchForm>
       </Box>
-      <Box sx={{ width: '60%' }}>
+      <Box className="searchForm">
         <BookTable rows={rows}></BookTable>
       </Box>
     </>
