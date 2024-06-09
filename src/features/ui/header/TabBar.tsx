@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   AppBar,
   Container,
@@ -11,42 +12,47 @@ import SearchIcon from '@mui/icons-material/Search';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
-import React from 'react';
 import { ColorModeContext } from '@/App';
-import { MenuItem } from './MenuItem';
+import { MenuItem as TabBarMenuItem } from './MenuItem';
 import { MenuDropdown } from './MenuDropdown';
 import HKALogo from '@/assets/HKALogo.png';
 import { LoginModal } from '@/features/auth';
+import './TabBar.css'; // Importiere die CSS-Datei
 
 const TabBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
+
   return (
     <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexGrow: 1,
-            }}
-          >
+          <Box className="boxMain">
             <Link to="/">
               <img
                 src={HKALogo}
                 alt="HKA Logo"
-                style={{ width: '200px', marginRight: '20px' }}
+                className="logo" // Verwende die CSS-Klasse anstelle des Style-Props
               />
             </Link>
-            <MenuItem name="Suche" link="search" icon={<SearchIcon />} />
-            <MenuItem name="Neues Buch" link="new" icon={<AutoStoriesIcon />} />
-            <MenuDropdown />
+            <Box className="desktopOnly">
+              <TabBarMenuItem
+                name="Suche"
+                link="search"
+                icon={<SearchIcon />}
+              />
+              <TabBarMenuItem
+                name="Neues Buch"
+                link="new"
+                icon={<AutoStoriesIcon />}
+              />
+              <MenuDropdown />
+            </Box>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box className="boxSecondary">
             <LoginModal />
             <IconButton
-              sx={{ ml: 1 }}
+              className="iconButton" // Verwende die CSS-Klasse anstelle des Style-Props
               onClick={colorMode.toggleColorMode}
               color="inherit"
             >
@@ -64,3 +70,34 @@ const TabBar = () => {
 };
 
 export { TabBar };
+
+/*          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <More />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option}
+                selected={option === 'Pyxis'}
+                onClick={handleClose}
+              >
+                {option}
+              </MenuItem>
+            ))}
+
+          </Menu>*/
