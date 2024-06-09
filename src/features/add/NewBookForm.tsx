@@ -16,6 +16,7 @@ import { addBook } from './api/addBook';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
 import { useNavigate } from 'react-router-dom';
+import './NewBookForm.css';
 
 const newBookSchema = object({
   isbn: string().regex(
@@ -84,16 +85,7 @@ const NewBookForm: FC = () => {
     <FormProvider {...methods}>
       <Box
         component="form"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '80ch',
-          '& .MuiTextField-root': { m: 1, width: '80ch' },
-          '& .MuiFormControl-root': { m: 1, width: '80ch' },
-          '& .MuiSwitch-root': { m: 1, width: '6ch' },
-          '& .MuiButton-root': { m: 1, mb: 10, width: '40ch' },
-        }}
+        className='bookForm'
         noValidate
         autoComplete="off"
         onSubmit={methods.handleSubmit(onHandleSubmit)}
@@ -131,6 +123,9 @@ const NewBookForm: FC = () => {
           name="schlagwoerter"
           label="Schlagwörter"
           options={['JavaScript', 'TypeScript']}
+          style={{
+            width: '20ch'
+          }}
         />
         <FormRating name="rating" label="Bewertung" size="large" />
         <FormRadioGroup row name="art" options={['KINDLE', 'DRUCKAUSGABE']} />
