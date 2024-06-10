@@ -14,14 +14,22 @@
   margin-left: 1rem;
 }
 
+.menuButton {
+  display: none;
+}
+
 .logo {
   width: 200px;
   margin-right: 20px;
 }
 
-@media (max-width: 340px) {
+@media (max-width: 900px) {
   .desktopOnly {
     display: none;
+  }
+
+  .menuButton {
+    display: block;
   }
 
   .logo {
