@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Container,
@@ -10,8 +10,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Menu,
-  MenuItem,
   useTheme,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -25,27 +23,18 @@ import { MenuDropdown } from './MenuDropdown';
 import HKALogo from '@/assets/HKALogo.png';
 import { LoginModal } from '@/features/auth';
 import MenuIcon from '@mui/icons-material/Menu';
-import './TabBar.css'; 
-
+import './TabBar.css';
+import { MenuCharts } from './MenuCharts';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 const TabBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
-
-  const handleClick= (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
 
   return (
     <AppBar position="static" color="transparent">
@@ -53,24 +42,12 @@ const TabBar = () => {
         <Toolbar disableGutters>
           <Box className="boxMain">
             <Link to="/">
-              <img
-                src={HKALogo}
-                alt="HKA Logo"
-                className="logo"
-              />
+              <img src={HKALogo} alt="HKA Logo" className="logo" />
             </Link>
             <Box className="desktopOnly">
-              <TabBarMenuItem
-                name="Suche"
-                link="search"
-                icon={<SearchIcon />}
-              />
-              <TabBarMenuItem
-                name="Neues Buch"
-                link="new"
-                icon={<AutoStoriesIcon />}
-              />
-              <MenuDropdown label='Diagramme' />
+              <TabBarMenuItem name="Suche" link="search" icon={<SearchIcon />} />
+              <TabBarMenuItem name="Neues Buch" link="new" icon={<AutoStoriesIcon />} />
+              <MenuDropdown label="Diagramme" />
             </Box>
           </Box>
           <Box className="boxSecondary">
@@ -80,11 +57,7 @@ const TabBar = () => {
               onClick={colorMode.toggleColorMode}
               color="inherit"
             >
-              {theme.palette.mode === 'dark' ? (
-                <Brightness7Icon />
-              ) : (
-                <Brightness4Icon />
-              )}
+              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <IconButton
               className="menuButton"
@@ -108,21 +81,7 @@ const TabBar = () => {
             <ListItemIcon><AutoStoriesIcon /></ListItemIcon>
             <ListItemText primary="Neues Buch" />
           </ListItem>
-          <ListItem button onClick={handleClick}>
-            <MenuDropdown label='Diagramme' />
-          </ListItem>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem component={Link} to="/barchart" onClick={handleClose}>
-              Säulendiagramm
-            </MenuItem>
-            <MenuItem component={Link} to="/piechart" onClick={handleClose}>
-              Kuchendiagramm
-            </MenuItem>
-          </Menu>
+          <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
         </List>
       </Drawer>
     </AppBar>
@@ -130,3 +89,4 @@ const TabBar = () => {
 };
 
 export { TabBar };
+
