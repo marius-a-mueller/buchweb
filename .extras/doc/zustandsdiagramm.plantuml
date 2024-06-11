@@ -1,0 +1,101 @@
+@startuml Buchweb-Zustandsdiagramm
+' Preview durch <Alt>d 
+
+skinparam backgroundColor #EEEBDC
+skinparam state {
+    BackgroundColor #FEFECE
+    BorderColor #BBBBBB
+    FontColor black
+    ArrowColor #333333
+    FontStyle bold
+}
+
+[*] --> Startseite : Start
+
+state Startseite {
+    Startseite : Suche klicken
+    Startseite : Neues Buch anlegen klicken
+    Startseite : Diagramme anzeigen klicken
+    Startseite : Login erforderlich (nicht eingeloggt)
+}
+
+Startseite --> Suche : Suche klicken
+Startseite --> NeuesBuch : Neues Buch anlegen klicken
+Startseite --> Diagramme : Diagramme anzeigen klicken
+Startseite --> Login : Login erforderlich (nicht eingeloggt)
+
+state Suche {
+    Suche : Buch aus Suche auswählen
+    Suche : Zurück zur Startseite
+}
+
+Suche --> Buchdetails : Buch aus Suche auswählen
+Suche --> Startseite : Zurück zur Startseite
+
+state NeuesBuch {
+    NeuesBuch : Buch gespeichert
+    NeuesBuch : Abbrechen
+    NeuesBuch : Fehler beim Speichern
+}
+
+NeuesBuch --> Startseite : Buch gespeichert
+NeuesBuch --> Startseite : Abbrechen
+NeuesBuch --> Fehler : Fehler beim Speichern
+
+state Diagramme {
+    Diagramme : Zurück zur Startseite
+    Diagramme : Balkendiagramm anzeigen
+    Diagramme : Kuchendiagramm anzeigen
+}
+
+Diagramme --> Startseite : Zurück zur Startseite
+Diagramme --> BarChart : Balkendiagramm anzeigen
+Diagramme --> PieChart : Kuchendiagramm anzeigen
+
+BarChart --> Diagramme : Zurück zu Diagramme
+PieChart --> Diagramme : Zurück zu Diagramme
+
+state Buchdetails {
+    Buchdetails : Bearbeiten klicken (eingeloggt und berechtigt)
+    Buchdetails : Zurück zur Suche
+}
+
+Buchdetails --> BuchEditieren : Bearbeiten klicken (eingeloggt und berechtigt)
+Buchdetails --> Suche : Zurück zur Suche
+
+state BuchEditieren {
+    BuchEditieren : Änderungen speichern
+    BuchEditieren : Abbrechen
+    BuchEditieren : Fehler beim Speichern
+}
+
+BuchEditieren --> Buchdetails : Änderungen speichern
+BuchEditieren --> Buchdetails : Abbrechen
+BuchEditieren --> Fehler : Fehler beim Speichern
+
+state Fehler {
+    Fehler : Zurück zur Startseite
+    Fehler : Erneut versuchen (bei Bearbeitungsfehler)
+    Fehler : Erneut versuchen (bei Speichern eines neuen Buches)
+}
+
+Fehler --> Startseite : Zurück zur Startseite
+Fehler --> BuchEditieren : Erneut versuchen (bei Bearbeitungsfehler)
+Fehler --> NeuesBuch : Erneut versuchen (bei Speichern eines neuen Buches)
+
+state Autorisierung {
+    Autorisierung : Login erforderlich
+}
+
+Autorisierung --> Login : Login erforderlich
+Login --> Startseite : Erfolgreich eingeloggt
+Login --> Fehler : Login fehlgeschlagen
+
+state Logout {
+    Logout : Ausloggen
+}
+
+Logout --> Startseite : Nicht eingeloggt
+Startseite --> Autorisierung : Autorisierung abgelaufen
+
+@enduml
