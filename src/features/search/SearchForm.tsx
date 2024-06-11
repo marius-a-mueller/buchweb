@@ -67,7 +67,7 @@ const SearchForm = (props: SearchFormProps) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '1rem'
+          gap: '1rem',
         }}
       >
         <TextField
@@ -76,6 +76,7 @@ const SearchForm = (props: SearchFormProps) => {
           value={searchIsbn}
           onChange={(e) => setSearchIsbn(e.target.value)}
           sx={{ width: '100%', textAlign: 'center' }}
+          data-cy='isbn'
         />
         <TextField
           id="title-input"
@@ -161,6 +162,7 @@ const SearchForm = (props: SearchFormProps) => {
           sx={{ marginBottom: '20px' }}
           onClick={handleSearch}
           disabled={loading}
+          data-cy="search-button-form"
         >
           Suche
         </Button>

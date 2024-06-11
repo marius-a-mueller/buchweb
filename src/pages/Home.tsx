@@ -4,7 +4,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { Link } from 'react-router-dom';
-import { MenuDropdown } from '@/features/ui/header/MenuDropdown';
 
 const Home = () => {
   const props = useParams();
@@ -18,7 +17,7 @@ const Home = () => {
       </Box>
 
       <Grid container spacing={2} sx={{ mt: 4 }} justifyContent="center">
-        <Grid item xs={12} md={4}>
+        <Grid item xs={4}>
           <Box
             sx={{
               display: 'flex',
@@ -39,14 +38,14 @@ const Home = () => {
               Stöbere in unserem riesigen Katalog und finde das Buch, das du schon immer lesen wolltest. Nutze die leistungsstarke Suchfunktion, um nach Titel, Autor oder Genre zu suchen.
             </Typography>
             <Link to={'search'} style={{ width: '100%' }}>
-              <Button color="secondary" variant="outlined" fullWidth>
+              <Button color="secondary" variant="outlined" fullWidth data-cy='mehrDazu_Suche'>
                 Mehr dazu
               </Button>
             </Link>
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={4}>
           <Box
             sx={{
               display: 'flex',
@@ -67,14 +66,14 @@ const Home = () => {
               Kreiere dein eigenes literarisches Meisterwerk! Lege ein neues Buch an und fülle es mit deinen Ideen, Geschichten und Abenteuern.
             </Typography>
             <Link to={'new'} style={{ width: '100%' }}>
-              <Button color="secondary" variant="outlined" fullWidth>
+              <Button color="secondary" variant="outlined" fullWidth data-cy='mehrDazu_Buch'>
                 Mehr dazu
               </Button>
             </Link>
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={4}>
           <Box
             sx={{
               display: 'flex',
@@ -94,7 +93,9 @@ const Home = () => {
             <Typography variant="body2" color="textSecondary" gutterBottom sx={{ textAlign: 'center', mt: 1, flexGrow: 1 }}>
               Erhalte Einblicke in die Lesegewohnheiten unserer Nutzer mit unseren interaktiven Charts. Entdecke Trends, beliebte Genres und vieles mehr!
             </Typography>
-            <MenuDropdown label='Mehr dazu' />
+            <Button color="secondary" variant="outlined" fullWidth data-cy='mehrDazu_Diagramm'>
+              Mehr dazu
+            </Button>
           </Box>
         </Grid>
       </Grid>

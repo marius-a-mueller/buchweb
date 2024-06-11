@@ -64,6 +64,7 @@ export function LoginModal() {
         </Button>
       ) : (
         <Button
+          data-cy='login-button'
           variant="outlined"
           color="secondary"
           startIcon={<LoginIcon />}
@@ -89,6 +90,7 @@ export function LoginModal() {
             onKeyDown={(e) => handleKeyDown(e, handleLogin)}
             fullWidth
             variant="standard"
+            data-cy='login-username' 
           />
           <TextField
             margin="dense"
@@ -100,6 +102,7 @@ export function LoginModal() {
             onKeyDown={(e) => handleKeyDown(e, handleLogin)}
             fullWidth
             variant="standard"
+            data-cy='login-password'
           />
           {showError !== '' ? (
             <Alert severity="error">{showError}</Alert>
@@ -119,6 +122,7 @@ export function LoginModal() {
             color="secondary"
             endIcon={<LoginIcon />}
             onClick={handleLogin}
+            data-cy='login-button-second'
           >
             Login
           </Button>

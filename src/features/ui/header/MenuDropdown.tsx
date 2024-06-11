@@ -21,6 +21,7 @@ const MenuDropdown = ({
             color="secondary"
             {...bindTrigger(popupState)}
             sx={{ margin: '5px' }}
+            data-cy={label} 
           >
             {label}
           </Button>

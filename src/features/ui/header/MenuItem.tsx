@@ -10,6 +10,7 @@ const MenuItem = (props: { name: string; link: string; icon?: ReactNode }) => {
         color="secondary"
         startIcon={props.icon}
         sx={{ margin: '5px' }}
+        data-cy={props.name}
       >
         {props.name}
       </Button>

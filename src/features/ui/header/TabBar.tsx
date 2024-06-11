@@ -35,18 +35,31 @@ const TabBar = () => {
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
-
   return (
     <AppBar position="static" color="transparent">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box className="boxMain">
             <Link to="/">
-              <img src={HKALogo} alt="HKA Logo" className="logo" />
+              <img
+                src={HKALogo}
+                alt="HKA Logo"
+                className="logo"
+                data-cy="logo"
+              />
             </Link>
             <Box className="desktopOnly">
-              <TabBarMenuItem name="Suche" link="search" icon={<SearchIcon />} />
-              <TabBarMenuItem name="Neues Buch" link="new" icon={<AutoStoriesIcon />} />
+              <TabBarMenuItem
+                name="Suche"
+                link="search"
+                icon={<SearchIcon />}
+              />
+              <TabBarMenuItem
+                name="Neues Buch"
+                data-cy="neuesBuch"
+                link="new"
+                icon={<AutoStoriesIcon />}
+              />
               <MenuDropdown label="Diagramme" />
             </Box>
           </Box>
@@ -57,7 +70,11 @@ const TabBar = () => {
               onClick={colorMode.toggleColorMode}
               color="inherit"
             >
-              {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+              {theme.palette.mode === 'dark' ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
             </IconButton>
             <IconButton
               className="menuButton"
@@ -73,12 +90,26 @@ const TabBar = () => {
       </Container>
       <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
         <List>
-          <ListItem button component={Link} to="search" onClick={handleDrawerToggle}>
-            <ListItemIcon><SearchIcon /></ListItemIcon>
+          <ListItem
+            button
+            component={Link}
+            to="search"
+            onClick={handleDrawerToggle}
+          >
+            <ListItemIcon>
+              <SearchIcon />
+            </ListItemIcon>
             <ListItemText primary="Suche" />
           </ListItem>
-          <ListItem button component={Link} to="new" onClick={handleDrawerToggle}>
-            <ListItemIcon><AutoStoriesIcon /></ListItemIcon>
+          <ListItem
+            button
+            component={Link}
+            to="new"
+            onClick={handleDrawerToggle}
+          >
+            <ListItemIcon>
+              <AutoStoriesIcon />
+            </ListItemIcon>
             <ListItemText primary="Neues Buch" />
           </ListItem>
           <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
@@ -89,4 +120,3 @@ const TabBar = () => {
 };
 
 export { TabBar };
-
