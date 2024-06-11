@@ -25,7 +25,7 @@ import { MenuDropdown } from './MenuDropdown';
 import HKALogo from '@/assets/HKALogo.png';
 import { LoginModal } from '@/features/auth';
 import MenuIcon from '@mui/icons-material/Menu';
-import './TabBar.css'; // Importiere die CSS-Datei
+import './TabBar.css'; 
 
 
 const TabBar = () => {
