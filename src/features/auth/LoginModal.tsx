@@ -55,6 +55,7 @@ export function LoginModal() {
     <div>
       {isLoggedIn() ? (
         <Button
+          data-cy='logout-button'
           variant="outlined"
           color="secondary"
           startIcon={<CloseIcon />}

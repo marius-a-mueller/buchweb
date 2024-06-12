@@ -90,4 +90,14 @@ describe('template spec', () => {
     cy.get('[data-cy=toggle-dark-mode').click();
     cy.get('[data-cy=toggle-dark-mode').click();
   });
+
+  it('Überprüfe Logout', () => {
+    cy.get('[data-cy=login-button]').click();
+    cy.get('[data-cy=login-username').type('admin');
+    cy.get('[data-cy=login-password').type('p');
+    cy.get('[data-cy=login-button-second]').click();
+    cy.wait(2000);
+    cy.get('[data-cy=logout-button').click();
+    cy.get('[data-cy=login-button]').should('exist');
+  });
 });
