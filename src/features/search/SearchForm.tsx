@@ -76,7 +76,7 @@ const SearchForm = (props: SearchFormProps) => {
           value={searchIsbn}
           onChange={(e) => setSearchIsbn(e.target.value)}
           sx={{ width: '100%', textAlign: 'center' }}
-          data-cy='isbn'
+          data-cy='isbn-search'
         />
         <TextField
           id="title-input"

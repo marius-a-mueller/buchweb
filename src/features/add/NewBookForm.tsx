@@ -85,7 +85,7 @@ const NewBookForm: FC = () => {
     <FormProvider {...methods}>
       <Box
         component="form"
-        className='bookForm'
+        className="bookForm"
         noValidate
         autoComplete="off"
         onSubmit={methods.handleSubmit(onHandleSubmit)}
@@ -102,8 +102,20 @@ const NewBookForm: FC = () => {
         >
           Neues Buch hinzufügen
         </Typography>
-        <FormTextfield label="ISBN" type="text" name="isbn" required />
-        <FormTextfield label="Titel" type="text" name="titel.titel" required />
+        <FormTextfield
+          label="ISBN"
+          type="text"
+          name="isbn"
+          required
+          data-cy="isbn-post"
+        />
+        <FormTextfield
+          label="Titel"
+          type="text"
+          name="titel.titel"
+          required
+          data-cy="titel-post"
+        />
         <FormTextfield label="Untertitel" type="text" name="titel.untertitel" />
         <FormTextfield
           label="Preis"
@@ -118,25 +130,33 @@ const NewBookForm: FC = () => {
           InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
         />
         <FormDatePicker label="Datum" name="datum" />
-        <FormTextfield label="Homepage" type="text" name="homepage" required />
+        <FormTextfield
+          label="Homepage"
+          type="text"
+          name="homepage"
+          required
+          data-cy="homepage-post"
+        />
         <FormAutocomplete
           name="schlagwoerter"
           label="Schlagwörter"
           options={['JavaScript', 'TypeScript']}
           style={{
-            width: '20ch'
+            width: '20ch',
           }}
         />
         <FormRating name="rating" label="Bewertung" size="large" />
-        <FormRadioGroup row name="art" options={['KINDLE', 'DRUCKAUSGABE']} />
+        <FormRadioGroup row name="art" options={['KINDLE', 'DRUCKAUSGABE']} data-cy="type" />
         <FormSwitch name="lieferbar" label="Lieferbar" />
 
         <Button
           type="submit"
           variant="contained"
           color="secondary"
+          data-cy="post-button-form"
           startIcon={<LibraryBooksRoundedIcon />}
         >
+          
           Buch hinzufügen
         </Button>
       </Box>
