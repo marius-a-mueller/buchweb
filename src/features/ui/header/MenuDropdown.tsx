@@ -30,6 +30,7 @@ const MenuDropdown = ({
               component={Link}
               to="/barchart"
               onClick={popupState.close}
+              data-cy="Säulendiagramm"
             >
               Säulendiagramm
             </MenuItem>
@@ -37,6 +38,7 @@ const MenuDropdown = ({
               component={Link}
               to="/piechart"
               onClick={popupState.close}
+              data-cy="Piechart"
             >
               Kuchendiagramm
             </MenuItem>

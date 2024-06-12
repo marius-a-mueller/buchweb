@@ -32,4 +32,10 @@ describe('template spec', () => {
         expect(body._embedded.buecher[0].isbn).to.equal('978-3-897-22583-1');
       });
   });
+  it('Überprüfe die Navigation der Diagramme', () => {
+    cy.get('[data-cy=Diagramme').click();
+    cy.get('[data-cy=Säulendiagramm').click();
+    cy.get('[data-cy=Diagramme').click();
+    cy.get('[data-cy=Piechart').click();
+  });
 });
