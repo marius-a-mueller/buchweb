@@ -86,6 +86,7 @@ const TabBar = () => {
               color="inherit"
               aria-label="menu"
               onClick={handleDrawerToggle}
+              data-cy="menuButton"
             >
               <MenuIcon />
             </IconButton>
@@ -103,7 +104,7 @@ const TabBar = () => {
             <ListItemIcon>
               <SearchIcon />
             </ListItemIcon>
-            <ListItemText primary="Suche" />
+            <ListItemText primary="Suche" data-cy='SucheSide'/>
           </ListItem>
           <ListItem
             button
@@ -114,7 +115,7 @@ const TabBar = () => {
             <ListItemIcon>
               <AutoStoriesIcon />
             </ListItemIcon>
-            <ListItemText primary="Neues Buch" />
+            <ListItemText primary="Neues Buch" data-cy='NeuesBuchSide' />
           </ListItem>
           <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
         </List>

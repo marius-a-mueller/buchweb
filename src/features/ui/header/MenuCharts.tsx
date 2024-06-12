@@ -19,13 +19,13 @@ const MenuCharts = ({ label, icon }: MenuChartsProps) => {
         <React.Fragment>
           <ListItem button {...bindTrigger(popupState)}>
             {icon && <ListItemIcon>{icon}</ListItemIcon>}
-            <ListItemText primary={label} />
+            <ListItemText primary={label} data-cy='DiagrammeS' />
           </ListItem>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem component={Link} to="/barchart" onClick={popupState.close}>
+            <MenuItem component={Link} to="/barchart" onClick={popupState.close} data-cy='SäulendiagrammS'>
               Säulendiagramm
             </MenuItem>
-            <MenuItem component={Link} to="/piechart" onClick={popupState.close}>
+            <MenuItem component={Link} to="/piechart" onClick={popupState.close} data-cy='KuchendiagrammS'>
               Kuchendiagramm
             </MenuItem>
           </Menu>

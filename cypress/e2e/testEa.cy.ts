@@ -37,12 +37,6 @@ describe('template spec', () => {
         expect(body._embedded.buecher[0].isbn).to.equal('978-3-897-22583-1');
       });
   });
-  it('Überprüfe die Navigation der Diagramme', () => {
-    cy.get('[data-cy=Diagramme').click();
-    cy.get('[data-cy=Säulendiagramm').click();
-    cy.get('[data-cy=Diagramme').click();
-    cy.get('[data-cy=Piechart').click();
-  });
   it('Lege neues Buch an', () => {
     cy.get('[data-cy=login-button]').click();
     cy.get('[data-cy=login-username').type('admin');
@@ -62,5 +56,33 @@ describe('template spec', () => {
     cy.wait(2000);
     cy.get('[data-cy=post-button-form').click();
     cy.wait(4000);
+  });
+  it('Überprüfe die Navigation der Diagramme', () => {
+    cy.get('[data-cy=Diagramme').click();
+    cy.get('[data-cy=Säulendiagramm').click();
+    cy.get('[data-cy=Diagramme').click();
+    cy.get('[data-cy=Piechart').click();
+  });
+  it('Überprüfen der Sidebar', () => {
+    cy.get('[data-cy=menuButton').should('exist');
+    cy.get('[data-cy=menuButton').click();
+    cy.get('[data-cy=SucheSide').should('exist');
+    cy.intercept('GET', '**/rest/**').as('searchRequest');
+    cy.get('[data-cy=SucheSide').click();
+    cy.wait(2000);
+    cy.get('[data-cy=menuButton').click()
+    //cy.get('[data-cy=neuesBuchSide').should('not.exist');
+    cy.get('[data-cy=NeuesBuchSide').click();
+    cy.get('[data-cy=login-button]').click();
+    cy.get('[data-cy=login-username').type('admin');
+    cy.get('[data-cy=login-password').type('p');
+    cy.get('[data-cy=login-button-second]').click();
+    cy.wait(2000);
+    cy.get('[data-cy=menuButton').click()
+    cy.get('[data-cy=DiagrammeS').click();
+    cy.get('[data-cy=SäulendiagrammS').click();
+    cy.wait(2000);
+    cy.get('[data-cy=DiagrammeS').click();
+    cy.get('[data-cy=KuchendiagrammS').click();
   });
 });
