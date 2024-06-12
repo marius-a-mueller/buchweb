@@ -16,6 +16,12 @@ describe('template spec', () => {
     cy.get('[data-cy=login-button]').should('exist');
     cy.get('[data-cy=logo').should('exist');
     cy.get('[data-cy=Suche').should('exist');
+    cy.get('[data-cy=neuesBuch').should('not.exist');
+    cy.get('[data-cy=login-button]').click();
+    cy.get('[data-cy=login-username').type('admin');
+    cy.get('[data-cy=login-password').type('p');
+    cy.get('[data-cy=login-button-second]').click();
+    cy.wait(2000);
     cy.get('[data-cy="Neues Buch"]').should('exist');
     cy.get('[data-cy=Diagramme').should('exist');
     cy.get('[data-cy=mehrDazu_Suche').should('exist');
