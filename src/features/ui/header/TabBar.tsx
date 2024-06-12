@@ -73,6 +73,7 @@ const TabBar = () => {
               className="iconButton"
               onClick={colorMode.toggleColorMode}
               color="inherit"
+              data-cy="toggle-dark-mode"
             >
               {theme.palette.mode === 'dark' ? (
                 <Brightness7Icon />

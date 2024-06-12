@@ -85,4 +85,9 @@ describe('template spec', () => {
     cy.get('[data-cy=DiagrammeS').click();
     cy.get('[data-cy=KuchendiagrammS').click();
   });
+
+  it('Überprüfe Dark Mode', () => { 
+    cy.get('[data-cy=toggle-dark-mode').click();
+    cy.get('[data-cy=toggle-dark-mode').click();
+  });
 });
