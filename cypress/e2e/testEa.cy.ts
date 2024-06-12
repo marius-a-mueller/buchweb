@@ -8,6 +8,9 @@ describe('template spec', () => {
     cy.get('[data-cy=login-username').type('admin');
     cy.get('[data-cy=login-password').type('p');
     cy.get('[data-cy=login-button-second]').click();
+    cy.wait(2000);
+    cy.get('[data-cy=logo').should('exist');
+
   });
   it('Überprüfe Default Zustand', () => {
     cy.get('[data-cy=login-button]').should('exist');
@@ -17,7 +20,7 @@ describe('template spec', () => {
     cy.get('[data-cy=Diagramme').should('exist');
     cy.get('[data-cy=mehrDazu_Suche').should('exist');
   });
-  it.only('Überprüfe Suche mit Gegebene ISBN', () => {
+  it('Überprüfe Suche mit Gegebene ISBN', () => {
     cy.intercept('GET', '**/rest/**').as('searchRequest');
     cy.get('[data-cy=Suche').click();
     cy.wait(2000);
