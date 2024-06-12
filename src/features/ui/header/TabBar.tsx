@@ -21,7 +21,7 @@ import { ColorModeContext } from '@/App';
 import { MenuItem as TabBarMenuItem } from './MenuItem';
 import { MenuDropdown } from './MenuDropdown';
 import HKALogo from '@/assets/HKALogo.png';
-import { LoginModal } from '@/features/auth';
+import { LoginModal, useAuth } from '@/features/auth';
 import MenuIcon from '@mui/icons-material/Menu';
 import './TabBar.css';
 import { MenuCharts } from './MenuCharts';
@@ -30,6 +30,7 @@ import EqualizerIcon from '@mui/icons-material/Equalizer';
 const TabBar = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
+  const { isLoggedIn } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -54,12 +55,15 @@ const TabBar = () => {
                 link="search"
                 icon={<SearchIcon />}
               />
-              <TabBarMenuItem
-                name="Neues Buch"
-                data-cy="neuesBuch"
-                link="new"
-                icon={<AutoStoriesIcon />}
-              />
+              {isLoggedIn() ? (
+                <TabBarMenuItem
+                  name="Neues Buch"
+                  data-cy="neuesBuch"
+                  link="new"
+                  icon={<AutoStoriesIcon />}
+                />
+              ) : null}
+
               <MenuDropdown label="Diagramme" />
             </Box>
           </Box>
