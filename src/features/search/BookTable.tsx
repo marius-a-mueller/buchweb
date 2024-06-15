@@ -117,7 +117,8 @@ const BookTable = (props: BookTableProps) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   console.log({ selectedRow });
 
