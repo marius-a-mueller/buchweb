@@ -32,7 +32,7 @@ const TabBar = () => {
   const colorMode = React.useContext(ColorModeContext);
   const { isLoggedIn } = useAuth();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -99,7 +99,7 @@ const TabBar = () => {
               alignItems: 'center',
             }}
           >
-            <LoginModal />
+            {isDesktop ? <LoginModal /> : null}
             <IconButton
               style={{
                 marginLeft: '1rem',
@@ -161,6 +161,10 @@ const TabBar = () => {
             <ListItemText primary="Neues Buch" data-cy="NeuesBuchSide" />
           </ListItem>
           <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
+          
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <LoginModal />
+          </Box>
         </List>
       </Drawer>
     </AppBar>
