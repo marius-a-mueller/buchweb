@@ -1,12 +1,13 @@
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, useTheme, useMediaQuery } from '@mui/material';
 import { getTypes } from './api/getTypes';
 import { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
-import './Chart.css';
 
 const PieChartForm = () => {
   const [types, setTypes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -68,7 +69,7 @@ const PieChartForm = () => {
                 ],
               },
             ]}
-            className='chart'
+            width={isDesktop ? 400 : 300}
             height={200}
           />
         </Paper>

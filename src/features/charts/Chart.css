@@ -1,9 +1,0 @@
-.chart {
-    width: 400px;
-}
-
-@media (max-width: 340px) {
-    .chart {
-        width: 340px;
-    }
-}
