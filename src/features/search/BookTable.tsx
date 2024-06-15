@@ -13,10 +13,9 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { TableHead } from '@mui/material';
+import { TableHead, useMediaQuery } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
-import './BookTable.css';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -118,6 +117,7 @@ const BookTable = (props: BookTableProps) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
   console.log({ selectedRow });
 
@@ -140,7 +140,11 @@ const BookTable = (props: BookTableProps) => {
   };
 
   return (
-    <TableContainer component={Paper} elevation={12} className="tableWrapper">
+    <TableContainer component={Paper} elevation={12} style={isDesktop ? {
+      margin: "20px",
+    } : {
+      margin: 0,
+    }}>
       <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
@@ -170,13 +174,19 @@ const BookTable = (props: BookTableProps) => {
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell className="tableEntry" align="right">
+              <TableCell style={{
+                width: 160
+              }} align="right">
                 {row.type}
               </TableCell>
-              <TableCell className="tableEntry" align="right">
+              <TableCell style={{
+                width: 160
+              }} align="right">
                 {row.price}
               </TableCell>
-              <TableCell className="tableEntry" align="right">
+              <TableCell style={{
+                width: 160
+              }} align="right">
                 {row.rating}
               </TableCell>
             </TableRow>
