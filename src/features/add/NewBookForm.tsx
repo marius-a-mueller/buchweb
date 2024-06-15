@@ -1,5 +1,11 @@
 import { FC } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { boolean, date, number, object, string, TypeOf, union } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +22,6 @@ import { addBook } from './api/addBook';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
 import { useNavigate } from 'react-router-dom';
-import './NewBookForm.css';
 
 const newBookSchema = object({
   isbn: string().regex(
@@ -50,6 +55,9 @@ type bookType = TypeOf<typeof newBookSchema>;
 const NewBookForm: FC = () => {
   const { token } = useAuth();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
   const defaultValues: bookType = {
     isbn: '',
     titel: { titel: '', untertitel: '' },
@@ -85,7 +93,29 @@ const NewBookForm: FC = () => {
     <FormProvider {...methods}>
       <Box
         component="form"
-        className="bookForm"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1rem',
+          '& .MuiTextField-root': isDesktop
+            ? { m: 1, width: '65ch' }
+            : { m: 1, width: '25ch' },
+          '& .MuiFormControl-root': isDesktop
+            ? { m: 1, width: '65ch' }
+            : { m: 1, width: '25ch' },
+          '& .MuiSwitch-root': { m: 1, width: '6ch' },
+          '& .MuiButton-root': isDesktop
+            ? { m: 1, mb: 10, width: '40ch' }
+            : { m: 1, mb: 10, width: '20ch' },
+          ...(isDesktop
+            ? {
+                width: '65ch',
+              }
+            : {
+                width: '25ch',
+              }),
+        }}
         noValidate
         autoComplete="off"
         onSubmit={methods.handleSubmit(onHandleSubmit)}
@@ -141,12 +171,14 @@ const NewBookForm: FC = () => {
           name="schlagwoerter"
           label="Schlagwörter"
           options={['JavaScript', 'TypeScript']}
-          style={{
-            width: '20ch',
-          }}
         />
         <FormRating name="rating" label="Bewertung" size="large" />
-        <FormRadioGroup row name="art" options={['KINDLE', 'DRUCKAUSGABE']} data-cy="type" />
+        <FormRadioGroup
+          row
+          name="art"
+          options={['KINDLE', 'DRUCKAUSGABE']}
+          data-cy="type"
+        />
         <FormSwitch name="lieferbar" label="Lieferbar" />
 
         <Button
@@ -156,7 +188,6 @@ const NewBookForm: FC = () => {
           data-cy="post-button-form"
           startIcon={<LibraryBooksRoundedIcon />}
         >
-          
           Buch hinzufügen
         </Button>
       </Box>

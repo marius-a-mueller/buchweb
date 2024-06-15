@@ -20,7 +20,7 @@ const Home = () => {
       </Box>
 
       <Grid container spacing={2} sx={{ mt: 4 }} justifyContent="center">
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Box
             sx={{
               display: 'flex',
@@ -72,7 +72,7 @@ const Home = () => {
           </Box>
         </Grid>
         {isLoggedIn() ? (
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Box
               sx={{
                 display: 'flex',
@@ -125,7 +125,7 @@ const Home = () => {
           </Grid>
         ) : null}
 
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Box
             sx={{
               display: 'flex',

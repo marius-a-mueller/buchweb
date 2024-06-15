@@ -1,9 +1,0 @@
-.searchForm {
-    width: 60%;
-}
-
-@media (max-width: 340px) {
-    .searchForm {
-        width: 90%;
-    }
-}
