@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { boolean, date, number, object, string, TypeOf, union } from 'zod';
+import { boolean, nullable, number, object, string, TypeOf, union } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import {
@@ -31,7 +31,7 @@ const newBookSchema = object({
   rating: number(),
   preis: number().min(0.01, 'Preis muss positiv sein'),
   rabatt: number().min(0),
-  datum: date(),
+  datum: nullable(string()),
   homepage: union([
     string().regex(
       new RegExp(
@@ -58,7 +58,7 @@ const NewBookForm: FC = () => {
     preis: 0.01,
     rabatt: 0,
     lieferbar: false,
-    datum: new Date(),
+    datum: null,
     homepage: '',
     schlagwoerter: [],
   };
@@ -118,16 +118,14 @@ const NewBookForm: FC = () => {
         />
         <FormTextfield label="Untertitel" type="text" name="titel.untertitel" />
         <FormTextfield
-          label="Preis"
-          type="number"
           name="preis"
-          InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
+          isNumber={true}
+          InputProps={{ inputProps: { min: 0, step: 0.01 } }}
         />
         <FormTextfield
-          label="Rabatt"
-          type="number"
           name="rabatt"
-          InputProps={{ inputProps: { min: 0, step: '0.01', lang: 'de-DE' } }}
+          isNumber={true}
+          InputProps={{ inputProps: { min: 0, step: 0.01 } }}
         />
         <FormDatePicker label="Datum" name="datum" />
         <FormTextfield
@@ -146,7 +144,12 @@ const NewBookForm: FC = () => {
           }}
         />
         <FormRating name="rating" label="Bewertung" size="large" />
-        <FormRadioGroup row name="art" options={['KINDLE', 'DRUCKAUSGABE']} data-cy="type" />
+        <FormRadioGroup
+          row
+          name="art"
+          options={['KINDLE', 'DRUCKAUSGABE']}
+          data-cy="type"
+        />
         <FormSwitch name="lieferbar" label="Lieferbar" />
 
         <Button
@@ -156,7 +159,6 @@ const NewBookForm: FC = () => {
           data-cy="post-button-form"
           startIcon={<LibraryBooksRoundedIcon />}
         >
-          
           Buch hinzufügen
         </Button>
       </Box>

@@ -23,8 +23,8 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   } = useFormContext();
   const value = dayjs(getValues(name) as Date);
   useEffect(() => {
-    register('fieldName');
-  }, [register]);
+    register(name);
+  }, [register, name]);
   useEffect(() => {
     setDate(value || null);
   }, [setDate, value]);
@@ -34,7 +34,10 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
         value={date}
         label={label}
         onChange={(date) =>
-          setValue(name, date, { shouldValidate: true, shouldDirty: true })
+          setValue(name, date?.toISOString().split('T')[0], {
+            shouldValidate: true,
+            shouldDirty: true,
+          })
         }
         {...otherProps}
       />

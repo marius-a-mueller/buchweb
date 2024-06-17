@@ -4,9 +4,14 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfTextfieldProps = {
   name: string;
+  isNumber?: boolean;
 } & Partial<TextFieldProps>;
 
-const FormTextfield: FC<RhfTextfieldProps> = ({ name, ...otherProps }) => {
+const FormTextfield: FC<RhfTextfieldProps> = ({
+  name,
+  isNumber = false,
+  ...otherProps
+}) => {
   const theme = useTheme();
   const color = theme.palette.primary.dark;
   const {
@@ -18,11 +23,16 @@ const FormTextfield: FC<RhfTextfieldProps> = ({ name, ...otherProps }) => {
     <Controller
       control={control}
       name={name}
-      defaultValue=""
+      defaultValue={isNumber ? 0 : ''}
       render={({ field }) => (
         <TextField
-          {...field}
           {...otherProps}
+          value={field.value}
+          onChange={(event) =>
+            field.onChange(
+              isNumber ? Number(event.target.value) : event.target.value
+            )
+          }
           sx={{
             '& label.Mui-focused': { color },
             '& .MuiInput-underline:after': {
@@ -40,6 +50,7 @@ const FormTextfield: FC<RhfTextfieldProps> = ({ name, ...otherProps }) => {
             },
           }}
           name={name}
+          type={isNumber ? 'number' : 'text'}
           error={!!errors[name]}
           helperText={
             errors[name] ? (errors[name]?.message as unknown as string) : ''
