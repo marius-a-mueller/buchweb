@@ -1,12 +1,13 @@
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { getStats } from './api/getStats';
 import { useState, useEffect } from 'react';
-import './Chart.css';
 
 const BarChartForm = () => {
   const [ratings, setRatings] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -81,7 +82,7 @@ const BarChartForm = () => {
                 ],
               },
             ]}
-            className='chart'
+            width={isDesktop ? 400 : 300}
             height={300}
           />
         </Paper>
