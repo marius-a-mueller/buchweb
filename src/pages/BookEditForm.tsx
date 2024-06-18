@@ -102,7 +102,17 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
               zIndex: 1,
             }}
           >
-            <CircularProgress />
+            <CircularProgress 
+               size={60}
+               thickness={5}
+               sx={{
+                 color: 'secondary.main',
+                 animationDuration: '550ms',
+                 '& .MuiCircularProgress-circle': {
+                   strokeLinecap: 'round',
+                 },
+               }}
+            />
           </Box>
         )}
       <Box sx={{ display: loading ? 'none' : 'block' }}></Box>
@@ -174,6 +184,7 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
               value={editedBook.rating}
               onChange={handleChange}
               margin="normal"
+              inputProps={{ min: 0, max: 5 }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
