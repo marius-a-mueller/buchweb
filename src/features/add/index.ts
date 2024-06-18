@@ -1,1 +1,1 @@
-export { NewBookForm, bookType } from './NewBookForm';
+export { NewBookForm } from './NewBookForm';
