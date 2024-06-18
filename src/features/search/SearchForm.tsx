@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -17,6 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import { searchBooks } from './api/searchBooks';
+
 
 interface SearchFormProps {
   setBookTableRows: (rows: BookTableRow[]) => void;
@@ -49,12 +51,15 @@ const SearchForm = (props: SearchFormProps) => {
     ];
     try {
       const rows = await searchBooks({ searchProps });
+      setTimeout(() => {
       setBookTableRows(rows?.length ? rows : []);
+      setLoading(false);
+      }, 1000);
     } catch (error) {
       console.error(error);
       setBookTableRows([]);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -166,6 +171,7 @@ const SearchForm = (props: SearchFormProps) => {
         >
           Suche
         </Button>
+        {loading && <CircularProgress />}
       </div>
     </>
   );
