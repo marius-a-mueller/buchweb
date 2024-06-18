@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, TextField, Button, MenuItem, Grid, Typography, Paper, Container, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { Box, TextField, Button, MenuItem, Grid, Typography, Paper, Container, FormGroup, FormControlLabel, Checkbox, CircularProgress } from '@mui/material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 
@@ -27,6 +27,7 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
   const [editedBook, setEditedBook] = useState<BookDetailProps>(book);
   const [, setEtag] = useState<string | null>(etag);
   const { token } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const [isJavaScript, setIsJavaScript] = useState<boolean>(book.schlagwoerter.includes('JAVASCRIPT'));
   const [isTypeScript, setIsTypeScript] = useState<boolean>(book.schlagwoerter.includes('TYPESCRIPT'));
@@ -50,6 +51,7 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
   };
 
   const handleSave = async () => {
+    setLoading(true);
     console.log("ETag before save:", etag);
 
     try {
@@ -68,19 +70,42 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         }
       );
       const newEtag = response.headers['etag'] || response.headers['ETag'];
+      setTimeout(() => {
       onSave({ ...editedBook, etag: newEtag });
       setEtag(newEtag);
+      setLoading(false);
+      }, 1000);
     } catch (error) {
       console.error('Error updating book details:', error);
+      setLoading(false);
     }
   };
 
   return (
     <Container maxWidth="md">
-      <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 4, position: 'relative' }}>
         <Typography variant="h4" gutterBottom align="center">
           Buch bearbeiten
         </Typography>
+        {loading && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              zIndex: 1,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+      <Box sx={{ display: loading ? 'none' : 'block' }}></Box>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -203,10 +228,10 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
           </Grid>
         </Grid>
         <Box display="flex" justifyContent="space-between" mt={2}>
-          <Button variant="contained" color="secondary" onClick={handleSave}>
+          <Button variant="contained" color="secondary" onClick={handleSave} disabled={loading}>
             Speichern
           </Button>
-          <Button variant="outlined" color="secondary" onClick={() => onSave(book)}>
+          <Button variant="outlined" color="secondary" onClick={() => onSave(book)} disabled={loading}>
             Abbrechen
           </Button>
         </Box>
