@@ -67,6 +67,36 @@ const SearchForm = (props: SearchFormProps) => {
       <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
         Suchformular
       </h1>
+      <Box sx={{ position: 'relative', width: '100%' }}>
+        {loading && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              zIndex: 1,
+            }}
+          >
+            <CircularProgress
+              size={60}
+              thickness={5}
+              sx={{
+                color: 'secondary.main',
+                animationDuration: '550ms',
+                '& .MuiCircularProgress-circle': {
+                  strokeLinecap: 'round',
+                },
+              }}
+            />
+          </Box>
+        )}
+        <Box sx={{ display: loading ? 'none' : 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}></Box>
       <div
         style={{
           display: 'flex',
@@ -171,8 +201,8 @@ const SearchForm = (props: SearchFormProps) => {
         >
           Suche
         </Button>
-        {loading && <CircularProgress />}
       </div>
+      </Box>
     </>
   );
 };
