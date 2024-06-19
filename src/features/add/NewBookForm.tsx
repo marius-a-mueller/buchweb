@@ -83,7 +83,7 @@ const NewBookForm: FC = () => {
         searchProps: [{ term: 'isbn', value: values.isbn }],
       });
       console.log(response);
-      navigate(`/book/${response[0].id}`);
+      navigate(`/buchweb/book/${response[0].id}`);
     } catch (error) {
       console.error('Error adding book: ', error);
     }
