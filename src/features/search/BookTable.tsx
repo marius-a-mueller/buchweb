@@ -141,11 +141,19 @@ const BookTable = (props: BookTableProps) => {
   };
 
   return (
-    <TableContainer component={Paper} elevation={12} style={isDesktop ? {
-      margin: "20px",
-    } : {
-      margin: 0,
-    }}>
+    <TableContainer
+      component={Paper}
+      elevation={12}
+      style={
+        isDesktop
+          ? {
+              margin: '20px',
+            }
+          : {
+              margin: 0,
+            }
+      }
+    >
       <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
@@ -165,7 +173,7 @@ const BookTable = (props: BookTableProps) => {
               key={row.title}
               onClick={() => {
                 setSelectedRow(row);
-                navigate('book/' + row.id);
+                navigate('/buchweb/book/' + row.id);
               }}
               sx={{
                 cursor: 'pointer',
@@ -175,19 +183,28 @@ const BookTable = (props: BookTableProps) => {
               <TableCell component="th" scope="row">
                 {row.title}
               </TableCell>
-              <TableCell style={{
-                width: 160
-              }} align="right">
+              <TableCell
+                style={{
+                  width: 160,
+                }}
+                align="right"
+              >
                 {row.type}
               </TableCell>
-              <TableCell style={{
-                width: 160
-              }} align="right">
+              <TableCell
+                style={{
+                  width: 160,
+                }}
+                align="right"
+              >
                 {row.price}
               </TableCell>
-              <TableCell style={{
-                width: 160
-              }} align="right">
+              <TableCell
+                style={{
+                  width: 160,
+                }}
+                align="right"
+              >
                 {row.rating}
               </TableCell>
             </TableRow>
