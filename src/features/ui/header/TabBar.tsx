@@ -49,7 +49,7 @@ const TabBar = () => {
               flexGrow: 1,
             }}
           >
-            <Link to="buchweb">
+            <Link to="/buchweb">
               <img
                 src={HKALogo}
                 alt="HKA Logo"
@@ -161,9 +161,9 @@ const TabBar = () => {
             <ListItemText primary="Neues Buch" data-cy="NeuesBuchSide" />
           </ListItem>
           <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
-          
+
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <LoginModal />
+            <LoginModal />
           </Box>
         </List>
       </Drawer>
