@@ -42,6 +42,36 @@ describe('template spec', () => {
         expect(body._embedded.buecher[0].isbn).to.equal('978-3-897-22583-1');
       });
   });
+
+  it('Überprüfe Anzeige eines gesuchten Buches', () => {
+      // Klick auf das Logo, um zur Startseite zu gelangen
+      cy.get('[data-cy=logo]').click();
+      
+      // Abfangen der Suchanfrage
+      cy.intercept('GET', '**/rest/**').as('searchRequest');
+      
+      // Öffnen des Suchformulars und Eingeben der ISBN
+      cy.get('[data-cy=Suche]').click();
+      cy.wait(2000); // Warten auf das Laden des Suchformulars
+      cy.get('[data-cy=isbn-search]').type('978-3-897-22583-1');
+      cy.get('[data-cy=search-button-form]').click();
+      
+      // Überprüfen der Suchanfrage und der Ergebnisse
+      cy.wait('@searchRequest')
+        .its('response.body')
+        .should((body) => {
+          expect(body._embedded.buecher[0].isbn).to.equal('978-3-897-22583-1');
+        });
+      
+      // Überprüfen, ob das Buch in der Tabelle angezeigt wird
+      cy.get('[data-cy=book-table]').within(() => {
+        cy.contains('Alpha').should('exist');
+      });
+      cy.contains('Alpha').click();
+      cy.wait(2000); // Warten auf das Laden der Buchdetails
+    
+  });
+
   it('Lege neues Buch an', () => {
     cy.get('[data-cy=logo]').click();
     cy.get('[data-cy=login-button]').click();
