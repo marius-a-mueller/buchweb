@@ -9,9 +9,7 @@ type MenuDropDownProps = {
   label: string;
 };
 
-const MenuDropdown = ({
-  label
-}: MenuDropDownProps) => {
+const MenuDropdown = ({ label }: MenuDropDownProps) => {
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
@@ -21,14 +19,14 @@ const MenuDropdown = ({
             color="secondary"
             {...bindTrigger(popupState)}
             sx={{ margin: '5px' }}
-            data-cy={label} 
+            data-cy={label}
           >
             {label}
           </Button>
           <Menu {...bindMenu(popupState)}>
             <MenuItem
               component={Link}
-              to="/barchart"
+              to="barchart"
               onClick={popupState.close}
               data-cy="Säulendiagramm"
             >
@@ -36,7 +34,7 @@ const MenuDropdown = ({
             </MenuItem>
             <MenuItem
               component={Link}
-              to="/piechart"
+              to="piechart"
               onClick={popupState.close}
               data-cy="Piechart"
             >

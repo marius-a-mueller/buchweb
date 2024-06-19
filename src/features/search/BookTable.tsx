@@ -165,7 +165,7 @@ const BookTable = (props: BookTableProps) => {
               key={row.title}
               onClick={() => {
                 setSelectedRow(row);
-                navigate('/book/' + row.id);
+                navigate('book/' + row.id);
               }}
               sx={{
                 cursor: 'pointer',
