@@ -9,8 +9,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from './hooks/useAuth';
-import { Alert } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 
 export function LoginModal() {
   const { login, logout, isLoggedIn } = useAuth();
@@ -18,6 +19,7 @@ export function LoginModal() {
   const [showError, setShowError] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -31,6 +33,7 @@ export function LoginModal() {
   };
 
   const handleLogin = async () => {
+    setLoading(true);
     console.info(`Login mit ${username} und ${password}`);
     try {
       const loginSucceeded = await login({ username, password });
@@ -42,6 +45,8 @@ export function LoginModal() {
       }
     } catch (error) {
       setShowError('Keine Verbindung zum Server!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,6 +113,34 @@ export function LoginModal() {
           {showError !== '' ? (
             <Alert severity="error">{showError}</Alert>
           ) : null}
+          {loading && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                zIndex: 1,
+              }}
+            >
+              <CircularProgress 
+                 size={60}
+                 thickness={5}
+                 sx={{
+                   color: 'secondary.main',
+                   animationDuration: '550ms',
+                   '& .MuiCircularProgress-circle': {
+                     strokeLinecap: 'round',
+                   },
+                 }}
+              />
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
@@ -115,6 +148,7 @@ export function LoginModal() {
             color="secondary"
             startIcon={<CloseIcon />}
             onClick={handleClose}
+            disabled={loading}
           >
             Abbrechen
           </Button>
@@ -124,6 +158,7 @@ export function LoginModal() {
             endIcon={<LoginIcon />}
             onClick={handleLogin}
             data-cy='login-button-second'
+            disabled={loading}
           >
             Login
           </Button>

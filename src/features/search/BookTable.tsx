@@ -154,7 +154,7 @@ const BookTable = (props: BookTableProps) => {
             }
       }
     >
-      <Table aria-label="custom pagination table">
+      <Table aria-label="custom pagination table" data-cy='book-table'>
         <TableHead>
           <TableRow>
             <TableCell>Titel</TableCell>
@@ -179,6 +179,7 @@ const BookTable = (props: BookTableProps) => {
                 cursor: 'pointer',
                 '&:last-child td, &:last-child th': { border: 0 },
               }}
+              data-cy={`book-row-${row.isbn}`} 
             >
               <TableCell component="th" scope="row">
                 {row.title}

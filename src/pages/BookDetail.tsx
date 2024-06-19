@@ -106,7 +106,7 @@ const BookDetail = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
-      <Paper elevation={3} sx={{ padding: 3 }}>
+      <Paper elevation={3} sx={{ padding: 3 }} data-cy="book-detail" >
         {editMode ? (
           <BookEditForm book={book} onSave={handleSave} etag={etag} />
         ) : (
