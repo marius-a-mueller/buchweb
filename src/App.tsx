@@ -36,7 +36,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/buchweb" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="search/" element={<Search />} />
             <Route path="book/:id" element={<BookDetail />} />
