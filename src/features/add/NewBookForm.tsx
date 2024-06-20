@@ -148,13 +148,11 @@ const NewBookForm: FC = () => {
         />
         <FormTextfield label="Untertitel" type="text" name="titel.untertitel" />
         <FormTextfield
-          label="Preis"
           name="preis"
           isNumber={true}
           InputProps={{ inputProps: { min: 0, step: 0.01 } }}
         />
         <FormTextfield
-          label="Rabatt"
           name="rabatt"
           isNumber={true}
           InputProps={{ inputProps: { min: 0, step: 0.01 } }}
