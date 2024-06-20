@@ -58,7 +58,7 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
     } else {
       setEditedBook(prev => ({
         ...prev,
-        [name]: name === 'lieferbar' ? value === 'true' : value,
+        [name]: name === 'lieferbar' ? value === 'true' : (name === 'rating' ? parseFloat(value) : value),
       }));
     }
   };

@@ -158,7 +158,7 @@ const BookDetail = () => {
                   Bewertung:
                   <Rating
                     name="book-rating"
-                    value={book.rating}
+                    value={parseFloat(book.rating.toString())}
                     readOnly
                     precision={0.5}
                     sx={{
