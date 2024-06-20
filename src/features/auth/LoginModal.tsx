@@ -34,7 +34,7 @@ export function LoginModal() {
 
   const handleLogin = async () => {
     setLoading(true);
-    console.info(`Login mit ${username} und ${password}`);
+    console.info(`Login mit ${username}`);
     try {
       const loginSucceeded = await login({ username, password });
       if (loginSucceeded) {
@@ -60,7 +60,7 @@ export function LoginModal() {
     <div>
       {isLoggedIn() ? (
         <Button
-          data-cy='logout-button'
+          data-cy="logout-button"
           variant="outlined"
           color="secondary"
           startIcon={<CloseIcon />}
@@ -70,7 +70,7 @@ export function LoginModal() {
         </Button>
       ) : (
         <Button
-          data-cy='login-button'
+          data-cy="login-button"
           variant="outlined"
           color="secondary"
           startIcon={<LoginIcon />}
@@ -96,7 +96,7 @@ export function LoginModal() {
             onKeyDown={(e) => handleKeyDown(e, handleLogin)}
             fullWidth
             variant="standard"
-            data-cy='login-username' 
+            data-cy="login-username"
           />
           <TextField
             margin="dense"
@@ -108,7 +108,7 @@ export function LoginModal() {
             onKeyDown={(e) => handleKeyDown(e, handleLogin)}
             fullWidth
             variant="standard"
-            data-cy='login-password'
+            data-cy="login-password"
           />
           {showError !== '' ? (
             <Alert severity="error">{showError}</Alert>
@@ -128,16 +128,16 @@ export function LoginModal() {
                 zIndex: 1,
               }}
             >
-              <CircularProgress 
-                 size={60}
-                 thickness={5}
-                 sx={{
-                   color: 'secondary.main',
-                   animationDuration: '550ms',
-                   '& .MuiCircularProgress-circle': {
-                     strokeLinecap: 'round',
-                   },
-                 }}
+              <CircularProgress
+                size={60}
+                thickness={5}
+                sx={{
+                  color: 'secondary.main',
+                  animationDuration: '550ms',
+                  '& .MuiCircularProgress-circle': {
+                    strokeLinecap: 'round',
+                  },
+                }}
               />
             </Box>
           )}
@@ -157,7 +157,7 @@ export function LoginModal() {
             color="secondary"
             endIcon={<LoginIcon />}
             onClick={handleLogin}
-            data-cy='login-button-second'
+            data-cy="login-button-second"
             disabled={loading}
           >
             Login
