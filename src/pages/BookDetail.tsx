@@ -19,7 +19,10 @@ import { BookEditForm } from './BookEditForm';
 interface BookDetailProps {
   id: number;
   isbn: string;
-  titel: string;
+  titel:{
+    titel: string;
+    untertitel: string;
+  }
   preis: number;
   art: string;
   rating: number;
@@ -53,7 +56,10 @@ const BookDetail = () => {
         const tempBook: BookDetailProps = {
           id: response.data._links.self.href.split('/').pop(),
           isbn: response.data.isbn,
-          titel: response.data.titel.titel,
+          titel:{ 
+            titel:response.data.titel.titel,
+            untertitel: response.data.titel.untertitel,
+          },
           preis: response.data.preis,
           art: response.data.art,
           rating: response.data.rating,
@@ -134,7 +140,10 @@ const BookDetail = () => {
                     alignItems: 'center',
                   }}
                 >
-                  {book.titel}
+                  {book.titel.titel}
+                </Typography>
+                <Typography variant="h6" color="text.secondary">
+                  {book.titel.untertitel}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   ISBN: {book.isbn}

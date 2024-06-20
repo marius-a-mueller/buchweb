@@ -6,7 +6,10 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
 interface BookDetailProps {
   id: number;
   isbn: string;
-  titel: string;
+  titel: {
+    titel: string;
+    untertitel: string;
+  };
   preis: number;
   art: string;
   rating: number;
@@ -44,11 +47,22 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEditedBook(prev => ({
-      ...prev,
-      [name]: name === 'lieferbar' ? value === 'true' : value,
-    }));
+    if (name === 'titel' || name === 'untertitel') {
+      setEditedBook(prev => ({
+        ...prev,
+        titel: {
+          ...prev.titel,
+          [name]: value,
+        },
+      }));
+    } else {
+      setEditedBook(prev => ({
+        ...prev,
+        [name]: name === 'lieferbar' ? value === 'true' : value,
+      }));
+    }
   };
+
 
   const handleSave = async () => {
     setLoading(true);
@@ -59,6 +73,10 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
         `/rest/${book.id}`,
         {
           ...editedBook,
+          titel: {
+            titel: editedBook.titel.titel,
+            untertitel: editedBook.titel.untertitel,
+          },
           preis: parseFloat(editedBook.preis.toString()),
           rating: parseFloat(editedBook.rating.toString()),
         },
@@ -69,6 +87,17 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
           },
         }
       );
+      console.log('Request data:', {
+        ...editedBook,
+        titel: {
+          titel: editedBook.titel.titel,
+          untertitel: editedBook.titel.untertitel,
+        },
+        preis: parseFloat(editedBook.preis.toString()),
+        rating: parseFloat(editedBook.rating.toString()),
+      });
+  
+      console.log('Response:', response.data);
       const newEtag = response.headers['etag'] || response.headers['ETag'];
       setTimeout(() => {
       onSave({ ...editedBook, etag: newEtag });
@@ -122,7 +151,17 @@ const BookEditForm = ({ book, onSave, etag }: BookEditFormProps) => {
               fullWidth
               label="Titel"
               name="titel"
-              value={editedBook.titel}
+              value={editedBook.titel.titel}
+              onChange={handleChange}
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Untertitel"
+              name="untertitel"
+              value={editedBook.titel.untertitel}
               onChange={handleChange}
               margin="normal"
             />
