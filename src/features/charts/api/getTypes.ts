@@ -1,3 +1,4 @@
+import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 
 const getTypes = async () => {
@@ -10,7 +11,7 @@ const getTypes = async () => {
 
   const types: string[] = [];
 
-  console.log('Fetched books: ', books);
+  logger.info('Fetched books: ', books);
   for (const book in books) {
     types.push(books[book].art);
   }

@@ -2,6 +2,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { Box, Typography, Paper, useMediaQuery, useTheme } from '@mui/material';
 import { getStats } from './api/getStats';
 import { useState, useEffect } from 'react';
+import { logger } from '@/util';
 
 const BarChartForm = () => {
   const [ratings, setRatings] = useState<number[]>([]);
@@ -14,7 +15,7 @@ const BarChartForm = () => {
       setLoading(true);
       try {
         const tempRatings = await getStats();
-        console.log('Fetched ratings: ', tempRatings);
+        logger.info('Fetched ratings: ', tempRatings);
         setRatings(tempRatings);
       } catch (error) {
         console.error('Error fetching book details:', error);

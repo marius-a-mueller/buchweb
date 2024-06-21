@@ -2,6 +2,7 @@ import { Box, Typography, Paper, useTheme, useMediaQuery } from '@mui/material';
 import { getTypes } from './api/getTypes';
 import { useState, useEffect } from 'react';
 import { PieChart } from '@mui/x-charts/PieChart';
+import { logger } from '@/util';
 
 const PieChartForm = () => {
   const [types, setTypes] = useState<string[]>([]);
@@ -14,7 +15,7 @@ const PieChartForm = () => {
       setLoading(true);
       try {
         const tempTypes = await getTypes();
-        console.log('Fetched types: ', tempTypes);
+        logger.info('Fetched types: ', tempTypes);
         setTypes(tempTypes);
       } catch (error) {
         console.error('Error fetching book details:', error);

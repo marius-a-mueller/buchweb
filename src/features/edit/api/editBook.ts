@@ -1,4 +1,5 @@
 import { fullBookType } from '@/components';
+import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { HttpStatusCode } from 'axios';
 
@@ -10,7 +11,7 @@ type EditBookProps = {
 };
 
 const editBook = async ({ id, book, token, etag }: EditBookProps) => {
-  console.log('Editing book: ', book);
+  logger.info('Editing book: ', book);
   const url = `/rest/${id}`;
   const response = await AxiosInstance.put(url, book, {
     headers: {
@@ -19,7 +20,7 @@ const editBook = async ({ id, book, token, etag }: EditBookProps) => {
     },
   });
 
-  console.log('Response: ', response);
+  logger.info('Response: ', response);
   return response;
   if (response.status !== HttpStatusCode.Created)
     throw new Error('Error adding book');

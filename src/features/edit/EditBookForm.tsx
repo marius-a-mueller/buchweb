@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { FullBookForm, fullBookType } from '@/components';
 import { useAuth } from '../auth';
 import { editBook } from './api/editBook';
+import { logger } from '@/util';
 
 type EditBookFormProps = {
   id: string;
@@ -22,12 +23,12 @@ const EditBookForm: FC<EditBookFormProps> = ({
     <FullBookForm
       defaultValues={book}
       onHandleSubmit={async (values) => {
-        console.log('values: ' + JSON.stringify(values));
+        logger.info('values: ' + JSON.stringify(values));
         try {
           const response = await editBook({ id, book: values, token, etag });
 
           const newEtag = response.headers.etag;
-          console.log('New ETAG: ' + newEtag);
+          logger.info('New ETAG: ' + newEtag);
           onSave(values, newEtag);
         } catch (error) {
           console.error('Error updating book details:', error);

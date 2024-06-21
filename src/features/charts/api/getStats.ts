@@ -1,3 +1,4 @@
+import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 
 const getStats = async () => {
@@ -10,7 +11,7 @@ const getStats = async () => {
 
   const ratings: number[] = [];
 
-  console.log('Fetched books: ', books);
+  logger.info('Fetched books: ', books);
   for (const book in books) {
     ratings.push(books[book].rating);
   }

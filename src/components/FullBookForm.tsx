@@ -18,6 +18,7 @@ import {
 } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { boolean, nullable, number, object, string, TypeOf, union } from 'zod';
+import { logger } from '@/util';
 
 type BookFormProps = {
   onHandleSubmit: (values: fullBookType) => void;
@@ -80,8 +81,8 @@ const FullBookForm: FC<BookFormProps> = ({
   });
 
   const onSave = async (values: fullBookType) => {
-    console.log('Formstate: ' + JSON.stringify(methods.formState.dirtyFields));
-    console.log('val:' + JSON.stringify(values));
+    logger.info('Formstate: ' + JSON.stringify(methods.formState.dirtyFields));
+    logger.info('val:' + JSON.stringify(values));
     setLoading(true);
     await onHandleSubmit(values);
     setLoading(false);

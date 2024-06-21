@@ -1,4 +1,5 @@
 import { fullBookType } from '@/components';
+import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { HttpStatusCode } from 'axios';
 
@@ -8,7 +9,7 @@ type AddBookProps = {
 };
 
 const addBook = async ({ book, token }: AddBookProps) => {
-  console.log('Adding book: ', book);
+  logger.info('Adding book: ', book);
   const url = '/rest/';
   const response = await AxiosInstance.post(url, book, {
     headers: {
@@ -16,7 +17,7 @@ const addBook = async ({ book, token }: AddBookProps) => {
     },
   });
 
-  console.log('Response: ', response);
+  logger.info('Response: ', response);
   if (response.status !== HttpStatusCode.Created)
     throw new Error('Error adding book');
 };

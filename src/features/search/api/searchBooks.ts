@@ -1,3 +1,4 @@
+import { logger } from '@/util';
 import { BookTableRow } from '../BookTable';
 import { AxiosInstance } from '@/util/AxiosInstance';
 
@@ -34,7 +35,7 @@ const searchBooks = async (props: SearchBooksProps) => {
   const books = response.data._embedded.buecher;
 
   const rows: BookTableRow[] = [];
-  console.log('Fetched books: ', books);
+  logger.info('Fetched books: ', books);
   for (const book in books) {
     rows.push({
       id: books[book]._links.self.href.split('/').pop(),

@@ -113,12 +113,9 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
 
 const BookTable = (props: BookTableProps) => {
   const [page, setPage] = useState(0);
-  const [selectedRow, setSelectedRow] = useState({});
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-
-  console.log({ selectedRow });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -158,7 +155,6 @@ const BookTable = (props: BookTableProps) => {
               hover={true}
               key={row.title}
               onClick={() => {
-                setSelectedRow(row);
                 navigate('/buchweb/book/' + row.id);
               }}
               sx={{

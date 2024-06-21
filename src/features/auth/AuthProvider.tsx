@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { AxiosError } from 'axios';
+import { logger } from '@/util';
 
 interface LoginType {
   username: string;
@@ -35,7 +36,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const response = await AxiosInstance.post('/auth/login', requestData);
-      console.log(response);
+      logger.info(response);
       if (response.status !== 200) return false;
       setToken(response.data.access_token);
       setWritePermission(true);

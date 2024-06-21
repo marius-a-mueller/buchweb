@@ -16,6 +16,7 @@ import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { EditBookForm } from '@/features/edit';
 import { fullBookType } from '@/components';
+import { logger } from '@/util';
 
 const BookDetailView = () => {
   const { id = 'default' } = useParams<{ id: string }>();
@@ -25,7 +26,7 @@ const BookDetailView = () => {
   const [, setEditedBook] = useState<fullBookType | null>(null);
   const [etag, setEtag] = useState<string | null>(null);
   const { token, isLoggedIn } = useAuth();
-  console.log(id);
+  logger.info(id);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -36,8 +37,8 @@ const BookDetailView = () => {
             Accept: '*/*',
           },
         });
-        console.log(response);
-        console.log('etag' + response.headers.etag);
+        logger.info(response);
+        logger.info('etag' + response.headers.etag);
         const tempBook: fullBookType = {
           isbn: response.data.isbn,
           titel: {

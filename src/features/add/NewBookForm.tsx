@@ -4,6 +4,7 @@ import { addBook } from './api/addBook';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
 import { useNavigate } from 'react-router-dom';
+import { logger } from '@/util';
 
 const NewBookForm: FC = () => {
   const { token } = useAuth();
@@ -17,7 +18,7 @@ const NewBookForm: FC = () => {
           const response = await searchBooks({
             searchProps: [{ term: 'isbn', value: values.isbn }],
           });
-          console.log(response);
+          logger.info(response);
           navigate(`/buchweb/book/${response[0].id}`);
         } catch (error) {
           console.error('Error adding book: ', error);
