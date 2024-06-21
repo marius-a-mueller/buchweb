@@ -4,21 +4,25 @@ import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
   Button,
-  Checkbox,
   CircularProgress,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  InputLabel,
-  MenuItem,
-  Rating,
-  Select,
-  SelectChangeEvent,
-  TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { searchBooks } from './api/searchBooks';
-
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm } from 'react-hook-form';
+import {
+  FormAutocomplete,
+  FormRadioGroup,
+  FormRating,
+  FormTextfield,
+} from '@/components';
+import {
+  searchBookDefaultValues,
+  searchBookSchema,
+  searchBookType,
+} from './SearchBookType';
 
 interface SearchFormProps {
   setBookTableRows: (rows: BookTableRow[]) => void;
@@ -26,34 +30,31 @@ interface SearchFormProps {
 
 const SearchForm = (props: SearchFormProps) => {
   const { setBookTableRows } = props;
-  const [art, setArt] = useState('');
-  //const [, setBooks] = useState<BookType[]>([]);
-  const [searchIsbn, setSearchIsbn] = useState('');
-  const [searchTitel, setSearchTitel] = useState('');
-  const [selectedRatingOption, setSelectedRatingOption] = useState(0);
-  const [isJavaScript, setIsJavaScript] = useState(false);
-  const [isTypeScript, setIsTypeScript] = useState(false);
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setArt(event.target.value);
-  };
-
-  const handleSearch = async () => {
+  const onHandleSubmit = async (values: searchBookType) => {
     setLoading(true);
     const searchProps = [
-      { term: 'isbn', value: searchIsbn },
-      { term: 'titel', value: searchTitel },
-      { term: 'rating', value: selectedRatingOption },
-      { term: 'art', value: art },
-      { term: 'javascript', value: isJavaScript },
-      { term: 'typescript', value: isTypeScript },
+      { term: 'isbn', value: values.isbn },
+      { term: 'titel', value: values.titel.titel },
+      { term: 'rating', value: values.rating },
+      { term: 'art', value: values.art },
+      {
+        term: 'javascript',
+        value: values.schlagwoerter.includes('JavaScript'),
+      },
+      {
+        term: 'typescript',
+        value: values.schlagwoerter.includes('TypeScript'),
+      },
     ];
     try {
       const rows = await searchBooks({ searchProps });
       setTimeout(() => {
-      setBookTableRows(rows?.length ? rows : []);
-      setLoading(false);
+        setBookTableRows(rows?.length ? rows : []);
+        setLoading(false);
       }, 1000);
     } catch (error) {
       console.error(error);
@@ -62,11 +63,25 @@ const SearchForm = (props: SearchFormProps) => {
     }
   };
 
+  const methods = useForm<searchBookType>({
+    resolver: zodResolver(searchBookSchema),
+    defaultValues: searchBookDefaultValues,
+  });
+
   return (
-    <>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography
+        variant="h6"
+        component="h2"
+        sx={{
+          mb: 2,
+          textAlign: 'center',
+          fontWeight: 'bold',
+          marginTop: '15px',
+        }}
+      >
         Suchformular
-      </h1>
+      </Typography>
       <Box sx={{ position: 'relative', width: '100%' }}>
         {loading && (
           <Box
@@ -96,114 +111,66 @@ const SearchForm = (props: SearchFormProps) => {
             />
           </Box>
         )}
-        <Box sx={{ display: loading ? 'none' : 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}></Box>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1rem',
-        }}
-      >
-        <TextField
-          id="isbn-input"
-          label="ISBN"
-          value={searchIsbn}
-          onChange={(e) => setSearchIsbn(e.target.value)}
-          sx={{ width: '100%', textAlign: 'center' }}
-          data-cy='isbn-search'
-        />
-        <TextField
-          id="title-input"
-          label="Titel"
-          value={searchTitel}
-          onChange={(e) => setSearchTitel(e.target.value)}
-          sx={{ width: '100%', textAlign: 'center' }}
-        />
-        <Box sx={{ width: '100%', textAlign: 'center' }}>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Art</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={art}
-              label="Art"
-              onChange={handleChange}
-            >
-              <MenuItem value={''}>Keine Auswahl</MenuItem>
-              <MenuItem value={'KINDLE'}>Kindle</MenuItem>
-              <MenuItem value={'DRUCKAUSGABE'}>Druckausgabe</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box
-          sx={{
-            width: '100%',
-            marginBottom: '20px',
-          }}
-        >
-          <Typography component="legend">Bewertung</Typography>
-          <Rating
-            name="rating"
-            value={selectedRatingOption}
-            size="large"
-            onChange={(_, newValue) => {
-              setSelectedRatingOption(newValue === null ? 0 : newValue);
+        <FormProvider {...methods}>
+          <Box
+            component="form"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              columnGap: '1rem',
+              '& .MuiTextField-root': isDesktop
+                ? { m: 1, width: '65ch' }
+                : { m: 1, width: '25ch' },
+              '& .MuiFormControl-root': isDesktop
+                ? { m: 1, width: '65ch' }
+                : { m: 1, width: '25ch' },
+              '& .MuiSwitch-root': { m: 1, width: '6ch' },
+              '& .MuiButton-root': isDesktop
+                ? { m: 1, mb: 10, width: '40ch' }
+                : { m: 1, mb: 10, width: '20ch' },
             }}
-          />
-        </Box>
-        <Box
-          sx={{
-            //width: 135,
-            //height: 100,
-            borderRadius: 1,
-            border: '1px solid',
-            borderColor: '#c2c2c2',
-            bgcolor: 'transparent',
-            //marginRight: '580px',
-            margin: '10px',
-            padding: '10px',
-            //marginBottom: '10px',
-          }}
-        >
-          <FormGroup sx={{ display: 'flex', flexDirection: 'row' }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isJavaScript}
-                  onChange={(e) => setIsJavaScript(e.target.checked)}
-                  color="secondary"
-                />
-              }
-              label="JavaScript"
+            noValidate
+            autoComplete="off"
+            onSubmit={methods.handleSubmit(onHandleSubmit)}
+          >
+            <FormTextfield
+              label="ISBN"
+              type="text"
+              name="isbn"
+              data-cy="isbn-post"
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isTypeScript}
-                  onChange={(e) => setIsTypeScript(e.target.checked)}
-                  color="secondary"
-                />
-              }
-              label="TypeScript"
+            <FormTextfield
+              label="Titel"
+              type="text"
+              name="titel.titel"
+              data-cy="titel-post"
             />
-          </FormGroup>
-        </Box>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<SearchIcon />}
-          sx={{ marginBottom: '20px' }}
-          onClick={handleSearch}
-          disabled={loading}
-          data-cy="search-button-form"
-        >
-          Suche
-        </Button>
-      </div>
+            <FormAutocomplete
+              name="schlagwoerter"
+              label="Schlagwörter"
+              options={['JavaScript', 'TypeScript']}
+            />
+            <FormRating name="rating" label="Bewertung" size="large" />
+            <FormRadioGroup
+              row
+              name="art"
+              options={['KINDLE', 'DRUCKAUSGABE']}
+              data-cy="type"
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              data-cy="post-button-form"
+              startIcon={<SearchIcon />}
+            >
+              Suchen
+            </Button>
+          </Box>
+        </FormProvider>
       </Box>
-    </>
+    </Box>
   );
 };
 

@@ -12,7 +12,6 @@ const Search = () => {
   return (
     <>
       <Box
-        component="form"
         sx={
           isDesktop
             ? {
@@ -20,18 +19,18 @@ const Search = () => {
               }
             : {
                 width: '90%',
+              } && {
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
               }
         }
-        noValidate
-        autoComplete="off"
       >
         <SearchForm
           setBookTableRows={(results: BookTableRow[]) => {
             setRows(results);
           }}
         ></SearchForm>
-      </Box>
-      <Box className="searchForm">
         <BookTable rows={rows}></BookTable>
       </Box>
     </>
