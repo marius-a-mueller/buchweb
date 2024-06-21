@@ -13,7 +13,7 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
-import { TableHead, useMediaQuery } from '@mui/material';
+import { TableHead } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import { useNavigate } from 'react-router-dom';
 
@@ -117,8 +117,6 @@ const BookTable = (props: BookTableProps) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const navigate = useNavigate();
   const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   console.log({ selectedRow });
 
@@ -141,19 +139,7 @@ const BookTable = (props: BookTableProps) => {
   };
 
   return (
-    <TableContainer
-      component={Paper}
-      elevation={12}
-      style={
-        isDesktop
-          ? {
-              margin: '20px',
-            }
-          : {
-              margin: 0,
-            }
-      }
-    >
+    <TableContainer component={Paper} elevation={12}>
       <Table aria-label="custom pagination table" data-cy="book-table">
         <TableHead>
           <TableRow>

@@ -99,7 +99,13 @@ const BookDetailView = () => {
     <Container maxWidth="md" sx={{ mt: 5 }}>
       <Paper elevation={3} sx={{ padding: 3 }} data-cy="book-detail">
         {editMode ? (
-          <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <Button
               variant="contained"
               color="secondary"
@@ -109,7 +115,7 @@ const BookDetailView = () => {
               Zurück
             </Button>
             <EditBookForm id={id} book={book} onSave={handleSave} etag={etag} />
-          </>
+          </Box>
         ) : (
           <>
             <Grid container spacing={3}>

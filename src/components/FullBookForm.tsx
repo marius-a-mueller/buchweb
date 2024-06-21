@@ -88,7 +88,15 @@ const FullBookForm: FC<BookFormProps> = ({
   };
 
   return (
-    <Box sx={{ position: 'relative', width: '100%' }}>
+    <Box
+      sx={{
+        position: 'relative',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
       {loading ? (
         <Box
           sx={{
@@ -215,4 +223,5 @@ const FullBookForm: FC<BookFormProps> = ({
 };
 
 export { FullBookForm };
+// eslint-disable-next-line react-refresh/only-export-components
 export type { fullBookType };
