@@ -159,8 +159,8 @@ const FullBookForm: FC<BookFormProps> = ({
             label="ISBN"
             type="text"
             name="isbn"
-            required
             data-cy="isbn-post"
+            InputProps={{ readOnly: true }}
           />
           <FormTextfield
             label="Titel"
