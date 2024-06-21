@@ -1,8 +1,13 @@
-import { Typography } from '@mui/material';
-import { DatePickerProps, MobileDatePicker } from '@mui/x-date-pickers';
+import {
+  DatePicker,
+  DatePickerProps,
+  LocalizationProvider,
+} from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import 'dayjs/locale/de';
 
 type RhfDatePickerProps = {
   name: string;
@@ -14,39 +19,42 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   label,
   ...otherProps
 }) => {
-  const [date, setDate] = useState<Dayjs | null | undefined>(null);
-  const {
-    register,
-    getValues,
-    setValue,
-    formState: { errors },
-  } = useFormContext();
-  const value = dayjs(getValues(name) as Date);
+  const [date, setDate] = useState<Dayjs | null>(null);
+
+  const { register, getValues, setValue } = useFormContext();
   useEffect(() => {
     register(name);
   }, [register, name]);
   useEffect(() => {
-    setDate(value || null);
-  }, [setDate, value]);
+    const value = getValues(name) as string;
+    if (value.length === 0) {
+      setDate(null);
+    } else {
+      setDate(dayjs(value));
+    }
+  }, [setDate, getValues, name]);
+
   return (
-    <>
-      <MobileDatePicker
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+      <DatePicker
         value={date}
+        disableFuture
         label={label}
-        onChange={(date) =>
-          setValue(name, date?.toISOString().split('T')[0], {
-            shouldValidate: true,
-            shouldDirty: true,
-          })
-        }
+        slotProps={{
+          field: { clearable: true, onClear: () => setDate(null) },
+        }}
+        onChange={(date) => {
+          try {
+            setValue(name, date?.toISOString().split('T')[0], {
+              shouldDirty: true,
+              shouldValidate: true,
+            });
+            // eslint-disable-next-line no-empty
+          } catch (_) {}
+        }}
         {...otherProps}
       />
-      {errors[name] && (
-        <Typography color="error">
-          {errors[name]?.message?.toString()}
-        </Typography>
-      )}
-    </>
+    </LocalizationProvider>
   );
 };
 

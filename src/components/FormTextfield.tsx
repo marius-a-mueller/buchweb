@@ -5,11 +5,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 type RhfTextfieldProps = {
   name: string;
   isNumber?: boolean;
+  endAdornment?: string;
 } & Partial<TextFieldProps>;
 
 const FormTextfield: FC<RhfTextfieldProps> = ({
   name,
   isNumber = false,
+  endAdornment = '',
   ...otherProps
 }) => {
   const theme = useTheme();
@@ -55,6 +57,9 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
           helperText={
             errors[name] ? (errors[name]?.message as unknown as string) : ''
           }
+          InputProps={{
+            endAdornment,
+          }}
         />
       )}
     />

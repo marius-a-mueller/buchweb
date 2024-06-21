@@ -35,8 +35,8 @@ const fullBookSchema = object({
   }),
   art: string().min(1, 'Art ist erforderlich'),
   rating: number(),
-  preis: number().min(0.01, 'Preis muss positiv sein'),
-  rabatt: number().min(0),
+  preis: number().min(0, 'Preis muss positiv sein'),
+  rabatt: number().min(0, 'Rabatt muss positiv sein'),
   datum: nullable(string()),
   homepage: union([
     string().regex(
@@ -56,10 +56,10 @@ const fullBookDefaultValues: fullBookType = {
   titel: { titel: '', untertitel: '' },
   rating: 0,
   art: '',
-  preis: 0.01,
+  preis: 0,
   rabatt: 0,
   lieferbar: false,
-  datum: null,
+  datum: '',
   homepage: '',
   schlagwoerter: [],
 };
@@ -176,11 +176,15 @@ const FullBookForm: FC<BookFormProps> = ({
           />
           <FormTextfield
             name="preis"
+            label="Preis"
+            endAdornment="€"
             isNumber={true}
             InputProps={{ inputProps: { min: 0, step: 0.01 } }}
           />
           <FormTextfield
             name="rabatt"
+            label="Rabatt"
+            endAdornment="%"
             isNumber={true}
             InputProps={{ inputProps: { min: 0, step: 0.01 } }}
           />
