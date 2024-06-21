@@ -14,31 +14,15 @@ import {
 import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { BookEditForm } from './BookEditForm';
-
-interface BookDetailProps {
-  id: number;
-  isbn: string;
-  titel:{
-    titel: string;
-    untertitel: string;
-  }
-  preis: number;
-  art: string;
-  rating: number;
-  lieferbar: boolean;
-  datum: string;
-  homepage: string;
-  schlagwoerter: string[];
-  etag?: string;
-}
+import { EditBookForm } from '@/features/edit';
+import { fullBookType } from '@/components';
 
 const BookDetail = () => {
   const { id = 'default' } = useParams<{ id: string }>();
-  const [book, setBook] = useState<BookDetailProps | null>(null);
+  const [book, setBook] = useState<fullBookType | null>(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
-  const [, setEditedBook] = useState<BookDetailProps | null>(null);
+  const [, setEditedBook] = useState<fullBookType | null>(null);
   const [etag, setEtag] = useState<string | null>(null);
   const { token, isLoggedIn } = useAuth();
   console.log(id);
@@ -49,18 +33,19 @@ const BookDetail = () => {
       try {
         const response = await AxiosInstance.get(`/rest/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Accept: '*/*',
           },
         });
         console.log(response);
-        const tempBook: BookDetailProps = {
-          id: response.data._links.self.href.split('/').pop(),
+        console.log('etag' + response.headers.etag);
+        const tempBook: fullBookType = {
           isbn: response.data.isbn,
-          titel:{ 
-            titel:response.data.titel.titel,
+          titel: {
+            titel: response.data.titel.titel,
             untertitel: response.data.titel.untertitel,
           },
           preis: response.data.preis,
+          rabatt: response.data.rabatt,
           art: response.data.art,
           rating: response.data.rating,
           lieferbar: response.data.lieferbar,
@@ -70,7 +55,7 @@ const BookDetail = () => {
         };
         setBook(tempBook);
         setEditedBook(tempBook);
-        setEtag(response.headers['etag'] || response.headers['ETag']);
+        setEtag(response.headers.etag);
       } catch (error) {
         console.error('Error fetching book details:', error);
       } finally {
@@ -81,9 +66,9 @@ const BookDetail = () => {
     fetchBook();
   }, [id, token]);
 
-  const handleSave = (updatedBook: BookDetailProps) => {
+  const handleSave = (updatedBook: fullBookType, etag: string | null) => {
     setBook(updatedBook);
-    setEtag(updatedBook.etag || null);
+    setEtag(etag || null);
     setEditMode(false);
   };
 
@@ -112,9 +97,19 @@ const BookDetail = () => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 5 }}>
-      <Paper elevation={3} sx={{ padding: 3 }} data-cy="book-detail" >
+      <Paper elevation={3} sx={{ padding: 3 }} data-cy="book-detail">
         {editMode ? (
-          <BookEditForm book={book} onSave={handleSave} etag={etag} />
+          <>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setEditMode(false)}
+              sx={{ mt: 2 }}
+            >
+              Zurück
+            </Button>
+            <EditBookForm id={id} book={book} onSave={handleSave} etag={etag} />
+          </>
         ) : (
           <>
             <Grid container spacing={3}>
@@ -173,7 +168,7 @@ const BookDetail = () => {
                   Lieferbar: {book.lieferbar ? 'Ja' : 'Nein'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Erscheinungsdatum: {new Date(book.datum).toLocaleDateString()}
+                  Erscheinungsdatum: {book.datum?.toLocaleLowerCase()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Homepage:{' '}

@@ -165,7 +165,7 @@ const SearchForm = (props: SearchFormProps) => {
               data-cy="post-button-form"
               startIcon={<SearchIcon />}
             >
-              Buch hinzufügen
+              Suchen
             </Button>
           </Box>
         </FormProvider>
