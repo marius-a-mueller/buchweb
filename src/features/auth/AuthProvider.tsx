@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosError } from 'axios';
 
 interface LoginType {
   username: string;
@@ -32,13 +33,26 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       username
     )}&password=${encodeURIComponent(password)}`;
 
-    const response = await AxiosInstance.post('/auth/login', requestData);
-    console.log(response);
-    if (response.status !== 200) return false;
-    setToken(response.data.access_token);
-    setWritePermission(true);
-    AxiosInstance.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
-    return true;
+    try {
+      const response = await AxiosInstance.post('/auth/login', requestData);
+      console.log(response);
+      if (response.status !== 200) return false;
+      setToken(response.data.access_token);
+      setWritePermission(true);
+      AxiosInstance.defaults.headers.common['Authorization'] =
+        `Bearer ${response.data.access_token}`;
+      return true;
+    } catch (error) {
+      if (
+        error instanceof AxiosError &&
+        error.response &&
+        error.response.status === 401
+      ) {
+        return false;
+      }
+      console.error('Error while logging in:', error);
+      throw new Error('Error while logging in');
+    }
   };
 
   const logout = () => {
