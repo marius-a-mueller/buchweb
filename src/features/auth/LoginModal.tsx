@@ -57,7 +57,7 @@ export function LoginModal() {
   };
 
   return (
-    <div>
+    <>
       {isLoggedIn() ? (
         <Button
           data-cy="logout-button"
@@ -65,6 +65,7 @@ export function LoginModal() {
           color="secondary"
           startIcon={<CloseIcon />}
           onClick={logout}
+          disableFocusRipple
         >
           Logout
         </Button>
@@ -85,62 +86,66 @@ export function LoginModal() {
           <DialogContentText>
             Bitte geben Sie Ihre Login-Daten ein, um fortzufahren.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Nutzername"
-            type="nutzername"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            onKeyDown={(e) => handleKeyDown(e, handleLogin)}
-            fullWidth
-            variant="standard"
-            data-cy="login-username"
-          />
-          <TextField
-            margin="dense"
-            id="password"
-            label="Passwort"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => handleKeyDown(e, handleLogin)}
-            fullWidth
-            variant="standard"
-            data-cy="login-password"
-          />
-          {showError !== '' ? (
-            <Alert severity="error">{showError}</Alert>
-          ) : null}
-          {loading && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                zIndex: 1,
-              }}
-            >
-              <CircularProgress
-                size={60}
-                thickness={5}
+          <Box component="form">
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Nutzername"
+              type="nutzername"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e, handleLogin)}
+              fullWidth
+              variant="standard"
+              data-cy="login-username"
+              autoComplete="on"
+            />
+            <TextField
+              margin="dense"
+              id="password"
+              label="Passwort"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e, handleLogin)}
+              fullWidth
+              variant="standard"
+              data-cy="login-password"
+              autoComplete="on"
+            />
+            {showError !== '' ? (
+              <Alert severity="error">{showError}</Alert>
+            ) : null}
+            {loading && (
+              <Box
                 sx={{
-                  color: 'secondary.main',
-                  animationDuration: '550ms',
-                  '& .MuiCircularProgress-circle': {
-                    strokeLinecap: 'round',
-                  },
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                  zIndex: 1,
                 }}
-              />
-            </Box>
-          )}
+              >
+                <CircularProgress
+                  size={60}
+                  thickness={5}
+                  sx={{
+                    color: 'secondary.main',
+                    animationDuration: '550ms',
+                    '& .MuiCircularProgress-circle': {
+                      strokeLinecap: 'round',
+                    },
+                  }}
+                />
+              </Box>
+            )}
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button
@@ -164,6 +169,6 @@ export function LoginModal() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
