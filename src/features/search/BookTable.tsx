@@ -70,7 +70,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
   };
 
   return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+    <Box sx={{ flexShrink: 0 }}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -154,7 +154,7 @@ const BookTable = (props: BookTableProps) => {
             }
       }
     >
-      <Table aria-label="custom pagination table" data-cy='book-table'>
+      <Table aria-label="custom pagination table" data-cy="book-table">
         <TableHead>
           <TableRow>
             <TableCell>Titel</TableCell>
@@ -179,7 +179,7 @@ const BookTable = (props: BookTableProps) => {
                 cursor: 'pointer',
                 '&:last-child td, &:last-child th': { border: 0 },
               }}
-              data-cy={`book-row-${row.isbn}`} 
+              data-cy={`book-row-${row.isbn}`}
             >
               <TableCell component="th" scope="row">
                 {row.title}

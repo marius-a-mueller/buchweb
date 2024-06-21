@@ -7,7 +7,6 @@ import {
   useTheme,
 } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { boolean, nullable, number, object, string, TypeOf, union } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import {
@@ -22,35 +21,7 @@ import { addBook } from './api/addBook';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
 import { useNavigate } from 'react-router-dom';
-
-const newBookSchema = object({
-  isbn: string().regex(
-    /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/,
-    'Kein gültiges ISBN-Format (z.B. 978-0-007-00644-1)'
-  ),
-  titel: object({
-    titel: string().min(1, 'Titel ist erforderlich'),
-    untertitel: string(),
-  }),
-  art: string().min(1, 'Art ist erforderlich'),
-  rating: number(),
-  preis: number().min(0.01, 'Preis muss positiv sein'),
-  rabatt: number().min(0),
-  datum: nullable(string()),
-  homepage: union([
-    string().regex(
-      new RegExp(
-        '^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?'
-      ),
-      'Ungültige URL'
-    ),
-    string().min(1),
-  ]),
-  lieferbar: boolean(),
-  schlagwoerter: string().array(),
-});
-
-type bookType = TypeOf<typeof newBookSchema>;
+import { newBookType, newBookDefaultValues, newBookSchema } from './NewBookType';
 
 const NewBookForm: FC = () => {
   const { token } = useAuth();
@@ -58,25 +29,13 @@ const NewBookForm: FC = () => {
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
-  const defaultValues: bookType = {
-    isbn: '',
-    titel: { titel: '', untertitel: '' },
-    rating: 0,
-    art: '',
-    preis: 0.01,
-    rabatt: 0,
-    lieferbar: false,
-    datum: null,
-    homepage: '',
-    schlagwoerter: [],
-  };
 
-  const methods = useForm<bookType>({
+  const methods = useForm<newBookType>({
     resolver: zodResolver(newBookSchema),
-    defaultValues,
+    defaultValues: newBookDefaultValues,
   });
 
-  const onHandleSubmit = async (values: bookType) => {
+  const onHandleSubmit = async (values: newBookType) => {
     try {
       await addBook({ book: values, token });
       const response = await searchBooks({
@@ -194,4 +153,3 @@ const NewBookForm: FC = () => {
 };
 
 export { NewBookForm };
-export type { bookType };
