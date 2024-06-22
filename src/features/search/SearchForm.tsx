@@ -5,6 +5,8 @@ import {
   Box,
   Button,
   CircularProgress,
+  FormHelperText,
+  Paper,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,7 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   FormAutocomplete,
-  FormRadioGroup,
+  FormCheckbox,
   FormRating,
   FormTextfield,
 } from '@/components';
@@ -40,7 +42,6 @@ const SearchForm = (props: SearchFormProps) => {
       { term: 'isbn', value: values.isbn },
       { term: 'titel', value: values.titel.titel },
       { term: 'rating', value: values.rating },
-      { term: 'art', value: values.art },
       {
         term: 'javascript',
         value: values.schlagwoerter.includes('JavaScript'),
@@ -50,6 +51,17 @@ const SearchForm = (props: SearchFormProps) => {
         value: values.schlagwoerter.includes('TypeScript'),
       },
     ];
+    if (values.kindle && !values.druckausgabe) {
+      searchProps.push({
+        term: 'art',
+        value: 'KINDLE',
+      });
+    } else if (!values.kindle && values.druckausgabe) {
+      searchProps.push({
+        term: 'art',
+        value: 'DRUCKAUSGABE',
+      });
+    }
     try {
       const rows = await searchBooks({ searchProps });
       setTimeout(() => {
@@ -152,12 +164,28 @@ const SearchForm = (props: SearchFormProps) => {
               options={['JavaScript', 'TypeScript']}
             />
             <FormRating name="rating" label="Bewertung" size="large" />
-            <FormRadioGroup
-              row
-              name="art"
-              options={['KINDLE', 'DRUCKAUSGABE']}
-              data-cy="type"
-            />
+            <Paper
+              sx={{
+                display: 'flex',
+                flexDirection: isDesktop ? 'row' : 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '65ch',
+                paddingX: '1rem',
+              }}
+            >
+              <FormCheckbox name="kindle" label="Kindle" data-cy="type" />
+              <FormCheckbox
+                name="druckausgabe"
+                label="Druckausgabe"
+                data-cy="type"
+              />
+            </Paper>
+            {methods.formState.errors?.kindle ? (
+              <FormHelperText>
+                {methods.formState.errors?.kindle.message}
+              </FormHelperText>
+            ) : null}
             <Button
               type="submit"
               variant="contained"

@@ -1,4 +1,4 @@
-import { number, object, string, TypeOf } from 'zod';
+import { boolean, number, object, string, TypeOf } from 'zod';
 
 const searchBookSchema = object({
   isbn: string()
@@ -10,16 +10,21 @@ const searchBookSchema = object({
   titel: object({
     titel: string(),
   }),
-  art: string(),
+  druckausgabe: boolean(),
+  kindle: boolean(),
   rating: number(),
   schlagwoerter: string().array(),
+}).refine((val) => val.druckausgabe || val.kindle, {
+  message: 'Mindestens eine Ausgabe muss ausgewählt sein',
+  path: ['kindle'],
 });
 
 const defaultValues: searchBookType = {
   isbn: '',
   titel: { titel: '' },
   rating: 0,
-  art: '',
+  druckausgabe: true,
+  kindle: true,
   schlagwoerter: [],
 };
 
