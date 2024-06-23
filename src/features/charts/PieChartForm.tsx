@@ -71,7 +71,13 @@ const PieChartForm = () => {
               },
             ]}
             width={isDesktop ? 400 : 300}
-            height={200}
+            height={375}
+            slotProps={{
+              legend: {
+                direction: 'row',
+                position:  {vertical: 'top', horizontal: 'middle'},
+              }
+            }}
           />
         </Paper>
       </Box>
