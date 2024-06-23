@@ -19,7 +19,7 @@ import {
   FormCheckbox,
   FormRating,
   FormTextfield,
-} from '@/components';
+} from '@/components/form';
 import {
   searchBookDefaultValues,
   searchBookSchema,

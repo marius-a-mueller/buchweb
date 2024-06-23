@@ -1,4 +1,4 @@
-import { fullBookType } from '@/components';
+import { fullBookType } from '@/components/form';
 import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { HttpStatusCode } from 'axios';

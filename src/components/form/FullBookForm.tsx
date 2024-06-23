@@ -15,7 +15,7 @@ import {
   FormRadioGroup,
   FormTextfield,
   FormSwitch,
-} from '@/components';
+} from '@/components/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { boolean, nullable, number, object, string, TypeOf, union } from 'zod';
 import { logger } from '@/util';
