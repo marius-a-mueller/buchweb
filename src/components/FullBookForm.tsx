@@ -181,6 +181,7 @@ const FullBookForm: FC<BookFormProps> = ({
             endAdornment="€"
             isNumber={true}
             InputProps={{ inputProps: { min: 0, step: 0.01 } }}
+            data-cy="preis-post"
           />
           <FormTextfield
             name="rabatt"
@@ -188,6 +189,7 @@ const FullBookForm: FC<BookFormProps> = ({
             endAdornment="%"
             isNumber={true}
             InputProps={{ inputProps: { min: 0, step: 0.01 } }}
+            data-cy="rabatt-post"
           />
           <FormDatePicker label="Datum" name="datum" />
           <FormTextfield
@@ -202,14 +204,14 @@ const FullBookForm: FC<BookFormProps> = ({
             label="Schlagwörter"
             options={['JavaScript', 'TypeScript']}
           />
-          <FormRating name="rating" label="Bewertung" size="large" />
+          <FormRating name="rating" label="Bewertung" size="large" data-cy='post-rating' />
           <FormRadioGroup
             row
             name="art"
             options={['KINDLE', 'DRUCKAUSGABE']}
             data-cy="type"
           />
-          <FormSwitch name="lieferbar" label="Lieferbar" />
+          <FormSwitch name="lieferbar" label="Lieferbar" data-cy='post-lieferbar'/>
 
           <Button
             type="submit"

@@ -210,6 +210,7 @@ const BookDetailView = () => {
                     color="secondary"
                     onClick={() => setEditMode(true)}
                     sx={{ mt: 2 }}
+                    data-cy="edit-button"
                   >
                     Bearbeiten
                   </Button>

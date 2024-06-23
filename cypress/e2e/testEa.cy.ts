@@ -44,7 +44,7 @@ describe('template spec', () => {
       });
   });
 
-  it('Überprüfe Anzeige eines gesuchten Buches', () => {
+  it('Überprüfe Anzeige eines gesuchten Buches und das Ändern von Buchdetails', () => {
       cy.get('[data-cy=logo]').click();
       cy.intercept('GET', '**/rest/**').as('searchRequest');
       cy.get('[data-cy=Suche]').click();
@@ -62,6 +62,30 @@ describe('template spec', () => {
       });
       cy.contains('Alpha').click();
       cy.wait(2000); 
+
+      //Überprüfe das Ändern von Buchdetails
+      cy.get('[data-cy=login-button]').click();
+    cy.get('[data-cy=login-username').type('admin');
+    cy.get('[data-cy=login-password').type('p');
+    cy.get('[data-cy=login-button-second]').click();
+    cy.wait(2000);
+    cy.get('[data-cy=edit-button]').click();
+    cy.get('[data-cy=preis-post] input').clear().type('100');
+    cy.get('[data-cy=post-rating]').eq(0).click()
+    cy.get('[data-cy=type]').contains('DRUCKAUSGABE').click()
+    cy.get('[data-cy=post-lieferbar]').click()
+
+
+    cy.get('[data-cy=post-button-form]').click();
+    cy.wait(2000);
+
+
+   
+   
+   
+   
+   
+    
     
   });
 
