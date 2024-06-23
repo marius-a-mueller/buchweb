@@ -21,8 +21,8 @@ const FormRating: FC<RhfRatingProps> = ({ name, label, ...otherProps }) => {
           <Typography>{label}</Typography>
           <Rating
             name={name}
-            value={Number(field.value)}
-            onChange={(_, value) => field.onChange(value)}
+            value={field.value}
+            onChange={(_, value) => field.onChange(value !== null ? value : 0)}
             {...otherProps}
           />
           {errors[name] && (

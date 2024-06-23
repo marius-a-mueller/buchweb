@@ -15,7 +15,7 @@ import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { EditBookForm } from '@/features/edit';
-import { fullBookType } from '@/components';
+import { fullBookType } from '@/components/form';
 import { logger } from '@/util';
 
 const BookDetailView = () => {

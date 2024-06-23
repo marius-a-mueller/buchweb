@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FullBookForm } from '@/components';
+import { FullBookForm } from '@/components/form';
 import { addBook } from './api/addBook';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
