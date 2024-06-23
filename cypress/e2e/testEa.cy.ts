@@ -35,8 +35,8 @@ describe('template spec', () => {
     cy.intercept('GET', '**/rest/**').as('searchRequest');
     cy.get('[data-cy=Suche').click();
     cy.wait(2000);
-    cy.get('[data-cy=isbn-search').type('978-3-897-22583-1');
-    cy.get('[data-cy=search-button-form').click();
+    cy.get('[data-cy=isbn-post]').type('978-3-897-22583-1');
+    cy.get('[data-cy=post-button-form]').click();
     cy.wait('@searchRequest')
       .its('response.body')
       .should((body) => {
@@ -49,8 +49,8 @@ describe('template spec', () => {
       cy.intercept('GET', '**/rest/**').as('searchRequest');
       cy.get('[data-cy=Suche]').click();
       cy.wait(2000); 
-      cy.get('[data-cy=isbn-search]').type('978-3-897-22583-1');
-      cy.get('[data-cy=search-button-form]').click();
+      cy.get('[data-cy=isbn-post]').type('978-3-897-22583-1');
+      cy.get('[data-cy=post-button-form]').click();
       cy.wait('@searchRequest')
         .its('response.body')
         .should((body) => {
@@ -126,32 +126,32 @@ describe('template spec', () => {
     cy.intercept('GET', '**/rest/**').as('searchRequest');
     cy.get('[data-cy=SucheSide').click();
     cy.wait(2000);
-    cy.get('[data-cy=isbn-search').type('978-3-897-22583-1');
-    cy.get('[data-cy=search-button-form').click();
+    cy.get('[data-cy=isbn-post').type('978-3-897-22583-1');
+    cy.get('[data-cy=post-button-form').click();
     cy.wait('@searchRequest')
       .its('response.body')
       .should((body) => {
         expect(body._embedded.buecher[0].isbn).to.equal('978-3-897-22583-1');
       });
-    cy.get('[data-cy=menuButton').click()
+    cy.get('[data-cy=menuButton]').click()
     //cy.get('[data-cy=neuesBuchSide').should('not.exist');
-    cy.get('[data-cy=NeuesBuchSide').click();
+    cy.get('[data-cy=NeuesBuchSide]').click();
     cy.wait(2000);
-    cy.get('[data-cy=isbn-post').type('978-3-649-64224-7');
+    cy.get('[data-cy=isbn-post]').type('978-3-649-64224-7');
     cy.wait(2000);
-    cy.get('[data-cy=titel-post').type('Frankenstein');
+    cy.get('[data-cy=titel-post]').type('Frankenstein');
     cy.wait(2000);
-    cy.get('[data-cy=homepage-post').type('https://Frankenstein.dev');
+    cy.get('[data-cy=homepage-post]').type('https://Frankenstein.dev');
     cy.wait(2000);
     cy.get('[data-cy=type]').contains('KINDLE').click();
     cy.wait(2000);
-    cy.get('[data-cy=post-button-form').click();
+    cy.get('[data-cy=post-button-form]').click();
     cy.wait(4000);
-    cy.get('[data-cy=menuButton').click()
-    cy.get('[data-cy=DiagrammeS').click();
-    cy.get('[data-cy=SäulendiagrammS').click();
+    cy.get('[data-cy=menuButton]').click()
+    cy.get('[data-cy=DiagrammeS]').click();
+    cy.get('[data-cy=SäulendiagrammS]').click();
     cy.wait(2000);
-    cy.get('[data-cy=DiagrammeS').click();
-    cy.get('[data-cy=KuchendiagrammS').click();
+    cy.get('[data-cy=DiagrammeS]').click();
+    cy.get('[data-cy=KuchendiagrammS]').click();
   });
 });
