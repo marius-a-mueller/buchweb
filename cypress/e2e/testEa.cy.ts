@@ -9,8 +9,8 @@ describe('template spec', () => {
   it('Überprüfe Login', () => {
     cy.get('[data-cy=logo]').click();
     cy.get('[data-cy=login-button]').click();
-    cy.get('[data-cy=login-username').type('admin');
-    cy.get('[data-cy=login-password').type('p');
+    cy.get('[data-cy=login-username]').type('admin');
+    cy.get('[data-cy=login-password]').type('p');
     cy.get('[data-cy=login-button-second]').click();
     cy.wait(2000);
     cy.get('[data-cy=logo').should('exist');
