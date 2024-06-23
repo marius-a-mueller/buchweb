@@ -12,7 +12,6 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
   name,
   isNumber = false,
   endAdornment = '',
-  InputProps,
   ...otherProps
 }) => {
   const theme = useTheme();
@@ -29,7 +28,6 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
       defaultValue={isNumber ? 0 : ''}
       render={({ field }) => (
         <TextField
-          {... field}
           {...otherProps}
           value={field.value}
           onChange={(event) =>
@@ -60,8 +58,7 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
             errors[name] ? (errors[name]?.message as unknown as string) : ''
           }
           InputProps={{
-            ...InputProps,
-            endAdornment,
+           endAdornment,
           }}
         />
       )}
