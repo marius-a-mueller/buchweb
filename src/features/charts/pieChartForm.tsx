@@ -6,6 +6,9 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import { useEffect, useState } from 'react';
 import { getTypes } from './api/getTypes';
 
+const SMALL_SIZE = 300;
+const BIG_SIZE = 350;
+
 const PieChartForm = () => {
   const [types, setTypes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -77,10 +80,12 @@ const PieChartForm = () => {
                     label: 'Druckausgabe',
                   },
                 ],
+                cx: isDesktop ? BIG_SIZE / 2 : SMALL_SIZE / 2,
+                cy: BIG_SIZE / 2,
               },
             ]}
-            width={isDesktop ? 400 : 300}
-            height={375}
+            width={isDesktop ? BIG_SIZE : SMALL_SIZE}
+            height={BIG_SIZE}
             slotProps={{
               legend: {
                 direction: 'row',

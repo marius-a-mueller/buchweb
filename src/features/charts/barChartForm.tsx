@@ -83,13 +83,7 @@ const BarChartForm = () => {
             loading={loading}
             series={[
               {
-                data: [
-                  countRating(1),
-                  countRating(2),
-                  countRating(3),
-                  countRating(4),
-                  countRating(5),
-                ],
+                data: Array.from({ length: 5 }, (_, i) => countRating(i + 1)),
               },
             ]}
             width={isDesktop ? 400 : 300}
