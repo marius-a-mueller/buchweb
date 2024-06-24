@@ -36,7 +36,7 @@ const fullBookSchema = object({
   }),
   art: string().min(1, 'Art ist erforderlich'),
   rating: number(),
-  preis: number().min(0, 'Preis muss positiv sein'),
+  preis: number().min(0.01, 'Preis muss positiv sein'),
   rabatt: number().min(0, 'Rabatt muss positiv sein'),
   datum: nullable(string()),
   homepage: union([
@@ -57,7 +57,7 @@ const fullBookDefaultValues: fullBookType = {
   titel: { titel: '', untertitel: '' },
   rating: 0,
   art: '',
-  preis: 0,
+  preis: 0.01,
   rabatt: 0,
   lieferbar: false,
   datum: '',
@@ -162,7 +162,6 @@ const FullBookForm: FC<BookFormProps> = ({
             name="isbn"
             required
             data-cy="isbn-post"
-            
           />
           <FormTextfield
             label="Titel"
@@ -205,14 +204,23 @@ const FullBookForm: FC<BookFormProps> = ({
             label="Schlagwörter"
             options={['JavaScript', 'TypeScript']}
           />
-          <FormRating name="rating" label="Bewertung" size="large" data-cy='post-rating' />
+          <FormRating
+            name="rating"
+            label="Bewertung"
+            size="large"
+            data-cy="post-rating"
+          />
           <FormRadioGroup
             row
             name="art"
             options={['KINDLE', 'DRUCKAUSGABE']}
             data-cy="type"
           />
-          <FormSwitch name="lieferbar" label="Lieferbar" data-cy='post-lieferbar'/>
+          <FormSwitch
+            name="lieferbar"
+            label="Lieferbar"
+            data-cy="post-lieferbar"
+          />
 
           <Button
             type="submit"
