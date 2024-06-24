@@ -18,21 +18,16 @@ const Home = () => {
 
       <Grid container spacing={2} sx={{ mt: 4 }} justifyContent="center">
         <Grid item xs={12} md={4}>
-          <Paper
-            elevation={3}
+          <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              padding:3,
               alignItems: 'center',
               justifyContent: 'space-between',
               height: '100%',
               border: 1,
               borderRadius: 1,
               p: 2,
-              '&:hover': {
-                boxShadow: 10,
-              },
             }}
           >
             <Typography
@@ -71,12 +66,11 @@ const Home = () => {
                 Mehr dazu
               </Button>
             </Link>
-          </Paper>
+          </Box>
         </Grid>
         {isLoggedIn() ? (
           <Grid item xs={12} md={4}>
-            <Paper
-              elevation={3}
+            <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -86,9 +80,6 @@ const Home = () => {
                 border: 1,
                 borderRadius: 1,
                 p: 2,
-                '&:hover': {
-                  boxShadow: 10,
-                },
               }}
             >
               <Typography
@@ -127,13 +118,12 @@ const Home = () => {
                   Mehr dazu
                 </Button>
               </Link>
-            </Paper>
+            </Box>
           </Grid>
         ) : undefined}
 
         <Grid item xs={12} md={4}>
-          <Paper
-            elevation={3}
+          <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -143,9 +133,6 @@ const Home = () => {
               border: 1,
               borderRadius: 1,
               p: 2,
-              '&:hover': {
-                boxShadow: 10,
-              },
             }}
           >
             <Typography
@@ -167,7 +154,7 @@ const Home = () => {
               vieles mehr!
             </Typography>
             <MenuDropdown label="Mehr dazu" data-cy="mehrDazu_Diagramm" />
-          </Paper>
+          </Box>
         </Grid>
       </Grid>
     </Container>

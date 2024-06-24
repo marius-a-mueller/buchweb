@@ -1,0 +1,9 @@
+singleQuote: true
+tabWidth: 2
+trailingComma: all
+plugins:
+  - prettier-plugin-organize-imports
+overrides:
+  - files: ['*.ts', '*.mts', '*.js', '*.mjs', '*.cjs']
+    options:
+      tabWidth: 4

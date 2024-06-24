@@ -1,3 +1,3 @@
-export * from './LoginModal';
-export * from './AuthProvider';
+export * from './authProvider';
 export * from './hooks/useAuth';
+export * from './loginModal';

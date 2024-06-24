@@ -1,29 +1,28 @@
-import { fullBookType } from '@/components/form';
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/naming-convention */
+import { type FullBookType } from '@/components/form';
 import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
-import { HttpStatusCode } from 'axios';
+import { AxiosInstance } from '@/util/axiosInstance';
 
-type EditBookProps = {
-  id: string;
-  book: fullBookType;
-  token: string;
-  etag: string | null;
-};
+interface EditBookProps {
+    id: string;
+    book: FullBookType;
+    token: string;
+    etag: string | undefined;
+}
 
 const editBook = async ({ id, book, token, etag }: EditBookProps) => {
-  logger.info('Editing book: ', book);
-  const url = `/rest/${id}`;
-  const response = await AxiosInstance.put(url, book, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'If-Match': etag ? etag : '',
-    },
-  });
+    logger.info('Editing book: ', book);
+    const url = `/rest/${id}`;
+    const response = await AxiosInstance.put(url, book, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'If-Match': etag ?? '',
+        },
+    });
 
-  logger.info('Response: ', response);
-  return response;
-  if (response.status !== HttpStatusCode.Created)
-    throw new Error('Error adding book');
+    logger.info('Response: ', response);
+    return response;
 };
 
 export { editBook };
