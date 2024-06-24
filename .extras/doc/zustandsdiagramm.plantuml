@@ -14,7 +14,7 @@ state AuthProvider {
       [*] --> Main
       Main -down-> Search : Button "Suche"
       Main -down-> NewBook : Button "Neues Buch" [wenn eingeloggt]
-      Main -down-> DiagramSelection : Button "Diagramme"
+      Main -down-> Diagram : Button "Diagramme"
     }
 
     state Search {
@@ -38,8 +38,6 @@ state AuthProvider {
     state BookDetail {
       [*] --> Details
       Details --> Edit: Button "Bearbeiten" [wenn eingeloggt]
-      Details --> Delete: Button "Löschen" [wenn eingeloggt]
-      Delete --> Search: Buch gelöscht
     }
 
     state Edit {
