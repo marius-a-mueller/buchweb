@@ -1,6 +1,5 @@
 /* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/naming-convention */
-
 import {
   FormAutocomplete,
   FormDatePicker,
@@ -21,15 +20,7 @@ import {
 } from '@mui/material';
 import { useState, type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  boolean,
-  nullable,
-  number,
-  object,
-  string,
-  union,
-  type TypeOf,
-} from 'zod';
+import { boolean, number, object, string, union, type TypeOf } from 'zod';
 
 const fullBookSchema = object({
   isbn: string().regex(
@@ -45,7 +36,7 @@ const fullBookSchema = object({
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   preis: number().min(0.01, 'Preis muss positiv sein'),
   rabatt: number().min(0, 'Rabatt muss positiv sein'),
-  datum: nullable(string()),
+  datum: string().nullish(),
   homepage: union([
     string().regex(
       // eslint-disable-next-line regexp/no-useless-quantifier, regexp/no-super-linear-backtracking, regexp/prefer-w, regexp/no-misleading-capturing-group, regexp/optimal-quantifier-concatenation
@@ -73,7 +64,7 @@ const fullBookDefaultValues: FullBookType = {
   preis: 0.01,
   rabatt: 0,
   lieferbar: false,
-  datum: '',
+  datum: undefined,
   homepage: '',
   schlagwoerter: [],
 };

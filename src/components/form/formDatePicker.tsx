@@ -27,7 +27,7 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   }, [register, name]);
   useEffect(() => {
     const value = getValues(name) as string;
-    if (value.length === 0) {
+    if (!value || value.length === 0) {
       setDate(undefined);
     } else {
       setDate(dayjs(value));
@@ -45,7 +45,7 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
         }}
         onChange={(val) => {
           try {
-            setValue(name, val?.toISOString().split('T')[0], {
+            setValue(name, val ? val.toISOString().split('T')[0] : undefined, {
               shouldDirty: true,
               shouldValidate: true,
             });
