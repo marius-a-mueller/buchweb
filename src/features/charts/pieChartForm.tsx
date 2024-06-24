@@ -1,3 +1,5 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { logger } from '@/util';
 import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -47,11 +49,19 @@ const PieChartForm = () => {
     >
       <Box width="500px" p={3}>
         <Paper
-          variant="outlined"
+          elevation={3}
           sx={{
-            padding: 2,
-            marginBottom: 2,
-            borderColor: 'grey.400',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: 3,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            border: 1,
+            borderRadius: 1,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            '&:hover': {
+              boxShadow: 10,
+            },
           }}
         >
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
@@ -71,7 +81,6 @@ const PieChartForm = () => {
                 ],
               },
             ]}
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             width={isDesktop ? 400 : 300}
             height={375}
             slotProps={{
