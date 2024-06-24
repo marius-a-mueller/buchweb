@@ -56,8 +56,6 @@ const PieChartForm = () => {
             padding: 3,
             alignItems: 'center',
             justifyContent: 'space-between',
-            border: 1,
-            borderRadius: 1,
             // eslint-disable-next-line @typescript-eslint/naming-convention
             '&:hover': {
               boxShadow: 10,
