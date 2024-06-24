@@ -149,17 +149,19 @@ const TabBar = () => {
             </ListItemIcon>
             <ListItemText primary="Suche" data-cy="SucheSide" />
           </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="new"
-            onClick={handleDrawerToggle}
-          >
-            <ListItemIcon>
-              <AutoStories />
-            </ListItemIcon>
-            <ListItemText primary="Neues Buch" data-cy="NeuesBuchSide" />
-          </ListItem>
+          {isLoggedIn() ? (
+            <ListItem
+              button
+              component={Link}
+              to="new"
+              onClick={handleDrawerToggle}
+            >
+              <ListItemIcon>
+                <AutoStories />
+              </ListItemIcon>
+              <ListItemText primary="Neues Buch" data-cy="NeuesBuchSide" />
+            </ListItem>
+          ) : undefined}
           <MenuCharts label="Diagramme" icon={<Equalizer />} />
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>

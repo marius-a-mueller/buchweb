@@ -27,8 +27,6 @@ const Home = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
               height: '100%',
-              border: 1,
-              borderRadius: 1,
               p: 2,
               // eslint-disable-next-line @typescript-eslint/naming-convention
               '&:hover': {
@@ -84,8 +82,6 @@ const Home = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 height: '100%',
-                border: 1,
-                borderRadius: 1,
                 p: 2,
                 // eslint-disable-next-line @typescript-eslint/naming-convention
                 '&:hover': {
@@ -142,8 +138,6 @@ const Home = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
               height: '100%',
-              border: 1,
-              borderRadius: 1,
               p: 2,
               // eslint-disable-next-line @typescript-eslint/naming-convention
               '&:hover': {
