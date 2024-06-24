@@ -1,17 +1,4 @@
-/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
-/* eslint-disable @typescript-eslint/naming-convention */
-
-import {
-  FormAutocomplete,
-  FormDatePicker,
-  FormRadioGroup,
-  FormRating,
-  FormSwitch,
-  FormTextfield,
-} from '@/components/form';
-import { logger } from '@/util';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { LibraryBooksRounded } from '@mui/icons-material';
+import { FC, useState } from 'react';
 import {
   Box,
   Button,
@@ -19,22 +6,29 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useState, type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import {
-  boolean,
-  nullable,
-  number,
-  object,
-  string,
-  union,
-  type TypeOf,
-} from 'zod';
+  FormAutocomplete,
+  FormDatePicker,
+  FormRating,
+  FormRadioGroup,
+  FormTextfield,
+  FormSwitch,
+} from '@/components/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { boolean, nullable, number, object, string, TypeOf, union } from 'zod';
+import { logger } from '@/util';
+
+type BookFormProps = {
+  onHandleSubmit: (values: fullBookType) => void;
+  defaultValues?: fullBookType;
+};
 
 const fullBookSchema = object({
   isbn: string().regex(
-    /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/u,
-    'Kein gültiges ISBN-Format (z.B. 978-0-007-00644-1)',
+    /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/,
+    'Kein gültiges ISBN-Format (z.B. 978-0-007-00644-1)'
   ),
   titel: object({
     titel: string().min(1, 'Titel ist erforderlich'),
@@ -42,15 +36,15 @@ const fullBookSchema = object({
   }),
   art: string().min(1, 'Art ist erforderlich'),
   rating: number(),
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   preis: number().min(0.01, 'Preis muss positiv sein'),
   rabatt: number().min(0, 'Rabatt muss positiv sein'),
   datum: nullable(string()),
   homepage: union([
     string().regex(
-      // eslint-disable-next-line regexp/no-useless-quantifier, regexp/no-super-linear-backtracking, regexp/prefer-w, regexp/no-misleading-capturing-group, regexp/optimal-quantifier-concatenation
-      /^(https?:\/\/(www\.)?|ftp:\/\/(www\.)?|www\.){1}([0-9A-Za-z-.@:%_+~#=]+)+((\.[a-zA-Z]{2,3})+)(\/(.)*)?(\?(.)*)?/u,
-      'Ungültige URL',
+      new RegExp(
+        '^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?'
+      ),
+      'Ungültige URL'
     ),
     string().min(1),
   ]),
@@ -58,14 +52,7 @@ const fullBookSchema = object({
   schlagwoerter: string().array(),
 });
 
-type FullBookType = TypeOf<typeof fullBookSchema>;
-
-interface BookFormProps {
-  onHandleSubmit: (values: FullBookType) => void;
-  defaultValues?: FullBookType;
-}
-
-const fullBookDefaultValues: FullBookType = {
+const fullBookDefaultValues: fullBookType = {
   isbn: '',
   titel: { titel: '', untertitel: '' },
   rating: 0,
@@ -78,6 +65,8 @@ const fullBookDefaultValues: FullBookType = {
   schlagwoerter: [],
 };
 
+type fullBookType = TypeOf<typeof fullBookSchema>;
+
 const FullBookForm: FC<BookFormProps> = ({
   onHandleSubmit,
   defaultValues = fullBookDefaultValues,
@@ -86,16 +75,16 @@ const FullBookForm: FC<BookFormProps> = ({
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const methods = useForm<FullBookType>({
+  const methods = useForm<fullBookType>({
     resolver: zodResolver(fullBookSchema),
     defaultValues,
   });
 
-  const onSave = (values: FullBookType) => {
-    logger.info(`Formstate: ${JSON.stringify(methods.formState.dirtyFields)}`);
-    logger.info(`val: ${JSON.stringify(values)}`);
+  const onSave = async (values: fullBookType) => {
+    logger.info('Formstate: ' + JSON.stringify(methods.formState.dirtyFields));
+    logger.info('val:' + JSON.stringify(values));
     setLoading(true);
-    onHandleSubmit(values);
+    await onHandleSubmit(values);
     setLoading(false);
   };
 
@@ -121,9 +110,9 @@ const FullBookForm: FC<BookFormProps> = ({
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor:
-              theme.palette.mode === 'light'
-                ? 'rgba(255, 255, 255, 0.8)'
-                : 'rgba(0, 0, 0, 0.8)',
+                theme.palette.mode === 'light'
+                  ? 'rgba(255, 255, 255, 0.8)'
+                  : 'rgba(0, 0, 0, 0.8)',
             zIndex: 9999,
           }}
         >
@@ -139,7 +128,7 @@ const FullBookForm: FC<BookFormProps> = ({
             }}
           />
         </Box>
-      ) : undefined}
+      ) : null}
       <FormProvider {...methods}>
         <Box
           component="form"
@@ -242,7 +231,7 @@ const FullBookForm: FC<BookFormProps> = ({
             color="secondary"
             disabled={!methods.formState.isDirty}
             data-cy="post-button-form"
-            startIcon={<LibraryBooksRounded />}
+            startIcon={<LibraryBooksRoundedIcon />}
           >
             OK
           </Button>
@@ -253,4 +242,5 @@ const FullBookForm: FC<BookFormProps> = ({
 };
 
 export { FullBookForm };
-export type { FullBookType };
+// eslint-disable-next-line react-refresh/only-export-components
+export type { fullBookType };

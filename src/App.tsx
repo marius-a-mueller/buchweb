@@ -1,41 +1,23 @@
-import { useAuth } from '@/features/auth';
-import { TabBar } from '@/features/ui/header';
-import { BookBarChart } from '@/pages/bookBarChart';
-import { BookDetail } from '@/pages/bookDetail';
-import { Forbidden } from '@/pages/forbidden';
-import { Home } from '@/pages/home';
-import { NewBook } from '@/pages/newBook';
-import { NotFound } from '@/pages/notFound';
-import { Search } from '@/pages/search';
-import { getTheme } from '@/theme';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import React from 'react';
+import { TabBar } from '@/features/ui/header';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { BookPieChart } from './pages/bookPieChart';
+import { Home } from '@/pages/Home';
+import { NotFound } from '@/pages/NotFound';
+import { Search } from '@/pages/Search';
+import { NewBook } from '@/pages/NewBook';
+import React from 'react';
+import { getTheme } from '@/theme';
+import { BookBarChart } from '@/pages/BookBarChart';
+import { useAuth } from '@/features/auth';
+import { Forbidden } from '@/pages/Forbidden';
+import { BookDetail } from '@/pages/BookDetail';
+import { BookPieChart } from './pages/BookPieChart';
 
-const ColorModeContext = React.createContext({
-  // eslint-disable-next-line no-empty-function
+export const ColorModeContext = React.createContext({
   toggleColorMode: () => {},
 });
 
-const Layout = () => (
-  <Box
-    sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'start',
-      alignItems: 'center',
-      width: '100svw',
-      height: '100svh',
-    }}
-  >
-    <TabBar />
-    <Outlet />
-  </Box>
-);
-
-const App = () => {
+function App() {
   const { writePermission } = useAuth();
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const colorMode = React.useMemo(
@@ -44,7 +26,7 @@ const App = () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
-    [],
+    []
   );
 
   const theme = React.useMemo(() => getTheme(mode), [mode]);
@@ -74,6 +56,24 @@ const App = () => {
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
-};
+}
 
-export { App, ColorModeContext };
+function Layout() {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'start',
+        alignItems: 'center',
+        width: '100svw',
+        height: '100svh',
+      }}
+    >
+      <TabBar />
+      <Outlet />
+    </Box>
+  );
+}
+
+export default App;

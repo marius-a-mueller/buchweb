@@ -1,7 +1,9 @@
-const Forbidden = () => (
-  <div>
-    <h1>Forbidden</h1>
-  </div>
-);
+const Forbidden = () => {
+  return (
+    <div>
+      <h1>Forbidden</h1>
+    </div>
+  );
+};
 
 export { Forbidden };

@@ -1,48 +1,50 @@
-import { Button, Menu, MenuItem } from '@mui/material';
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as React from 'react';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link } from 'react-router-dom';
 
-interface MenuDropDownProps {
+type MenuDropDownProps = {
   label: string;
-}
+};
 
-const MenuDropdown = ({ label }: MenuDropDownProps) => (
-  <PopupState variant="popover" popupId="demo-popup-menu">
-    {(popupState) => (
-      <React.Fragment>
-        <Button
-          variant="outlined"
-          color="secondary"
-          {...bindTrigger(popupState)}
-          sx={{ margin: '5px' }}
-          data-cy={label}
-        >
-          {label}
-        </Button>
-        <Menu {...bindMenu(popupState)}>
-          <MenuItem
-            component={Link}
-            to="barchart"
-            onClick={popupState.close}
-            data-cy="Säulendiagramm"
+const MenuDropdown = ({ label }: MenuDropDownProps) => {
+  return (
+    <PopupState variant="popover" popupId="demo-popup-menu">
+      {(popupState) => (
+        <React.Fragment>
+          <Button
+            variant="outlined"
+            color="secondary"
+            {...bindTrigger(popupState)}
+            sx={{ margin: '5px' }}
+            data-cy={label}
           >
-            Säulendiagramm
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="piechart"
-            onClick={popupState.close}
-            data-cy="Piechart"
-          >
-            Kuchendiagramm
-          </MenuItem>
-        </Menu>
-      </React.Fragment>
-    )}
-  </PopupState>
-);
+            {label}
+          </Button>
+          <Menu {...bindMenu(popupState)}>
+            <MenuItem
+              component={Link}
+              to="barchart"
+              onClick={popupState.close}
+              data-cy="Säulendiagramm"
+            >
+              Säulendiagramm
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              to="piechart"
+              onClick={popupState.close}
+              data-cy="Piechart"
+            >
+              Kuchendiagramm
+            </MenuItem>
+          </Menu>
+        </React.Fragment>
+      )}
+    </PopupState>
+  );
+};
 
 export { MenuDropdown };

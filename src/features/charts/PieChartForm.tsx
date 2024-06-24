@@ -1,8 +1,8 @@
-import { logger } from '@/util';
-import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { PieChart } from '@mui/x-charts/PieChart';
-import { useEffect, useState } from 'react';
+import { Box, Typography, Paper, useTheme, useMediaQuery } from '@mui/material';
 import { getTypes } from './api/getTypes';
+import { useState, useEffect } from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
+import { logger } from '@/util';
 
 const PieChartForm = () => {
   const [types, setTypes] = useState<string[]>([]);
@@ -17,18 +17,17 @@ const PieChartForm = () => {
         const tempTypes = await getTypes();
         logger.info('Fetched types: ', tempTypes);
         setTypes(tempTypes);
-      } catch (err) {
-        console.error('Error fetching book details:', err);
+      } catch (error) {
+        console.error('Error fetching book details:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    // eslint-disable-next-line no-void
-    void fetchBook();
+    fetchBook();
   }, []);
 
-  const countType = (typ: string) => {
+  const countType = function (typ: string) {
     let count = 0;
     types.forEach((typen) => {
       if (typen === typ) {
@@ -71,14 +70,13 @@ const PieChartForm = () => {
                 ],
               },
             ]}
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             width={isDesktop ? 400 : 300}
             height={375}
             slotProps={{
               legend: {
                 direction: 'row',
-                position: { vertical: 'top', horizontal: 'middle' },
-              },
+                position:  {vertical: 'top', horizontal: 'middle'},
+              }
             }}
           />
         </Paper>

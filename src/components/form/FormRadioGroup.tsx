@@ -2,10 +2,10 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  RadioGroupProps,
   Typography,
-  type RadioGroupProps,
 } from '@mui/material';
-import { type FC } from 'react';
+import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfRadioGroupProps = {

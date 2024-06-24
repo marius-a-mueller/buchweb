@@ -1,15 +1,12 @@
-import { App } from '@/app';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React from 'react';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import ReactDOM from 'react-dom/client';
+import App from '@/App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './features/auth';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-// eslint-disable-next-line no-undef
-ReactDOM.createRoot(document.querySelector('#root')!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <AuthProvider>
@@ -18,5 +15,5 @@ ReactDOM.createRoot(document.querySelector('#root')!).render(
         </BrowserRouter>
       </AuthProvider>
     </LocalizationProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

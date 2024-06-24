@@ -1,15 +1,15 @@
-import { FullBookForm, type FullBookType } from '@/components/form';
-import { logger } from '@/util';
-import { type FC } from 'react';
+import { FC } from 'react';
+import { FullBookForm, fullBookType } from '@/components/form';
 import { useAuth } from '../auth';
 import { editBook } from './api/editBook';
+import { logger } from '@/util';
 
-interface EditBookFormProps {
+type EditBookFormProps = {
   id: string;
-  book: FullBookType;
-  etag: string | undefined;
-  onSave: (updatedBook: FullBookType, etag: string | null) => void;
-}
+  book: fullBookType;
+  etag: string | null;
+  onSave: (updatedBook: fullBookType, etag: string | null) => void;
+};
 
 const EditBookForm: FC<EditBookFormProps> = ({
   id,
@@ -23,17 +23,15 @@ const EditBookForm: FC<EditBookFormProps> = ({
     <FullBookForm
       defaultValues={book}
       onHandleSubmit={async (values) => {
-        logger.info(`values: ${JSON.stringify(values)}`);
+        logger.info('values: ' + JSON.stringify(values));
         try {
           const response = await editBook({ id, book: values, token, etag });
 
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const newEtag = response.headers.etag;
-          logger.info(`New ETAG: ${newEtag}`);
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          logger.info('New ETAG: ' + newEtag);
           onSave(values, newEtag);
-        } catch (err) {
-          console.error('Error updating book details:', err);
+        } catch (error) {
+          console.error('Error updating book details:', error);
         }
       }}
     />

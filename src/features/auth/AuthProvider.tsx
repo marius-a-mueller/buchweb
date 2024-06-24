@@ -1,10 +1,8 @@
-import { logger } from '@/util';
-import { AxiosInstance } from '@/util/axiosInstance';
-import { AxiosError, HttpStatusCode } from 'axios';
-// eslint-disable-next-line @typescript-eslint/naming-convention, n/no-extraneous-import, import/no-extraneous-dependencies
-import PropTypes from 'prop-types';
-// eslint-disable-next-line @typescript-eslint/naming-convention
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosError } from 'axios';
+import { logger } from '@/util';
 
 interface LoginType {
   username: string;
@@ -23,7 +21,6 @@ const AuthContext = React.createContext<AuthContextType>({
   token: '',
   writePermission: false,
   login: () => Promise.resolve(false),
-  // eslint-disable-next-line unicorn/no-useless-undefined
   logout: () => undefined,
   isLoggedIn: () => false,
 });
@@ -34,30 +31,27 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async ({ username, password }: LoginType) => {
     const requestData = `username=${encodeURIComponent(
-      username,
+      username
     )}&password=${encodeURIComponent(password)}`;
 
     try {
       const response = await AxiosInstance.post('/auth/login', requestData);
       logger.info(response);
-      if (response.status !== (HttpStatusCode.Ok as number)) {
-        return false;
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      if (response.status !== 200) return false;
       setToken(response.data.access_token);
       setWritePermission(true);
-      // eslint-disable-next-line require-atomic-updates
-      AxiosInstance.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`;
+      AxiosInstance.defaults.headers.common['Authorization'] =
+        `Bearer ${response.data.access_token}`;
       return true;
-    } catch (err) {
+    } catch (error) {
       if (
-        err instanceof AxiosError &&
-        err.response &&
-        err.response.status === (HttpStatusCode.Unauthorized as number)
+        error instanceof AxiosError &&
+        error.response &&
+        error.response.status === 401
       ) {
         return false;
       }
-      console.error('Error while logging in:', err);
+      console.error('Error while logging in:', error);
       throw new Error('Error while logging in');
     }
   };
@@ -65,10 +59,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = () => {
     setToken('');
     setWritePermission(false);
-    delete AxiosInstance.defaults.headers.common.Authorization;
+    delete AxiosInstance.defaults.headers.common['Authorization'];
   };
 
-  const isLoggedIn = () => token !== '';
+  const isLoggedIn = () => {
+    return token !== '';
+  };
 
   return (
     <AuthContext.Provider

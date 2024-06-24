@@ -23,10 +23,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
+    
     /* Cypress types */
-    "types": ["cypress", "node"]
+    "types": ["cypress","node"]
   },
-  "include": ["src", "__tests__", "cypress", ".eslintrc.cjs", "jest.config.js"],
+  "include": ["src","__tests__","cypress"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

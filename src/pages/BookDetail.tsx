@@ -1,5 +1,7 @@
 import { BookDetailView } from '@/features/edit';
 
-const BookDetail = () => <BookDetailView />;
+const BookDetail = () => {
+  return <BookDetailView />;
+};
 
 export { BookDetail };

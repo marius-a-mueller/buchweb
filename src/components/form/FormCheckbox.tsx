@@ -1,10 +1,10 @@
 import {
   Checkbox,
+  CheckboxProps,
   FormControl,
   FormControlLabel,
-  type CheckboxProps,
 } from '@mui/material';
-import { type FC } from 'react';
+import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfCheckboxProps = {
@@ -25,10 +25,9 @@ const FormCheckbox: FC<RhfCheckboxProps> = ({ name, label, ...otherProps }) => {
             control={
               <Checkbox
                 inputRef={field.ref}
-                checked={field.value as boolean}
+                checked={(field.value as boolean) ?? false}
                 onChange={(_, checked) => field.onChange(checked)}
                 onBlur={field.onBlur}
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 inputProps={{ 'aria-label': 'controlled' }}
                 {...otherProps}
               />

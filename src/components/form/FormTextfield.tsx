@@ -1,7 +1,5 @@
-// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/naming-convention */
-import { TextField, useTheme, type TextFieldProps } from '@mui/material';
-import { type FC } from 'react';
+import { TextField, TextFieldProps, useTheme } from '@mui/material';
+import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfTextfieldProps = {
@@ -31,10 +29,10 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
       render={({ field }) => (
         <TextField
           {...otherProps}
-          value={field.value as string}
+          value={field.value}
           onChange={(event) =>
             field.onChange(
-              isNumber ? Number(event.target.value) : event.target.value,
+              isNumber ? Number(event.target.value) : event.target.value
             )
           }
           sx={{
@@ -55,12 +53,12 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
           }}
           name={name}
           type={isNumber ? 'number' : 'text'}
-          error={Boolean(errors[name])}
+          error={!!errors[name]}
           helperText={
             errors[name] ? (errors[name]?.message as unknown as string) : ''
           }
           InputProps={{
-            endAdornment,
+           endAdornment,
           }}
         />
       )}
