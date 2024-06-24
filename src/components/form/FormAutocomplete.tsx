@@ -1,11 +1,13 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Autocomplete,
-  AutocompleteProps,
   Chip,
   TextField,
   useTheme,
+  type AutocompleteProps,
 } from '@mui/material';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfAutocompleteProps = {
@@ -37,14 +39,15 @@ const FormAutocomplete: FC<RhfAutocompleteProps> = ({
           multiple
           onBlur={onBlur}
           onChange={(_, data) => onChange(data)}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           value={value || ''}
           id="tags-filled"
           options={options}
           defaultValue={undefined}
           freeSolo
           {...otherProps}
-          renderTags={(value: readonly string[]) =>
-            value.map((option: string) => (
+          renderTags={(val: readonly string[]) =>
+            val.map((option: string) => (
               <Chip variant="outlined" label={option} key={option} />
             ))
           }
@@ -54,7 +57,7 @@ const FormAutocomplete: FC<RhfAutocompleteProps> = ({
               name={name}
               inputRef={ref}
               variant="filled"
-              error={!!errors[name]}
+              error={Boolean(errors[name])}
               label={label}
               sx={{
                 '& label.Mui-focused': { color },

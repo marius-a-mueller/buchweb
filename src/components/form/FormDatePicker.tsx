@@ -1,25 +1,25 @@
 import {
   DatePicker,
-  DatePickerProps,
   LocalizationProvider,
+  type DatePickerProps,
 } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
-import { FC, useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import dayjs, { type Dayjs } from 'dayjs';
 import 'dayjs/locale/de';
+import { useEffect, useState, type FC } from 'react';
+import { useFormContext } from 'react-hook-form';
 
 type RhfDatePickerProps = {
   name: string;
   label: string;
-} & Partial<DatePickerProps<Dayjs, false>>;
+} & Partial<DatePickerProps<Dayjs>>;
 
 const FormDatePicker: FC<RhfDatePickerProps> = ({
   name,
   label,
   ...otherProps
 }) => {
-  const [date, setDate] = useState<Dayjs | null>(null);
+  const [date, setDate] = useState<Dayjs | undefined>();
 
   const { register, getValues, setValue } = useFormContext();
   useEffect(() => {
@@ -28,7 +28,7 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   useEffect(() => {
     const value = getValues(name) as string;
     if (value.length === 0) {
-      setDate(null);
+      setDate(undefined);
     } else {
       setDate(dayjs(value));
     }
@@ -41,16 +41,16 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
         disableFuture
         label={label}
         slotProps={{
-          field: { clearable: true, onClear: () => setDate(null) },
+          field: { clearable: true, onClear: () => setDate(undefined) },
         }}
-        onChange={(date) => {
+        onChange={(val) => {
           try {
-            setValue(name, date?.toISOString().split('T')[0], {
+            setValue(name, val?.toISOString().split('T')[0], {
               shouldDirty: true,
               shouldValidate: true,
             });
             // eslint-disable-next-line no-empty
-          } catch (_) {}
+          } catch {}
         }}
         {...otherProps}
       />

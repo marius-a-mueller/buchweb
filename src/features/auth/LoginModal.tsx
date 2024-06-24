@@ -1,19 +1,24 @@
-import { useState } from 'react';
-import { KeyboardEvent } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import LoginIcon from '@mui/icons-material/Login';
-import CloseIcon from '@mui/icons-material/Close';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useAuth } from './hooks/useAuth';
-import { Alert, Box, useTheme } from '@mui/material';
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/naming-convention */
 
-export function LoginModal() {
+import { Close, Login } from '@mui/icons-material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  useTheme,
+} from '@mui/material';
+import { useState, type KeyboardEvent } from 'react';
+import { useAuth } from './hooks/useAuth';
+
+const LoginModal = () => {
   const theme = useTheme();
   const { login, logout, isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
@@ -44,7 +49,7 @@ export function LoginModal() {
       } else {
         setShowError('Login fehlgeschlagen!');
       }
-    } catch (error) {
+    } catch {
       setShowError('Keine Verbindung zum Server!');
     } finally {
       setLoading(false);
@@ -53,6 +58,7 @@ export function LoginModal() {
 
   const handleKeyDown = (e: KeyboardEvent<unknown>, callback: () => void) => {
     if (e.key === 'Enter') {
+      // eslint-disable-next-line n/callback-return
       callback();
     }
   };
@@ -64,7 +70,7 @@ export function LoginModal() {
           data-cy="logout-button"
           variant="outlined"
           color="secondary"
-          startIcon={<CloseIcon />}
+          startIcon={<Close />}
           onClick={logout}
           disableFocusRipple
         >
@@ -75,7 +81,7 @@ export function LoginModal() {
           data-cy="login-button"
           variant="outlined"
           color="secondary"
-          startIcon={<LoginIcon />}
+          startIcon={<Login />}
           onClick={handleOpen}
         >
           Login
@@ -115,9 +121,9 @@ export function LoginModal() {
               data-cy="login-password"
               autoComplete="on"
             />
-            {showError !== '' ? (
+            {showError === '' ? undefined : (
               <Alert severity="error">{showError}</Alert>
-            ) : null}
+            )}
             {loading && (
               <Box
                 sx={{
@@ -155,7 +161,7 @@ export function LoginModal() {
           <Button
             variant="outlined"
             color="secondary"
-            startIcon={<CloseIcon />}
+            startIcon={<Close />}
             onClick={handleClose}
             disabled={loading}
           >
@@ -164,7 +170,7 @@ export function LoginModal() {
           <Button
             variant="contained"
             color="secondary"
-            endIcon={<LoginIcon />}
+            endIcon={<Login />}
             onClick={handleLogin}
             data-cy="login-button-second"
             disabled={loading}
@@ -175,4 +181,6 @@ export function LoginModal() {
       </Dialog>
     </>
   );
-}
+};
+
+export { LoginModal };

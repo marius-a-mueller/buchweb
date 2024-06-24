@@ -1,10 +1,10 @@
 import {
   FormControlLabel,
   Switch,
-  SwitchProps,
   Typography,
+  type SwitchProps,
 } from '@mui/material';
-import { FC } from 'react';
+import { type FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfSwitchProps = {

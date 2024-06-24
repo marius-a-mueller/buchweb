@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
+import { ColorModeContext } from '@/App';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import HKALogo from '@/assets/HKALogo.png';
+import { LoginModal, useAuth } from '@/features/auth';
+import {
+  AutoStories,
+  Brightness4,
+  Brightness7,
+  Equalizer,
+  Menu,
+  Search,
+} from '@mui/icons-material';
 import {
   AppBar,
-  Container,
-  Toolbar,
   Box,
-  IconButton,
+  Container,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  useTheme,
+  Toolbar,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import { ColorModeContext } from '@/App';
-import { MenuItem as TabBarMenuItem } from './MenuItem';
-import { MenuDropdown } from './MenuDropdown';
-import HKALogo from '@/assets/HKALogo.png';
-import { LoginModal, useAuth } from '@/features/auth';
-import MenuIcon from '@mui/icons-material/Menu';
 import { MenuCharts } from './MenuCharts';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
+import { MenuDropdown } from './MenuDropdown';
+import { MenuItem as TabBarMenuItem } from './MenuItem';
 
 const TabBar = () => {
   const theme = useTheme();
@@ -76,19 +80,15 @@ const TabBar = () => {
                     }
               }
             >
-              <TabBarMenuItem
-                name="Suche"
-                link="search"
-                icon={<SearchIcon />}
-              />
+              <TabBarMenuItem name="Suche" link="search" icon={<Search />} />
               {isLoggedIn() ? (
                 <TabBarMenuItem
                   name="Neues Buch"
                   data-cy="neuesBuch"
                   link="new"
-                  icon={<AutoStoriesIcon />}
+                  icon={<AutoStories />}
                 />
-              ) : null}
+              ) : undefined}
 
               <MenuDropdown label="Diagramme" />
             </Box>
@@ -99,7 +99,7 @@ const TabBar = () => {
               alignItems: 'center',
             }}
           >
-            {isDesktop ? <LoginModal /> : null}
+            {isDesktop ? <LoginModal /> : undefined}
             <IconButton
               style={{
                 marginLeft: '1rem',
@@ -109,9 +109,9 @@ const TabBar = () => {
               data-cy="toggle-dark-mode"
             >
               {theme.palette.mode === 'dark' ? (
-                <Brightness7Icon />
+                <Brightness7 />
               ) : (
-                <Brightness4Icon />
+                <Brightness4 />
               )}
             </IconButton>
             <IconButton
@@ -131,7 +131,7 @@ const TabBar = () => {
                     }
               }
             >
-              <MenuIcon />
+              <Menu />
             </IconButton>
           </Box>
         </Toolbar>
@@ -145,7 +145,7 @@ const TabBar = () => {
             onClick={handleDrawerToggle}
           >
             <ListItemIcon>
-              <SearchIcon />
+              <Search />
             </ListItemIcon>
             <ListItemText primary="Suche" data-cy="SucheSide" />
           </ListItem>
@@ -156,11 +156,11 @@ const TabBar = () => {
             onClick={handleDrawerToggle}
           >
             <ListItemIcon>
-              <AutoStoriesIcon />
+              <AutoStories />
             </ListItemIcon>
             <ListItemText primary="Neues Buch" data-cy="NeuesBuchSide" />
           </ListItem>
-          <MenuCharts label="Diagramme" icon={<EqualizerIcon />} />
+          <MenuCharts label="Diagramme" icon={<Equalizer />} />
 
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <LoginModal />

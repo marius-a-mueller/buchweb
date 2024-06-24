@@ -1,8 +1,8 @@
-import { BarChart } from '@mui/x-charts/BarChart';
-import { Box, Typography, Paper, useMediaQuery, useTheme } from '@mui/material';
-import { getStats } from './api/getStats';
-import { useState, useEffect } from 'react';
 import { logger } from '@/util';
+import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { useEffect, useState } from 'react';
+import { getStats } from './api/getStats';
 
 const BarChartForm = () => {
   const [ratings, setRatings] = useState<number[]>([]);
@@ -17,14 +17,15 @@ const BarChartForm = () => {
         const tempRatings = await getStats();
         logger.info('Fetched ratings: ', tempRatings);
         setRatings(tempRatings);
-      } catch (error) {
-        console.error('Error fetching book details:', error);
+      } catch (err) {
+        console.error('Error fetching book details:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBook();
+    // eslint-disable-next-line no-void
+    void fetchBook();
   }, []);
 
   const countRating = (i: number) => {
@@ -74,15 +75,10 @@ const BarChartForm = () => {
             loading={loading}
             series={[
               {
-                data: [
-                  countRating(1),
-                  countRating(2),
-                  countRating(3),
-                  countRating(4),
-                  countRating(5),
-                ],
+                data: Array.from({ length: 5 }, (_, i) => countRating(i + 1)),
               },
             ]}
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             width={isDesktop ? 400 : 300}
             height={300}
           />

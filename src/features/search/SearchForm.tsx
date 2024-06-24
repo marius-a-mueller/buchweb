@@ -1,6 +1,13 @@
-import { useState } from 'react';
-import { BookTableRow } from './BookTable';
-import SearchIcon from '@mui/icons-material/Search';
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/naming-convention */
+import {
+  FormAutocomplete,
+  FormCheckbox,
+  FormRating,
+  FormTextfield,
+} from '@/components/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Search } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -11,20 +18,17 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { searchBooks } from './api/searchBooks';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  FormAutocomplete,
-  FormCheckbox,
-  FormRating,
-  FormTextfield,
-} from '@/components/form';
+import { type BookTableRow } from './BookTable';
 import {
   searchBookDefaultValues,
   searchBookSchema,
-  searchBookType,
+  type SearchBookType,
 } from './SearchBookType';
+import { searchBooks } from './api/searchBooks';
+
+const TIMEOUT = 1000;
 
 interface SearchFormProps {
   setBookTableRows: (rows: BookTableRow[]) => void;
@@ -36,7 +40,7 @@ const SearchForm = (props: SearchFormProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const onHandleSubmit = async (values: searchBookType) => {
+  const onHandleSubmit = async (values: SearchBookType) => {
     setLoading(true);
     const searchProps = [
       { term: 'isbn', value: values.isbn },
@@ -65,17 +69,17 @@ const SearchForm = (props: SearchFormProps) => {
     try {
       const rows = await searchBooks({ searchProps });
       setTimeout(() => {
-        setBookTableRows(rows?.length ? rows : []);
+        setBookTableRows(rows.length > 0 ? rows : []);
         setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error(error);
+      }, TIMEOUT);
+    } catch (err) {
+      console.error(err);
       setBookTableRows([]);
       setLoading(false);
     }
   };
 
-  const methods = useForm<searchBookType>({
+  const methods = useForm<SearchBookType>({
     resolver: zodResolver(searchBookSchema),
     defaultValues: searchBookDefaultValues,
   });
@@ -184,17 +188,17 @@ const SearchForm = (props: SearchFormProps) => {
                 data-cy="type"
               />
             </Paper>
-            {methods.formState.errors?.kindle ? (
+            {methods.formState.errors.kindle ? (
               <FormHelperText>
-                {methods.formState.errors?.kindle.message}
+                {methods.formState.errors.kindle.message}
               </FormHelperText>
-            ) : null}
+            ) : undefined}
             <Button
               type="submit"
               variant="contained"
               color="secondary"
               data-cy="post-button-form"
-              startIcon={<SearchIcon />}
+              startIcon={<Search />}
             >
               Suchen
             </Button>

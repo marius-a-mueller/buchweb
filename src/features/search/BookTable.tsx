@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/naming-convention */
+import {
+  FirstPage,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  LastPage,
+} from '@mui/icons-material';
+import {
+  Box,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableFooter,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableContainer from '@mui/material/TableContainer';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import { TableHead } from '@mui/material';
-import TableCell from '@mui/material/TableCell';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface TablePaginationActionsProps {
@@ -23,9 +29,12 @@ interface TablePaginationActionsProps {
   rowsPerPage: number;
   onPageChange: (
     event: React.MouseEvent<HTMLButtonElement>,
-    newPage: number
+    newPage: number,
   ) => void;
 }
+
+const ROWS_PER_PAGE = 5;
+const ROW_MULTIPLIER = 53;
 
 interface BookTableRow {
   id: string;
@@ -46,25 +55,25 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
   const { count, page, rowsPerPage, onPageChange } = props;
 
   const handleFirstPageButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, 0);
   };
 
   const handleBackButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, page - 1);
   };
 
   const handleNextButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, page + 1);
   };
 
   const handleLastPageButtonClick = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
@@ -76,7 +85,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPage /> : <FirstPage />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
@@ -105,7 +114,7 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPage /> : <LastPage />}
       </IconButton>
     </Box>
   );
@@ -113,9 +122,9 @@ const TablePaginationActions = (props: TablePaginationActionsProps) => {
 
 const BookTable = (props: BookTableProps) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE);
   const navigate = useNavigate();
-  const rows = props.rows?.sort((a, b) => (a.rating > b.rating ? -1 : 1));
+  const rows = props.rows.sort((a, b) => (a.rating > b.rating ? -1 : 1));
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -123,15 +132,15 @@ const BookTable = (props: BookTableProps) => {
 
   const handleChangePage = (
     _: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
+    newPage: number,
   ) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(Number.parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -155,7 +164,7 @@ const BookTable = (props: BookTableProps) => {
               hover={true}
               key={row.title}
               onClick={() => {
-                navigate('/buchweb/book/' + row.id);
+                navigate(`/buchweb/book/${row.id}`);
               }}
               sx={{
                 cursor: 'pointer',
@@ -193,7 +202,7 @@ const BookTable = (props: BookTableProps) => {
             </TableRow>
           ))}
           {emptyRows > 0 && (
-            <TableRow hover style={{ height: 53 * emptyRows }}>
+            <TableRow hover style={{ height: ROW_MULTIPLIER * emptyRows }}>
               <TableCell colSpan={6} />
             </TableRow>
           )}
@@ -201,7 +210,14 @@ const BookTable = (props: BookTableProps) => {
         <TableFooter>
           <TableRow sx={{ width: '100%' }}>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[
+                ROWS_PER_PAGE,
+                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                2 * ROWS_PER_PAGE,
+                // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                3 * ROWS_PER_PAGE,
+                { label: 'All', value: -1 },
+              ]}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}

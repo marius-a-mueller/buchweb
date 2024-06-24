@@ -1,11 +1,8 @@
-import { useParams } from 'react-router-dom';
-import { Container, Box, Typography, Grid, Button } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import { Link } from 'react-router-dom';
-import { MenuDropdown } from '@/features/ui/header/MenuDropdown';
 import { useAuth } from '@/features/auth';
+import { MenuDropdown } from '@/features/ui/header/MenuDropdown';
+import { AutoStories, Equalizer, Search } from '@mui/icons-material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
 
 const Home = () => {
   const { isLoggedIn } = useAuth();
@@ -40,7 +37,7 @@ const Home = () => {
             >
               Suche
             </Typography>
-            <SearchIcon />
+            <Search />
             <Typography
               variant="body2"
               color="textSecondary"
@@ -92,7 +89,7 @@ const Home = () => {
               >
                 Neues Buch
               </Typography>
-              <AutoStoriesIcon />
+              <AutoStories />
               <Typography
                 variant="body2"
                 color="textSecondary"
@@ -123,7 +120,7 @@ const Home = () => {
               </Link>
             </Box>
           </Grid>
-        ) : null}
+        ) : undefined}
 
         <Grid item xs={12} md={4}>
           <Box
@@ -145,7 +142,7 @@ const Home = () => {
             >
               Diagramme
             </Typography>
-            <EqualizerIcon />
+            <Equalizer />
             <Typography
               variant="body2"
               color="textSecondary"

@@ -1,23 +1,41 @@
-import { Box, CssBaseline, ThemeProvider } from '@mui/material';
+import { useAuth } from '@/features/auth';
 import { TabBar } from '@/features/ui/header';
-import { Outlet, Route, Routes } from 'react-router-dom';
+import { BookBarChart } from '@/pages/BookBarChart';
+import { BookDetail } from '@/pages/BookDetail';
+import { Forbidden } from '@/pages/Forbidden';
 import { Home } from '@/pages/Home';
+import { NewBook } from '@/pages/NewBook';
 import { NotFound } from '@/pages/NotFound';
 import { Search } from '@/pages/Search';
-import { NewBook } from '@/pages/NewBook';
-import React from 'react';
 import { getTheme } from '@/theme';
-import { BookBarChart } from '@/pages/BookBarChart';
-import { useAuth } from '@/features/auth';
-import { Forbidden } from '@/pages/Forbidden';
-import { BookDetail } from '@/pages/BookDetail';
+import { Box, CssBaseline, ThemeProvider } from '@mui/material';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+import React from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import { BookPieChart } from './pages/BookPieChart';
 
-export const ColorModeContext = React.createContext({
+const ColorModeContext = React.createContext({
+  // eslint-disable-next-line no-empty-function
   toggleColorMode: () => {},
 });
 
-function App() {
+const Layout = () => (
+  <Box
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'start',
+      alignItems: 'center',
+      width: '100svw',
+      height: '100svh',
+    }}
+  >
+    <TabBar />
+    <Outlet />
+  </Box>
+);
+
+const App = () => {
   const { writePermission } = useAuth();
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const colorMode = React.useMemo(
@@ -26,7 +44,7 @@ function App() {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
       },
     }),
-    []
+    [],
   );
 
   const theme = React.useMemo(() => getTheme(mode), [mode]);
@@ -56,24 +74,6 @@ function App() {
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
-}
+};
 
-function Layout() {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'start',
-        alignItems: 'center',
-        width: '100svw',
-        height: '100svh',
-      }}
-    >
-      <TabBar />
-      <Outlet />
-    </Box>
-  );
-}
-
-export default App;
+export { App, ColorModeContext };

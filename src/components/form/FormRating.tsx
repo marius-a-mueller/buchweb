@@ -1,5 +1,5 @@
-import { Rating, RatingProps, Typography } from '@mui/material';
-import { FC } from 'react';
+import { Rating, Typography, type RatingProps } from '@mui/material';
+import { type FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type RhfRatingProps = {
@@ -21,8 +21,8 @@ const FormRating: FC<RhfRatingProps> = ({ name, label, ...otherProps }) => {
           <Typography>{label}</Typography>
           <Rating
             name={name}
-            value={field.value}
-            onChange={(_, value) => field.onChange(value !== null ? value : 0)}
+            value={field.value as number}
+            onChange={(_, value) => field.onChange(value ?? 0)}
             {...otherProps}
           />
           {errors[name] && (

@@ -1,30 +1,32 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  Box,
-  CircularProgress,
-  Typography,
-  Button,
-  Paper,
-  Container,
-  Grid,
-  Rating,
-  Chip,
-} from '@mui/material';
-import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
-import { AxiosInstance } from '@/util/AxiosInstance';
+/* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type FullBookType } from '@/components/form';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { EditBookForm } from '@/features/edit';
-import { fullBookType } from '@/components/form';
 import { logger } from '@/util';
+import { AxiosInstance } from '@/util/AxiosInstance';
+import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  Container,
+  Grid,
+  Paper,
+  Rating,
+  Typography,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const BookDetailView = () => {
   const { id = 'default' } = useParams<{ id: string }>();
-  const [book, setBook] = useState<fullBookType | null>(null);
+  const [book, setBook] = useState<FullBookType | undefined>();
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
-  const [, setEditedBook] = useState<fullBookType | null>(null);
-  const [etag, setEtag] = useState<string | null>(null);
+  const [, setEditedBook] = useState<FullBookType | undefined>();
+  const [etag, setEtag] = useState<string | undefined>();
   const { token, isLoggedIn } = useAuth();
   logger.info(id);
 
@@ -34,12 +36,13 @@ const BookDetailView = () => {
       try {
         const response = await AxiosInstance.get(`/rest/${id}`, {
           headers: {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             Accept: '*/*',
           },
         });
         logger.info(response);
-        logger.info('etag' + response.headers.etag);
-        const tempBook: fullBookType = {
+        logger.info(`etag ${response.headers.etag}`);
+        const tempBook: FullBookType = {
           isbn: response.data.isbn,
           titel: {
             titel: response.data.titel.titel,
@@ -56,20 +59,22 @@ const BookDetailView = () => {
         };
         setBook(tempBook);
         setEditedBook(tempBook);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setEtag(response.headers.etag);
-      } catch (error) {
-        console.error('Error fetching book details:', error);
+      } catch (err) {
+        console.error('Error fetching book details:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBook();
+    // eslint-disable-next-line no-void
+    void fetchBook();
   }, [id, token]);
 
-  const handleSave = (updatedBook: fullBookType, etag: string | null) => {
+  const handleSave = (updatedBook: FullBookType, newEtag: string | null) => {
     setBook(updatedBook);
-    setEtag(etag || null);
+    setEtag(newEtag ?? undefined);
     setEditMode(false);
   };
 
@@ -127,8 +132,8 @@ const BookDetailView = () => {
                     width: '100%',
                     borderRadius: 1,
                   }}
-                  src={`https://via.placeholder.com/150?text=${book.titel}`}
-                  alt={`Cover von ${book.titel}`}
+                  src={`https://via.placeholder.com/150?text=${book.titel.titel}`}
+                  alt={`Cover von ${book.titel.titel}`}
                 />
               </Grid>
               <Grid item xs={12} sm={8}>
@@ -160,7 +165,7 @@ const BookDetailView = () => {
                   Bewertung:
                   <Rating
                     name="book-rating"
-                    value={parseFloat(book.rating.toString())}
+                    value={Number.parseFloat(book.rating.toString())}
                     readOnly
                     precision={0.5}
                     sx={{

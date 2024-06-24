@@ -1,25 +1,27 @@
-import { fullBookType } from '@/components/form';
+import { type FullBookType } from '@/components/form';
 import { logger } from '@/util';
 import { AxiosInstance } from '@/util/AxiosInstance';
 import { HttpStatusCode } from 'axios';
 
-type AddBookProps = {
-  book: fullBookType;
+interface AddBookProps {
+  book: FullBookType;
   token: string;
-};
+}
 
 const addBook = async ({ book, token }: AddBookProps) => {
   logger.info('Adding book: ', book);
   const url = '/rest/';
   const response = await AxiosInstance.post(url, book, {
     headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       Authorization: `Bearer ${token}`,
     },
   });
 
   logger.info('Response: ', response);
-  if (response.status !== HttpStatusCode.Created)
+  if (response.status !== (HttpStatusCode.Created as number)) {
     throw new Error('Error adding book');
+  }
 };
 
 export { addBook };

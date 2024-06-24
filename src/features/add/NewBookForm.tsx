@@ -1,10 +1,10 @@
-import { FC } from 'react';
 import { FullBookForm } from '@/components/form';
-import { addBook } from './api/addBook';
+import { logger } from '@/util';
+import { type FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { searchBooks } from '../search/api/searchBooks';
-import { useNavigate } from 'react-router-dom';
-import { logger } from '@/util';
+import { addBook } from './api/addBook';
 
 const NewBookForm: FC = () => {
   const { token } = useAuth();
@@ -20,8 +20,8 @@ const NewBookForm: FC = () => {
           });
           logger.info(response);
           navigate(`/buchweb/book/${response[0].id}`);
-        } catch (error) {
-          console.error('Error adding book: ', error);
+        } catch (err) {
+          console.error('Error adding book:', err);
         }
       }}
     />
