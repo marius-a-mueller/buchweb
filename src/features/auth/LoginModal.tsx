@@ -11,9 +11,10 @@ import LoginIcon from '@mui/icons-material/Login';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAuth } from './hooks/useAuth';
-import { Alert, Box } from '@mui/material';
+import { Alert, Box, useTheme } from '@mui/material';
 
 export function LoginModal() {
+  const theme = useTheme();
   const { login, logout, isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
   const [showError, setShowError] = useState('');
@@ -128,7 +129,10 @@ export function LoginModal() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                  backgroundColor:
+                    theme.palette.mode === 'light'
+                      ? 'rgba(255, 255, 255, 0.8)'
+                      : 'rgba(0, 0, 0, 0.8)',
                   zIndex: 1,
                 }}
               >

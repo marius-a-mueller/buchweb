@@ -106,7 +106,10 @@ const SearchForm = (props: SearchFormProps) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor:
+                theme.palette.mode === 'light'
+                  ? 'rgba(255, 255, 255, 0.8)'
+                  : 'rgba(0, 0, 0, 0.8)',
               zIndex: 1,
             }}
           >
