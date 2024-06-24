@@ -180,7 +180,7 @@ const FullBookForm: FC<BookFormProps> = ({
             label="Preis"
             endAdornment="€"
             isNumber={true}
-            InputProps={{ inputProps: { min: 0, step: 0.01 } }}
+            InputProps={{ inputProps: { min: 0.01, step: 0.01 } }}
             data-cy="preis-post"
           />
           <FormTextfield
