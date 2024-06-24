@@ -1,4 +1,4 @@
-import { NewBookForm } from '@/features/add/NewBookForm';
+import { NewBookForm } from '@/features/add';
 import { Box, Typography } from '@mui/material';
 
 const NewBook = () => (

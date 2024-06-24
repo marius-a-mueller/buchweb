@@ -1,18 +1,20 @@
 import { useAuth } from '@/features/auth';
 import { TabBar } from '@/features/ui/header';
-import { BookBarChart } from '@/pages/BookBarChart';
-import { BookDetail } from '@/pages/BookDetail';
-import { Forbidden } from '@/pages/Forbidden';
-import { Home } from '@/pages/Home';
-import { NewBook } from '@/pages/NewBook';
-import { NotFound } from '@/pages/NotFound';
-import { Search } from '@/pages/Search';
+import {
+  BookBarChart,
+  BookDetail,
+  BookPieChart,
+  Forbidden,
+  Home,
+  NewBook,
+  NotFound,
+  Search,
+} from '@/pages';
 import { getTheme } from '@/theme';
 import { Box, CssBaseline, ThemeProvider } from '@mui/material';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import { BookPieChart } from './pages/BookPieChart';
 
 const ColorModeContext = React.createContext({
   // eslint-disable-next-line no-empty-function

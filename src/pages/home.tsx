@@ -1,5 +1,5 @@
 import { useAuth } from '@/features/auth';
-import { MenuDropdown } from '@/features/ui/header/MenuDropdown';
+import { MenuDropdown } from '@/features/ui/header';
 import { AutoStories, Equalizer, Search } from '@mui/icons-material';
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';

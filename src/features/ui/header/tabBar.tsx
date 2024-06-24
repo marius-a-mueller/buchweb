@@ -1,6 +1,6 @@
-import { ColorModeContext } from '@/App';
+import { ColorModeContext } from '@/app';
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import HKALogo from '@/assets/HKALogo.png';
+import HKALogo from '@/assets/hkaLogo.png';
 import { LoginModal, useAuth } from '@/features/auth';
 import {
   AutoStories,
@@ -27,9 +27,9 @@ import {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuCharts } from './MenuCharts';
-import { MenuDropdown } from './MenuDropdown';
-import { MenuItem as TabBarMenuItem } from './MenuItem';
+import { MenuCharts } from './menuCharts';
+import { MenuDropdown } from './menuDropdown';
+import { MenuItem as TabBarMenuItem } from './menuItem';
 
 const TabBar = () => {
   const theme = useTheme();

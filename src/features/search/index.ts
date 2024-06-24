@@ -1,3 +1,3 @@
-export * from './BookTable';
-export * from './SearchForm';
 export * from './api/searchBooks';
+export * from './bookTable';
+export * from './searchForm';

@@ -3,8 +3,7 @@
 import { type FullBookType } from '@/components/form';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { EditBookForm } from '@/features/edit';
-import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance, logger } from '@/util';
 import { LocalOffer as LocalOfferIcon } from '@mui/icons-material';
 import {
   Box,

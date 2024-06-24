@@ -1,5 +1,4 @@
-import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance, logger } from '@/util';
 import { AxiosError, HttpStatusCode } from 'axios';
 // eslint-disable-next-line @typescript-eslint/naming-convention, n/no-extraneous-import, import/no-extraneous-dependencies
 import PropTypes from 'prop-types';

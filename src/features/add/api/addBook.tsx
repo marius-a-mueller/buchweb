@@ -1,6 +1,5 @@
 import { type FullBookType } from '@/components/form';
-import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance, logger } from '@/util';
 import { HttpStatusCode } from 'axios';
 
 interface AddBookProps {

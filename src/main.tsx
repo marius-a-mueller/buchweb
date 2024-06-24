@@ -1,4 +1,4 @@
-import { App } from '@/App.tsx';
+import { App } from '@/app';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // eslint-disable-next-line @typescript-eslint/naming-convention

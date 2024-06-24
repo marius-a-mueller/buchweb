@@ -1,8 +1,7 @@
 /* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { type FullBookType } from '@/components/form';
-import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance, logger } from '@/util';
 
 interface EditBookProps {
     id: string;

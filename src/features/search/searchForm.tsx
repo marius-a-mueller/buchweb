@@ -20,13 +20,13 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { type BookTableRow } from './BookTable';
+import { searchBooks } from './api/searchBooks';
+import { type BookTableRow } from './bookTable';
 import {
   searchBookDefaultValues,
   searchBookSchema,
   type SearchBookType,
-} from './SearchBookType';
-import { searchBooks } from './api/searchBooks';
+} from './searchBookType';
 
 const TIMEOUT = 1000;
 
