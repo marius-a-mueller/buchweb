@@ -1,3 +1,5 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { logger } from '@/util';
 import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
@@ -47,11 +49,19 @@ const BarChartForm = () => {
     >
       <Box width="500px" p={3}>
         <Paper
-          variant="outlined"
+          elevation={3}
           sx={{
-            padding: 2,
-            marginBottom: 2,
-            borderColor: 'grey.400',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: 3,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            border: 1,
+            borderRadius: 1,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            '&:hover': {
+              boxShadow: 10,
+            },
           }}
         >
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
@@ -75,10 +85,15 @@ const BarChartForm = () => {
             loading={loading}
             series={[
               {
-                data: Array.from({ length: 5 }, (_, i) => countRating(i + 1)),
+                data: [
+                  countRating(1),
+                  countRating(2),
+                  countRating(3),
+                  countRating(4),
+                  countRating(5),
+                ],
               },
             ]}
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
             width={isDesktop ? 400 : 300}
             height={300}
           />
