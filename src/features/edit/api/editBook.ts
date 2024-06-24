@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { type FullBookType } from '@/components/form';
 import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance } from '@/util/axiosInstance';
 
 interface EditBookProps {
     id: string;

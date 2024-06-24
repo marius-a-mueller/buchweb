@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance } from '@/util/axiosInstance';
 import { HttpStatusCode } from 'axios';
-import { type BookTableRow } from '../BookTable';
+import { type BookTableRow } from '../bookTable';
 
 interface SearchParameter {
     term: string;

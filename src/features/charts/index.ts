@@ -1,2 +1,2 @@
-export * from './BarChartForm';
-export * from './PieChartForm';
+export * from './barChartForm';
+export * from './pieChartForm';

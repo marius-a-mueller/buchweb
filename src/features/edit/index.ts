@@ -1,2 +1,2 @@
-export * from './BookDetailView';
-export * from './EditBookForm';
+export * from './bookDetailView';
+export * from './editBookForm';

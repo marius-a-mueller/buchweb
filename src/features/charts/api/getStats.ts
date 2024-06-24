@@ -1,5 +1,5 @@
 import { logger } from '@/util';
-import { AxiosInstance } from '@/util/AxiosInstance';
+import { AxiosInstance } from '@/util/axiosInstance';
 import { HttpStatusCode } from 'axios';
 
 const getStats = async () => {
