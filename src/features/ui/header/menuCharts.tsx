@@ -1,5 +1,5 @@
 import {
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Menu,
@@ -20,10 +20,10 @@ const MenuCharts = ({ label, icon }: MenuChartsProps) => (
   <PopupState variant="popover" popupId="demo-popup-menu">
     {(popupState) => (
       <React.Fragment>
-        <ListItem button {...bindTrigger(popupState)}>
+        <ListItemButton {...bindTrigger(popupState)}>
           {icon && <ListItemIcon>{icon}</ListItemIcon>}
           <ListItemText primary={label} data-cy="DiagrammeS" />
-        </ListItem>
+        </ListItemButton>
         <Menu {...bindMenu(popupState)}>
           <MenuItem
             component={Link}

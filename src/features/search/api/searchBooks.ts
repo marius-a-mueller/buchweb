@@ -32,13 +32,11 @@ const searchBooks = async (props: SearchBooksProps) => {
     });
 
     const response = await AxiosInstance.get(url);
-
     if (response.status !== (HttpStatusCode.Ok as number)) {
         return [];
     }
     // eslint-disable-next-line no-underscore-dangle
     const books = response.data._embedded.buecher;
-
     const rows: BookTableRow[] = [];
     logger.debug(`appendSearchTerm: books=${JSON.stringify(books)}`);
     for (const book in books) {
