@@ -53,7 +53,7 @@ const TabBar = () => {
               flexGrow: 1,
             }}
           >
-            <Link to="/buchweb">
+            <Link to="/buchweb/">
               <img
                 src={HKALogo}
                 alt="HKA Logo"
