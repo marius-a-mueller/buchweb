@@ -1,6 +1,6 @@
 import { AxiosInstance, logger } from '@/util';
 import { AxiosError, HttpStatusCode } from 'axios';
-// eslint-disable-next-line @typescript-eslint/naming-convention, n/no-extraneous-import, import/no-extraneous-dependencies
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import PropTypes from 'prop-types';
 // eslint-disable-next-line @typescript-eslint/naming-convention
 import React, { useEffect, useState } from 'react';

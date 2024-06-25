@@ -27,6 +27,6 @@
     /* Cypress types */
     "types": ["cypress", "node"]
   },
-  "include": ["src", "__tests__", "cypress", ".eslintrc.cjs", "jest.config.js"],
+  "include": ["src", "__tests__", "cypress", ".eslintrc.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

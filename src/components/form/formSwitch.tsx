@@ -31,7 +31,7 @@ const FormSwitch: FC<RhfSwitchProps> = ({ name, label, ...otherProps }) => {
           />
           {errors[name] && (
             <Typography color="error">
-              {errors[name]?.message?.toString()}
+              {errors[name].message?.toString()}
             </Typography>
           )}
         </>

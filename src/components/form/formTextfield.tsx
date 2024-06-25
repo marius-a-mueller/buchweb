@@ -57,7 +57,7 @@ const FormTextfield: FC<RhfTextfieldProps> = ({
           type={isNumber ? 'number' : 'text'}
           error={Boolean(errors[name])}
           helperText={
-            errors[name] ? (errors[name]?.message as unknown as string) : ''
+            errors[name] ? (errors[name].message as unknown as string) : ''
           }
           InputProps={{
             endAdornment,

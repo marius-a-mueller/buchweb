@@ -40,7 +40,7 @@ const FormRadioGroup: FC<RhfRadioGroupProps> = ({
           </RadioGroup>
           {errors[name] && (
             <Typography color="error">
-              {errors[name]?.message?.toString()}
+              {errors[name].message?.toString()}
             </Typography>
           )}
         </>
