@@ -17,3 +17,4 @@ cypress/*
 .eslintrc.cjs
 vite.config.ts
 cypress.config.ts
+*.html
