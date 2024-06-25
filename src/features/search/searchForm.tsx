@@ -140,10 +140,10 @@ const SearchForm = (props: SearchFormProps) => {
               columnGap: '1rem',
               '& .MuiTextField-root': isDesktop
                 ? { m: 1, width: '65ch' }
-                : { m: 1, width: '25ch' },
+                : { m: 1, width: '30ch' },
               '& .MuiFormControl-root': isDesktop
                 ? { m: 1, width: '65ch' }
-                : { m: 1, width: '25ch' },
+                : { m: 1, width: '30ch' },
               '& .MuiSwitch-root': { m: 1, width: '6ch' },
               '& .MuiButton-root': isDesktop
                 ? { m: 1, mb: 10, width: '40ch' }

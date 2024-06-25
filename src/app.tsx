@@ -38,7 +38,7 @@ const Layout = () => (
 );
 
 const App = () => {
-  const { writePermission } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const colorMode = React.useMemo(
     () => ({
@@ -62,7 +62,7 @@ const App = () => {
             <Route path="book/:id" element={<BookDetail />} />
             <Route
               path="new"
-              element={writePermission ? <NewBook /> : <Forbidden />}
+              element={isLoggedIn() ? <NewBook /> : <Forbidden />}
             />
             <Route path="barchart" element={<BookBarChart />} />
             <Route path="piechart" element={<BookPieChart />} />
