@@ -18,7 +18,7 @@
       // the correct url will be waiting in the browser's history for
       // the single page app to route accordingly.
       (function (l) {
-        document.write('L ' + l);
+        document.write('encoded ' + l);
         if (l.search[1] === '/') {
           var decoded = l.search
             .slice(1)
@@ -27,6 +27,7 @@
               return s.replace(/~and~/g, '&');
             })
             .join('?');
+          document.write('decoded ' + l);
           window.history.replaceState(
             null,
             null,
