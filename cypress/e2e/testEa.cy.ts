@@ -74,20 +74,9 @@ describe('template spec', () => {
     cy.get('[data-cy=post-rating]').eq(0).click()
     cy.get('[data-cy=type]').contains('DRUCKAUSGABE').click()
     cy.get('[data-cy=post-lieferbar]').click()
-
-
     cy.get('[data-cy=post-button-form]').click();
     cy.wait(2000);
-
-
-   
-   
-   
-   
-   
-    
-    
-  });
+    });
 
   it('Lege neues Buch an', () => {
     cy.get('[data-cy=logo]').click();
@@ -159,9 +148,10 @@ describe('template spec', () => {
       });
     cy.get('[data-cy=menuButton]').click()
     //cy.get('[data-cy=neuesBuchSide').should('not.exist');
+    cy.intercept('POST', '**/rest/**').as('newBookRequest');
     cy.get('[data-cy=NeuesBuchSide]').click();
     cy.wait(2000);
-    cy.get('[data-cy=isbn-post]').type('978-3-649-64224-7');
+    cy.get('[data-cy=isbn-post]').type('978-3-12-676685-2');
     cy.wait(2000);
     cy.get('[data-cy=titel-post]').type('Frankenstein');
     cy.wait(2000);
