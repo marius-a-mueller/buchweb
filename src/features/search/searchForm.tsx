@@ -178,25 +178,35 @@ const SearchForm = (props: SearchFormProps) => {
             <Paper
               sx={{
                 display: 'flex',
-                flexDirection: isDesktop ? 'row' : 'column',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
                 width: '65ch',
                 paddingX: '1rem',
               }}
             >
-              <FormCheckbox name="kindle" label="Kindle" data-cy="type" />
-              <FormCheckbox
-                name="druckausgabe"
-                label="Druckausgabe"
-                data-cy="type"
-              />
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: isDesktop ? 'row' : 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '65ch',
+                }}
+              >
+                <FormCheckbox name="kindle" label="Kindle" data-cy="type" />
+                <FormCheckbox
+                  name="druckausgabe"
+                  label="Druckausgabe"
+                  data-cy="type"
+                />
+              </Box>
+              {methods.formState.errors.kindle ? (
+                <FormHelperText error>
+                  {methods.formState.errors.kindle.message}
+                </FormHelperText>
+              ) : undefined}
             </Paper>
-            {methods.formState.errors.kindle ? (
-              <FormHelperText>
-                {methods.formState.errors.kindle.message}
-              </FormHelperText>
-            ) : undefined}
             <Button
               type="submit"
               variant="contained"
