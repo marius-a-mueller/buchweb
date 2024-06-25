@@ -8,6 +8,7 @@ state AuthProvider {
   AuthProvider : writeAccess
 
   state App {
+    [*]--> [*]: Login
     [*] --> Home
 
     state Home {
@@ -20,8 +21,6 @@ state AuthProvider {
     state Search {
       [*] --> SearchForm: Suchkriterien eingeben
       SearchForm --> Waiting: Button "Suche"
-      SearchForm --> SearchForm: Button "Zurücksetzen"
-
       state SearchChoice <<choice>>
       Waiting --> SearchChoice: Suchergebnis eingetroffen
 
@@ -33,7 +32,7 @@ state AuthProvider {
       }
     }
 
-    Search --> BookDetail: Büchertabellen Zeile auswählen
+    Search --> BookTable: Büchertabellen Zeile auswählen
 
     state BookDetail {
       [*] --> Details
@@ -53,7 +52,7 @@ state AuthProvider {
     state NewBook {
       [*] --> InputFields: Daten eines neuen Buches eintragen
       state AddChoice <<choice>>
-      InputFields --> AddChoice: Button "Speichern"
+      InputFields --> AddChoice: Button "Ok"
       AddChoice --> CreateBook: valide Daten
       AddChoice --> CreateFehlermeldung: invalide Daten
       CreateBook --> NewBook: Buch wird hochgeladen
