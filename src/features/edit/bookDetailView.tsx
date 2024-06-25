@@ -19,6 +19,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+const MAX_PERCENTAGE = 100;
+
 const BookDetailView = () => {
   const { id = 'default' } = useParams<{ id: string }>();
   const [book, setBook] = useState<FullBookType | undefined>();
@@ -47,10 +49,10 @@ const BookDetailView = () => {
             titel: response.data.titel.titel,
             untertitel: response.data.titel.untertitel,
           },
-          preis: response.data.preis,
-          rabatt: response.data.rabatt,
+          preis: Number(response.data.preis),
+          rabatt: Number(response.data.rabatt) * MAX_PERCENTAGE,
           art: response.data.art,
-          rating: response.data.rating,
+          rating: Number(response.data.rating),
           lieferbar: response.data.lieferbar,
           datum: response.data.datum,
           homepage: response.data.homepage,
@@ -72,6 +74,7 @@ const BookDetailView = () => {
   }, [id, token]);
 
   const handleSave = (updatedBook: FullBookType, newEtag: string | null) => {
+    updatedBook.rabatt = Number(updatedBook.rabatt) * MAX_PERCENTAGE;
     setBook(updatedBook);
     setEtag(newEtag ?? undefined);
     setEditMode(false);

@@ -22,6 +22,8 @@ import { useState, type FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { boolean, number, object, string, union, type TypeOf } from 'zod';
 
+const MAX_PERCENTAGE = 100;
+
 const fullBookSchema = object({
   isbn: string().regex(
     /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/u,
@@ -35,7 +37,9 @@ const fullBookSchema = object({
   rating: number(),
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   preis: number().min(0.01, 'Preis muss positiv sein'),
-  rabatt: number().min(0, 'Rabatt muss positiv sein'),
+  rabatt: number()
+    .min(0, 'Rabatt muss positiv sein')
+    .max(MAX_PERCENTAGE, `Rabatt darf nicht über ${MAX_PERCENTAGE}% sein`),
   datum: string().nullish(),
   homepage: union([
     string().regex(
@@ -84,6 +88,7 @@ const FullBookForm: FC<BookFormProps> = ({
 
   const onSave = (values: FullBookType) => {
     logger.debug(`onSave: values=${JSON.stringify(values)}`);
+    values.rabatt = Number(values.rabatt) / MAX_PERCENTAGE;
     setLoading(true);
     onHandleSubmit(values);
     setLoading(false);
@@ -183,7 +188,7 @@ const FullBookForm: FC<BookFormProps> = ({
             name="preis"
             label="Preis"
             endAdornment="€"
-            isNumber={true}
+            isNumber
             InputProps={{ inputProps: { min: 0.01, step: 0.01 } }}
             data-cy="preis-post"
           />
@@ -191,7 +196,7 @@ const FullBookForm: FC<BookFormProps> = ({
             name="rabatt"
             label="Rabatt"
             endAdornment="%"
-            isNumber={true}
+            isNumber
             InputProps={{ inputProps: { min: 0, step: 0.01 } }}
             data-cy="rabatt-post"
           />
