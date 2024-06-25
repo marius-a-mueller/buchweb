@@ -148,6 +148,9 @@ const SearchForm = (props: SearchFormProps) => {
               '& .MuiButton-root': isDesktop
                 ? { m: 1, mb: 10, width: '40ch' }
                 : { m: 1, mb: 10, width: '20ch' },
+              '& .MuiPaper-root': isDesktop
+                ? { m: 1, mb: 10, width: '65ch' }
+                : { m: 1, mb: 10, width: '30ch' },
             }}
             noValidate
             autoComplete="off"
