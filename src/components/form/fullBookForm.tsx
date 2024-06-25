@@ -83,8 +83,7 @@ const FullBookForm: FC<BookFormProps> = ({
   });
 
   const onSave = (values: FullBookType) => {
-    logger.info(`Formstate: ${JSON.stringify(methods.formState.dirtyFields)}`);
-    logger.info(`val: ${JSON.stringify(values)}`);
+    logger.debug(`onSave: values=${JSON.stringify(values)}`);
     setLoading(true);
     onHandleSubmit(values);
     setLoading(false);

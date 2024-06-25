@@ -20,10 +20,10 @@ const PieChartForm = () => {
       setLoading(true);
       try {
         const tempTypes = await getTypes();
-        logger.info('Fetched types: ', tempTypes);
+        logger.debug(`PieChartForm: types=${tempTypes.join(',')}`);
         setTypes(tempTypes);
       } catch (err) {
-        logger.error('Error fetching book details:', err);
+        logger.error('PieChartForm: Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

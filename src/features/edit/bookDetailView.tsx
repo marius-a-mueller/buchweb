@@ -27,7 +27,7 @@ const BookDetailView = () => {
   const [, setEditedBook] = useState<FullBookType | undefined>();
   const [etag, setEtag] = useState<string | undefined>();
   const { token, isLoggedIn } = useAuth();
-  logger.info(id);
+  logger.debug(`BookDetailView: id=${id}`);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -39,8 +39,8 @@ const BookDetailView = () => {
             Accept: '*/*',
           },
         });
-        logger.info(response);
-        logger.info(`etag ${response.headers.etag}`);
+        logger.debug(`fetchBook: response=${JSON.stringify(response)}`);
+        logger.debug(`fetchBook: etag=${response.headers.etag}`);
         const tempBook: FullBookType = {
           isbn: response.data.isbn,
           titel: {
@@ -61,7 +61,7 @@ const BookDetailView = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setEtag(response.headers.etag);
       } catch (err) {
-        logger.error('Error fetching book details:', err);
+        logger.error('fetchBook: Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

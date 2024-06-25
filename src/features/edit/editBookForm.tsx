@@ -23,17 +23,17 @@ const EditBookForm: FC<EditBookFormProps> = ({
     <FullBookForm
       defaultValues={book}
       onHandleSubmit={async (values) => {
-        logger.info(`values: ${JSON.stringify(values)}`);
+        logger.debug(`EditBookForm: values=${JSON.stringify(values)}`);
         try {
           const response = await editBook({ id, book: values, token, etag });
 
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const newEtag = response.headers.etag;
-          logger.info(`New ETAG: ${newEtag}`);
+          logger.debug(`EditBookForm: newEtag=${newEtag}`);
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           onSave(values, newEtag);
         } catch (err) {
-          logger.error('Error updating book details:', err);
+          logger.error('EditBookForm: Error updating book details:', err);
         }
       }}
     />

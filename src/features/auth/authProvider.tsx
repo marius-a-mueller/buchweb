@@ -38,13 +38,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [token]);
 
   const login = async ({ username, password }: LoginType) => {
+    logger.debug(`login: username=${username}`);
     const requestData = `username=${encodeURIComponent(
       username,
     )}&password=${encodeURIComponent(password)}`;
 
     try {
       const response = await AxiosInstance.post('/auth/login', requestData);
-      logger.info(response);
+      logger.debug(`login: response=${JSON.stringify(response)}`);
       if (response.status !== (HttpStatusCode.Ok as number)) {
         return false;
       }
@@ -62,7 +63,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ) {
         return false;
       }
-      logger.error('Error while logging in:', err);
+      logger.error('login: error=', err);
       throw new Error('Error while logging in');
     }
   };

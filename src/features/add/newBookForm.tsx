@@ -18,10 +18,10 @@ const NewBookForm: FC = () => {
           const response = await searchBooks({
             searchProps: [{ term: 'isbn', value: values.isbn }],
           });
-          logger.info(response);
+          logger.debug(`submitNewBook: response=${JSON.stringify(response)}`);
           navigate(`/buchweb/book/${response[0].id}`);
         } catch (err) {
-          logger.error('Error adding book:', err);
+          logger.error('submitNewBook: error=', err);
         }
       }}
     />

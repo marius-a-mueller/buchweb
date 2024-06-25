@@ -17,10 +17,10 @@ const BarChartForm = () => {
       setLoading(true);
       try {
         const tempRatings = await getStats();
-        logger.info('Fetched ratings: ', tempRatings);
+        logger.debug(`BarChartForm: ratings=${tempRatings.join(',')}`);
         setRatings(tempRatings);
       } catch (err) {
-        logger.error('Error fetching book details:', err);
+        logger.error('BarChartForm: Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

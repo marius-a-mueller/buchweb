@@ -74,7 +74,7 @@ const SearchForm = (props: SearchFormProps) => {
         setLoading(false);
       }, TIMEOUT);
     } catch (err) {
-      logger.error(err);
+      logger.error('submitSearch: error=', err);
       setBookTableRows([]);
       setLoading(false);
     }

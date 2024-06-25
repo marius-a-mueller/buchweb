@@ -11,7 +11,7 @@ interface EditBookProps {
 }
 
 const editBook = async ({ id, book, token, etag }: EditBookProps) => {
-    logger.info('Editing book: ', book);
+    logger.debug(`editBook: book=${JSON.stringify(book)}`);
     const url = `/rest/${id}`;
     const response = await AxiosInstance.put(url, book, {
         headers: {
@@ -19,8 +19,7 @@ const editBook = async ({ id, book, token, etag }: EditBookProps) => {
             'If-Match': etag ?? '',
         },
     });
-
-    logger.info('Response: ', response);
+    logger.debug(`editBook: response=${JSON.stringify(response)}`);
     return response;
 };
 

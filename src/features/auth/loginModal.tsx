@@ -40,8 +40,8 @@ const LoginModal = () => {
   };
 
   const handleLogin = async () => {
+    logger.debug(`handleLogin: username=${username}`);
     setLoading(true);
-    logger.info(`Login mit ${username}`);
     try {
       const loginSucceeded = await login({ username, password });
       if (loginSucceeded) {

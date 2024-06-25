@@ -1,23 +1,21 @@
+import { type FullBookType } from '@/components/form';
 import { AxiosInstance, logger } from '@/util';
 import { HttpStatusCode } from 'axios';
 
 const getTypes = async () => {
     const url = '/rest/';
-
     const response = await AxiosInstance.get(url);
 
     if (response.status !== (HttpStatusCode.Ok as number)) {
         return [];
     }
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, no-underscore-dangle
-    const books = response.data._embedded.buecher;
-
+    // eslint-disable-next-line no-underscore-dangle, @typescript-eslint/no-unsafe-assignment
+    const books: FullBookType[] = response.data._embedded.buecher;
+    logger.debug(`getTypes: books=${JSON.stringify(books)}`);
     const types: string[] = [];
 
-    logger.info('Fetched books: ', books);
-    for (const book in books) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        types.push(books[book].art);
+    for (const book of books) {
+        types.push(book.art);
     }
     return types;
 };

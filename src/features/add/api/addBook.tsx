@@ -8,7 +8,7 @@ interface AddBookProps {
 }
 
 const addBook = async ({ book, token }: AddBookProps) => {
-  logger.info('Adding book: ', book);
+  logger.debug(`addBook: book=${JSON.stringify(book)}`);
   const url = '/rest/';
   const response = await AxiosInstance.post(url, book, {
     headers: {
@@ -17,9 +17,9 @@ const addBook = async ({ book, token }: AddBookProps) => {
     },
   });
 
-  logger.info('Response: ', response);
+  logger.debug('Response: ', response);
   if (response.status !== (HttpStatusCode.Created as number)) {
-    throw new Error('Error adding book');
+    throw new Error(`addBook: Unexpected status code: ${response.status}`);
   }
 };
 

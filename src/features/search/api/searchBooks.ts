@@ -40,7 +40,7 @@ const searchBooks = async (props: SearchBooksProps) => {
     const books = response.data._embedded.buecher;
 
     const rows: BookTableRow[] = [];
-    logger.info('Fetched books: ', books);
+    logger.debug(`appendSearchTerm: books=${JSON.stringify(books)}`);
     for (const book in books) {
         rows.push({
             // eslint-disable-next-line no-underscore-dangle
