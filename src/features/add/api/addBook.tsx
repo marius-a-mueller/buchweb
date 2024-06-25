@@ -17,7 +17,7 @@ const addBook = async ({ book, token }: AddBookProps) => {
     },
   });
 
-  logger.debug('Response: ', response);
+  logger.debug(`addBook: response=${JSON.stringify(response)}`);
   if (response.status !== (HttpStatusCode.Created as number)) {
     throw new Error(`addBook: Unexpected status code: ${response.status}`);
   }
