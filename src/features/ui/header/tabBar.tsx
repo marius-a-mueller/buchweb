@@ -64,7 +64,7 @@ const TabBar = () => {
                         marginRight: '20px',
                       }
                     : {
-                        width: '130px',
+                        width: '180px',
                         marginRight: 0,
                       }
                 }
