@@ -6,79 +6,70 @@ hide empty description
 state AuthProvider {
   AuthProvider : token
   AuthProvider : writeAccess
+}
 
-  state App {
-    [*]--> [*]: Login
-    [*] --> Home
+state App {
+  [*] --> Home
 
-    state Home {
-      [*] --> Main
-      Main -down-> Search : Button "Suche"
-      Main -down-> NewBook : Button "Neues Buch" [wenn eingeloggt]
-      Main -down-> Diagram : Button "Diagramme"
-    }
-
-    state Search {
-      [*] --> SearchForm: Suchkriterien eingeben
-      SearchForm --> Waiting: Button "Suche"
-      state SearchChoice <<choice>>
-      Waiting --> SearchChoice: Suchergebnis eingetroffen
-
-      state SuchergebnisTabelle {
-        SearchChoice --> GefundeneBuecher: mind. 1 passendes Buch gefunden
-        SearchChoice --> Fehlermeldung: keine passenden Bücher gefunden
-        Fehlermeldung --> [*]
-        GefundeneBuecher --> [*]
-      }
-    }
-
-    Search --> BookTable: Büchertabellen Zeile auswählen
-
-    state BookDetail {
-      [*] --> Details
-      Details --> Edit: Button "Bearbeiten" [wenn eingeloggt]
-    }
-
-    state Edit {
-      [*] --> DataFields: Änderungen eintragen
-      state UpdateChoice <<choice>>
-      DataFields --> UpdateChoice: Button "Speichern"
-      UpdateChoice --> UpdateBook: valide Daten
-      UpdateChoice --> UpdateFehlermeldung: fehlerhafte Daten
-      UpdateBook --> Edit: Daten hochladen
-      UpdateFehlermeldung --> DataFields: Daten abändern
-    }
-
-    state NewBook {
-      [*] --> InputFields: Daten eines neuen Buches eintragen
-      state AddChoice <<choice>>
-      InputFields --> AddChoice: Button "Ok"
-      AddChoice --> CreateBook: valide Daten
-      AddChoice --> CreateFehlermeldung: invalide Daten
-      CreateBook --> NewBook: Buch wird hochgeladen
-      CreateFehlermeldung --> InputFields: Daten abändern
-    }
-
-    state DiagramSelection {
-      [*] --> BarChart: Button "Balkendiagramm"
-      [*] --> PieChart: Button "Kuchendiagramm"
-    }
-
-    state NotFound {
-      [*] --> NotFound: ungültiger Pfad
-    }
-
-    state Forbidden {
-      [*] --> Forbidden: kein Zugriff
-    }
-
-    Home -down-> Search: Tab "Suche"
-    Home -down-> NewBook: Tab "Neues Buch" [wenn eingeloggt]
-    Home -down-> DiagramSelection: Tab "Diagramme"
-    Home -down-> Forbidden: Tab "Neues Buch" [wenn nicht eingeloggt]
-
-    [*] --> NotFound: ungültiger Pfad
+  state Home {
+    [*] --> Main
+    Main -down-> Search : Button "Suche"
+    Main -down-> NewBook : Button "Neues Buch" [wenn eingeloggt]
+    Main -down-> DiagramSelection : Button "Diagramme"
   }
+
+  state Search {
+    [*] --> SearchForm : Suchkriterien eingeben
+    SearchForm --> Waiting : Button "Suche"
+    Waiting --> BookTable : Suchergebnis eingetroffen
+    
+
+    state BookTable {
+      [*] --> GefundeneBuecher : mind. 1 passendes Buch gefunden
+      GefundeneBuecher --> BookDetail : Zeile auswählen
+    }
+  }
+
+  state BookDetail {
+    [*] --> Details
+    Details --> Edit : Button "Bearbeiten" [wenn eingeloggt]
+  }
+
+  state Edit {
+    [*] --> DataFields : Änderungen eintragen
+    state UpdateChoice <<choice>>
+    DataFields --> UpdateChoice : Button "Speichern"
+    UpdateChoice --> UpdateBook : valide Daten
+    UpdateChoice --> UpdateFehlermeldung : fehlerhafte Daten
+    UpdateBook --> Edit : Daten hochladen
+    UpdateFehlermeldung --> DataFields : Daten abändern
+  }
+
+  state NewBook {
+    [*] --> InputFields : Daten eines neuen Buches eintragen
+    state AddChoice <<choice>>
+    InputFields --> AddChoice : Button "Ok"
+    AddChoice --> CreateBook : valide Daten
+    AddChoice --> CreateFehlermeldung : invalide Daten
+    CreateBook --> BookDetail : Buch wird hochgeladen und Detailansicht anzeigen
+    CreateFehlermeldung --> InputFields : Daten abändern
+  }
+
+  state DiagramSelection {
+    [*] --> BarChart : Button "Balkendiagramm"
+    [*] --> PieChart : Button "Kuchendiagramm"
+  }
+
+  state NotFound {
+    [*] --> NotFound : ungültiger Pfad
+  }
+
+  state Forbidden {
+    [*] --> Forbidden : kein Zugriff
+  }
+
+  Home --> Forbidden : kein Zugriff
+  Home --> NotFound : ungültiger Pfad
 }
 
 @enduml
