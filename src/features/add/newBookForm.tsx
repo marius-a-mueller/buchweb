@@ -21,7 +21,7 @@ const NewBookForm: FC = () => {
           logger.info(response);
           navigate(`/buchweb/book/${response[0].id}`);
         } catch (err) {
-          console.error('Error adding book:', err);
+          logger.error('Error adding book:', err);
         }
       }}
     />

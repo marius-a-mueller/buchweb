@@ -33,7 +33,7 @@ const EditBookForm: FC<EditBookFormProps> = ({
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           onSave(values, newEtag);
         } catch (err) {
-          console.error('Error updating book details:', err);
+          logger.error('Error updating book details:', err);
         }
       }}
     />

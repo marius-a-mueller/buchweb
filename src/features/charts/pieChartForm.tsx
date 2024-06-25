@@ -23,7 +23,7 @@ const PieChartForm = () => {
         logger.info('Fetched types: ', tempTypes);
         setTypes(tempTypes);
       } catch (err) {
-        console.error('Error fetching book details:', err);
+        logger.error('Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

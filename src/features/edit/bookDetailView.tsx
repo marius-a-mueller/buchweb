@@ -61,7 +61,7 @@ const BookDetailView = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         setEtag(response.headers.etag);
       } catch (err) {
-        console.error('Error fetching book details:', err);
+        logger.error('Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

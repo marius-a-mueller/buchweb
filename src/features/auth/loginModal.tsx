@@ -1,6 +1,7 @@
 /* eslint-disable @eslint-community/eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import { logger } from '@/util';
 import { Close, Login } from '@mui/icons-material';
 import {
   Alert,
@@ -40,7 +41,7 @@ const LoginModal = () => {
 
   const handleLogin = async () => {
     setLoading(true);
-    console.info(`Login mit ${username}`);
+    logger.info(`Login mit ${username}`);
     try {
       const loginSucceeded = await login({ username, password });
       if (loginSucceeded) {

@@ -6,6 +6,7 @@ import {
   FormRating,
   FormTextfield,
 } from '@/components/form';
+import { logger } from '@/util';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Search } from '@mui/icons-material';
 import {
@@ -73,7 +74,7 @@ const SearchForm = (props: SearchFormProps) => {
         setLoading(false);
       }, TIMEOUT);
     } catch (err) {
-      console.error(err);
+      logger.error(err);
       setBookTableRows([]);
       setLoading(false);
     }

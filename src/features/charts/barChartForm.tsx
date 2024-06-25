@@ -20,7 +20,7 @@ const BarChartForm = () => {
         logger.info('Fetched ratings: ', tempRatings);
         setRatings(tempRatings);
       } catch (err) {
-        console.error('Error fetching book details:', err);
+        logger.error('Error fetching book details:', err);
       } finally {
         setLoading(false);
       }

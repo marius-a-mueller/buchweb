@@ -62,7 +62,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ) {
         return false;
       }
-      console.error('Error while logging in:', err);
+      logger.error('Error while logging in:', err);
       throw new Error('Error while logging in');
     }
   };
