@@ -3,7 +3,7 @@ import { AxiosError, HttpStatusCode } from 'axios';
 // eslint-disable-next-line @typescript-eslint/naming-convention, n/no-extraneous-import, import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface LoginType {
   username: string;
@@ -28,8 +28,14 @@ const AuthContext = React.createContext<AuthContextType>({
 });
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState('');
+  // eslint-disable-next-line no-undef
+  const [token, setToken] = useState(localStorage.getItem('token') ?? '');
   const [writePermission, setWritePermission] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line no-undef
+    localStorage.setItem('token', token);
+  }, [token]);
 
   const login = async ({ username, password }: LoginType) => {
     const requestData = `username=${encodeURIComponent(
