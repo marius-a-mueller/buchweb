@@ -1,6 +1,6 @@
 import { ColorModeContext } from '@/app';
 // eslint-disable-next-line @typescript-eslint/naming-convention
-import HKALogo from '@/assets/hkaLogo.png';
+import HKALogo from '@/../assets/hkaLogo.png';
 import { LoginModal, useAuth } from '@/features/auth';
 import {
   AutoStories,
