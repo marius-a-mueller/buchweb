@@ -11,7 +11,7 @@ describe('template spec', () => {
         cy.visit(FRONTEND_URL);
     });
 
-    it('Überprüfe Login', () => {
+     it('Überprüfe Login', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username]').type(USERNAME);
@@ -50,7 +50,7 @@ describe('template spec', () => {
                 );
             });
     });
-
+ 
     it('Überprüfe Anzeige eines gesuchten Buches und das Ändern von Buchdetails', () => {
         cy.get('[data-cy=logo]').click();
         cy.intercept('GET', '**/rest/**').as('searchRequest');
@@ -84,7 +84,7 @@ describe('template spec', () => {
         cy.get('[data-cy=type]').contains('DRUCKAUSGABE').click();
         cy.get('[data-cy=post-lieferbar]').click();
         cy.get('[data-cy=post-button-form]').click();
-        cy.wait(2000);
+        
     });
 
     function generateISBN13() {
@@ -125,11 +125,15 @@ describe('template spec', () => {
             cy.get('[data-cy=type]').contains('KINDLE').click();
             cy.wait(2000);
             cy.get('[data-cy=post-button-form]').click();
-            cy.wait(4000);
+            cy.wait(2000);
+            cy.get('[data-cy=delete-button]').click();
+            cy.wait(2000);
+            cy.get('[data-cy=delete-confirm-button]').click();
+            cy.wait(2000);
         });
     });
 
-    it('Überprüfe die Navigation der Diagramme', () => {
+     it('Überprüfe die Navigation der Diagramme', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=Diagramme').click();
         cy.get('[data-cy=Säulendiagramm').click();
@@ -141,7 +145,7 @@ describe('template spec', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=toggle-dark-mode').click();
         cy.get('[data-cy=toggle-dark-mode').click();
-    });
+    }); 
 
     it('Überprüfe Logout', () => {
         cy.get('[data-cy=logo]').click();
@@ -153,9 +157,10 @@ describe('template spec', () => {
         cy.get('[data-cy=logout-button').click();
         cy.get('[data-cy=login-button]').should('exist');
     });
-
     it('Überprüfen der Sidebar', () => {
+        const newISBN = generateISBN13();
         cy.viewport('iphone-xr');
+        
 
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=menuButton').should('exist');
@@ -183,7 +188,7 @@ describe('template spec', () => {
         cy.intercept('POST', '**/rest/**').as('newBookRequest');
         cy.get('[data-cy=NeuesBuchSide]').click();
         cy.wait(2000);
-        cy.get('[data-cy=isbn-post]').type('978-3-12-676685-2');
+        cy.get('[data-cy=isbn-post]').type(newISBN);
         cy.wait(2000);
         cy.get('[data-cy=titel-post]').type('Frankenstein');
         cy.wait(2000);
@@ -192,7 +197,11 @@ describe('template spec', () => {
         cy.get('[data-cy=type]').contains('KINDLE').click();
         cy.wait(2000);
         cy.get('[data-cy=post-button-form]').click();
-        cy.wait(4000);
+        cy.wait(2000);
+            cy.get('[data-cy=delete-button]').click();
+            cy.wait(2000);
+            cy.get('[data-cy=delete-confirm-button]').click();
+            cy.wait(2000);
         cy.get('[data-cy=menuButton]').click();
         cy.get('[data-cy=DiagrammeS]').click();
         cy.get('[data-cy=SäulendiagrammS]').click();

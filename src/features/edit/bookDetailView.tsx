@@ -134,6 +134,7 @@ const BookDetailView = () => {
               color="secondary"
               onClick={() => setEditMode(false)}
               sx={{ mt: 2 }}
+              data-cy="cancel-button"
             >
               Zurück
             </Button>
@@ -241,8 +242,8 @@ const BookDetailView = () => {
                       variant="contained"
                       color="primary"
                       onClick={() => setAlertOpen(true)}
-                      data-cy="edit-button"
                       sx={{ ml: 2, mt: 2 }}
+                      data-cy="delete-button"
                     >
                       Löschen
                     </Button>
@@ -262,7 +263,11 @@ const BookDetailView = () => {
         <DialogTitle id="alert-dialog-title">{'Eintrag löschen?'}</DialogTitle>
         <DialogActions>
           <Button onClick={handleCancelAlert}>Abbrechen</Button>
-          <Button onClick={handleOkAlert} autoFocus>
+          <Button
+            onClick={handleOkAlert}
+            autoFocus
+            data-cy="delete-confirm-button"
+          >
             OK
           </Button>
         </DialogActions>
