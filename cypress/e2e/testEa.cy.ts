@@ -1,12 +1,14 @@
 import { expect } from 'chai';
 import './commands';
 
-const PASSWORD = import.meta.env.VITE_PASSWORD as string;
-const USERNAME = import.meta.env.VITE_USERNAME as string;
+const FRONTEND_URL = Cypress.env('frontendUrl') || 'localhost:4200';
+const PASSWORD = Cypress.env('password') || 'p';
+const USERNAME = Cypress.env('username') || 'admin';
 
 describe('template spec', () => {
     beforeEach(() => {
-        cy.visit('localhost:4200');
+        cy.log(`FRONTEND_URL: ${FRONTEND_URL}`);
+        cy.visit(FRONTEND_URL);
     });
 
     it('Überprüfe Login', () => {
