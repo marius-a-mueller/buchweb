@@ -6,7 +6,7 @@ const USERNAME = import.meta.env.VITE_USERNAME as string;
 
 describe('template spec', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:4200/');
+        cy.visit('localhost:4200');
     });
 
     it('Überprüfe Login', () => {
@@ -89,50 +89,20 @@ describe('template spec', () => {
         let isbn = '9780';
         for (let i = 0; i < 8; i++) {
             isbn += Math.floor(Math.random() * 10);
-            isbn += Math.floor(Math.random() * 10);
         }
-
 
         let sum = 0;
         for (let i = 0; i < 12; i++) {
-            sum += Number(isbn[i]) * (i % 2 === 0 ? 1 : 3);
             sum += Number(isbn[i]) * (i % 2 === 0 ? 1 : 3);
         }
         const checkDigit = (10 - (sum % 10)) % 10;
         isbn += checkDigit;
 
-
         return `${isbn.slice(0, 3)}-${isbn[3]}-${isbn.slice(4, 7)}-${isbn.slice(7, 12)}-${isbn[12]}`;
     }
 
     describe('Buchverwaltung', () => {
-    }
-
-    describe('Buchverwaltung', () => {
         it('Lege neues Buch an', () => {
-            const newISBN = generateISBN13();
-
-            cy.get('[data-cy=logo]').click();
-            cy.get('[data-cy=login-button]').click();
-            cy.get('[data-cy=login-username]').type('admin');
-            cy.get('[data-cy=login-password]').type(
-                'Bankroll-Subsidize-Revise6',
-            );
-            cy.get('[data-cy=login-button-second]').click();
-            cy.wait(2000);
-            cy.intercept('POST', '**/rest/**').as('newBookRequest');
-            cy.get('[data-cy="Neues Buch"]').click();
-            cy.wait(2000);
-            cy.get('[data-cy=isbn-post]').type(newISBN);
-            cy.wait(2000);
-            cy.get('[data-cy=titel-post]').type('Dracula');
-            cy.wait(2000);
-            cy.get('[data-cy=homepage-post]').type('https://Dracula.dev');
-            cy.wait(2000);
-            cy.get('[data-cy=type]').contains('KINDLE').click();
-            cy.wait(2000);
-            cy.get('[data-cy=post-button-form]').click();
-            cy.wait(4000);
             const newISBN = generateISBN13();
 
             cy.get('[data-cy=logo]').click();
@@ -155,8 +125,6 @@ describe('template spec', () => {
             cy.get('[data-cy=post-button-form]').click();
             cy.wait(4000);
         });
-    });
-
     });
 
     it('Überprüfe die Navigation der Diagramme', () => {
@@ -185,7 +153,6 @@ describe('template spec', () => {
     });
 
     it('Überprüfen der Sidebar', () => {
-        const newISBN = generateISBN13();
         cy.viewport('iphone-xr');
 
         cy.get('[data-cy=logo]').click();
@@ -209,13 +176,12 @@ describe('template spec', () => {
                     '978-3-897-22583-1',
                 );
             });
-
         cy.get('[data-cy=menuButton]').click();
         //cy.get('[data-cy=neuesBuchSide').should('not.exist');
         cy.intercept('POST', '**/rest/**').as('newBookRequest');
         cy.get('[data-cy=NeuesBuchSide]').click();
         cy.wait(2000);
-        cy.get('[data-cy=isbn-post]').type(newISBN);
+        cy.get('[data-cy=isbn-post]').type('978-3-12-676685-2');
         cy.wait(2000);
         cy.get('[data-cy=titel-post]').type('Frankenstein');
         cy.wait(2000);
