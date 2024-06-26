@@ -22,6 +22,7 @@ const EditBookForm: FC<EditBookFormProps> = ({
   return (
     <FullBookForm
       defaultValues={book}
+      disableTitle
       onHandleSubmit={async (values) => {
         logger.debug(`EditBookForm: values=${JSON.stringify(values)}`);
         try {

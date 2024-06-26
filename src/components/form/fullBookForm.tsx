@@ -58,6 +58,7 @@ type FullBookType = TypeOf<typeof fullBookSchema>;
 interface BookFormProps {
   onHandleSubmit: (values: FullBookType) => void;
   defaultValues?: FullBookType;
+  disableTitle?: boolean;
 }
 
 const fullBookDefaultValues: FullBookType = {
@@ -76,6 +77,7 @@ const fullBookDefaultValues: FullBookType = {
 const FullBookForm: FC<BookFormProps> = ({
   onHandleSubmit,
   defaultValues = fullBookDefaultValues,
+  disableTitle = false,
 }) => {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
@@ -176,12 +178,14 @@ const FullBookForm: FC<BookFormProps> = ({
             label="Titel"
             type="text"
             name="titel.titel"
+            disabled={disableTitle}
             required
             data-cy="titel-post"
           />
           <FormTextfield
             label="Untertitel"
             type="text"
+            disabled={disableTitle}
             name="titel.untertitel"
           />
           <FormTextfield

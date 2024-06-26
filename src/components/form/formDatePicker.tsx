@@ -1,3 +1,5 @@
+// eslint-disable-next-line @eslint-community/eslint-comments/disable-enable-pair
+/* eslint-disable unicorn/no-null */
 import {
   DatePicker,
   LocalizationProvider,
@@ -9,6 +11,8 @@ import 'dayjs/locale/de';
 import { useEffect, useState, type FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
+const DATE_FORMAT = 'YYYY-MM-DD';
+
 type RhfDatePickerProps = {
   name: string;
   label: string;
@@ -19,7 +23,7 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   label,
   ...otherProps
 }) => {
-  const [date, setDate] = useState<Dayjs | undefined>();
+  const [date, setDate] = useState<Dayjs | null>(null);
 
   const { register, getValues, setValue } = useFormContext();
   useEffect(() => {
@@ -28,9 +32,9 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
   useEffect(() => {
     const value = getValues(name) as string;
     if (!value || value.length === 0) {
-      setDate(undefined);
+      setDate(null);
     } else {
-      setDate(dayjs(value));
+      setDate(dayjs(value, DATE_FORMAT));
     }
   }, [setDate, getValues, name]);
 
@@ -41,11 +45,11 @@ const FormDatePicker: FC<RhfDatePickerProps> = ({
         disableFuture
         label={label}
         slotProps={{
-          field: { clearable: true, onClear: () => setDate(undefined) },
+          field: { clearable: true, onClear: () => setDate(null) },
         }}
         onChange={(val) => {
           try {
-            setValue(name, val ? val.toISOString().split('T')[0] : undefined, {
+            setValue(name, val ? val.format(DATE_FORMAT) : undefined, {
               shouldDirty: true,
               shouldValidate: true,
             });
