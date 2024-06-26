@@ -74,7 +74,7 @@ const SearchForm = (props: SearchFormProps) => {
         setLoading(false);
       }, TIMEOUT);
     } catch (err) {
-      logger.error('submitSearch: error=', err);
+      logger.debug('submitSearch: Kein Buch gefunden. error=', err);
       setBookTableRows([]);
       setLoading(false);
     }
