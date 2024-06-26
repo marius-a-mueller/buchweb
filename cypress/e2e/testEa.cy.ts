@@ -10,7 +10,7 @@ describe('template spec', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username]').type('admin');
-        cy.get('[data-cy=login-password]').type('p');
+        cy.get('[data-cy=login-password]').type('Bankroll-Subsidize-Revise6');
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=logo').should('exist');
@@ -23,7 +23,7 @@ describe('template spec', () => {
         cy.get('[data-cy=logo').click();
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('p');
+        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy="Neues Buch"]').should('exist');
@@ -70,7 +70,7 @@ describe('template spec', () => {
         //Überprüfe das Ändern von Buchdetails
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('p');
+        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=edit-button]').click();
@@ -105,7 +105,7 @@ describe('template spec', () => {
           cy.get('[data-cy=logo]').click();
           cy.get('[data-cy=login-button]').click();
           cy.get('[data-cy=login-username]').type('admin');
-          cy.get('[data-cy=login-password]').type('p');
+          cy.get('[data-cy=login-password]').type('Bankroll-Subsidize-Revise6');
           cy.get('[data-cy=login-button-second]').click();
           cy.wait(2000);
           cy.intercept('POST', '**/rest/**').as('newBookRequest');
@@ -142,7 +142,7 @@ describe('template spec', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('p');
+        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=logout-button').click();
@@ -157,7 +157,7 @@ describe('template spec', () => {
         cy.get('[data-cy=menuButton').click();
         cy.get('[data-cy=login-button]').click();
         cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('p');
+        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=SucheSide').should('exist');
