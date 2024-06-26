@@ -3,11 +3,10 @@ import './commands';
 
 const PASSWORD = import.meta.env.VITE_PASSWORD as string;
 const USERNAME = import.meta.env.VITE_USERNAME as string;
-const URL = import.meta.env.VITE_BACKEND_URL as string;
 
 describe('template spec', () => {
     beforeEach(() => {
-        cy.visit(URL);
+        cy.visit('http://localhost:4200/');
     });
 
     it('Überprüfe Login', () => {
