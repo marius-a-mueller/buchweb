@@ -1,16 +1,20 @@
 import { expect } from 'chai';
 import './commands';
 
+const PASSWORD = import.meta.env.VITE_PASSWORD as string;
+const USERNAME = import.meta.env.VITE_USERNAME as string;
+const URL = import.meta.env.VITE_BACKEND_URL as string;
+
 describe('template spec', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:4200/');
+        cy.visit(URL);
     });
 
     it('Überprüfe Login', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=login-button]').click();
-        cy.get('[data-cy=login-username]').type('admin');
-        cy.get('[data-cy=login-password]').type('Bankroll-Subsidize-Revise6');
+        cy.get('[data-cy=login-username]').type(USERNAME);
+        cy.get('[data-cy=login-password]').type(PASSWORD);
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=logo').should('exist');
@@ -22,8 +26,8 @@ describe('template spec', () => {
         cy.get('[data-cy=neuesBuch').should('not.exist');
         cy.get('[data-cy=logo').click();
         cy.get('[data-cy=login-button]').click();
-        cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
+        cy.get('[data-cy=login-username').type(USERNAME);
+        cy.get('[data-cy=login-password').type(PASSWORD);
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy="Neues Buch"]').should('exist');
@@ -69,8 +73,8 @@ describe('template spec', () => {
 
         //Überprüfe das Ändern von Buchdetails
         cy.get('[data-cy=login-button]').click();
-        cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
+        cy.get('[data-cy=login-username').type(USERNAME);
+        cy.get('[data-cy=login-password').type(PASSWORD);
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=edit-button]').click();
@@ -85,45 +89,45 @@ describe('template spec', () => {
     function generateISBN13() {
         let isbn = '9780';
         for (let i = 0; i < 8; i++) {
-          isbn += Math.floor(Math.random() * 10);
+            isbn += Math.floor(Math.random() * 10);
         }
-      
+
         let sum = 0;
         for (let i = 0; i < 12; i++) {
-          sum += Number(isbn[i]) * (i % 2 === 0 ? 1 : 3);
+            sum += Number(isbn[i]) * (i % 2 === 0 ? 1 : 3);
         }
         const checkDigit = (10 - (sum % 10)) % 10;
         isbn += checkDigit;
-      
+
         return `${isbn.slice(0, 3)}-${isbn[3]}-${isbn.slice(4, 7)}-${isbn.slice(7, 12)}-${isbn[12]}`;
-      }
-      
-      describe('Buchverwaltung', () => {
+    }
+
+    describe('Buchverwaltung', () => {
         it('Lege neues Buch an', () => {
-          const newISBN = generateISBN13();
-      
-          cy.get('[data-cy=logo]').click();
-          cy.get('[data-cy=login-button]').click();
-          cy.get('[data-cy=login-username]').type('admin');
-          cy.get('[data-cy=login-password]').type('Bankroll-Subsidize-Revise6');
-          cy.get('[data-cy=login-button-second]').click();
-          cy.wait(2000);
-          cy.intercept('POST', '**/rest/**').as('newBookRequest');
-          cy.get('[data-cy="Neues Buch"]').click();
-          cy.wait(2000);
-          cy.get('[data-cy=isbn-post]').type(newISBN);
-          cy.wait(2000);
-          cy.get('[data-cy=titel-post]').type('Dracula');
-          cy.wait(2000);
-          cy.get('[data-cy=homepage-post]').type('https://Dracula.dev');
-          cy.wait(2000);
-          cy.get('[data-cy=type]').contains('KINDLE').click();
-          cy.wait(2000);
-          cy.get('[data-cy=post-button-form]').click();
-          cy.wait(4000);
+            const newISBN = generateISBN13();
+
+            cy.get('[data-cy=logo]').click();
+            cy.get('[data-cy=login-button]').click();
+            cy.get('[data-cy=login-username]').type(USERNAME);
+            cy.get('[data-cy=login-password]').type(PASSWORD);
+            cy.get('[data-cy=login-button-second]').click();
+            cy.wait(2000);
+            cy.intercept('POST', '**/rest/**').as('newBookRequest');
+            cy.get('[data-cy="Neues Buch"]').click();
+            cy.wait(2000);
+            cy.get('[data-cy=isbn-post]').type(newISBN);
+            cy.wait(2000);
+            cy.get('[data-cy=titel-post]').type('Dracula');
+            cy.wait(2000);
+            cy.get('[data-cy=homepage-post]').type('https://Dracula.dev');
+            cy.wait(2000);
+            cy.get('[data-cy=type]').contains('KINDLE').click();
+            cy.wait(2000);
+            cy.get('[data-cy=post-button-form]').click();
+            cy.wait(4000);
         });
-      });
-      
+    });
+
     it('Überprüfe die Navigation der Diagramme', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=Diagramme').click();
@@ -141,8 +145,8 @@ describe('template spec', () => {
     it('Überprüfe Logout', () => {
         cy.get('[data-cy=logo]').click();
         cy.get('[data-cy=login-button]').click();
-        cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
+        cy.get('[data-cy=login-username').type(USERNAME);
+        cy.get('[data-cy=login-password').type(PASSWORD);
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=logout-button').click();
@@ -156,8 +160,8 @@ describe('template spec', () => {
         cy.get('[data-cy=menuButton').should('exist');
         cy.get('[data-cy=menuButton').click();
         cy.get('[data-cy=login-button]').click();
-        cy.get('[data-cy=login-username').type('admin');
-        cy.get('[data-cy=login-password').type('Bankroll-Subsidize-Revise6');
+        cy.get('[data-cy=login-username').type(USERNAME);
+        cy.get('[data-cy=login-password').type(PASSWORD);
         cy.get('[data-cy=login-button-second]').click();
         cy.wait(2000);
         cy.get('[data-cy=SucheSide').should('exist');
