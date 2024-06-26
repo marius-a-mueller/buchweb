@@ -22,7 +22,7 @@ state App {
     [*] --> SearchForm : Suchkriterien eingeben
     SearchForm --> Waiting : Button "Suche"
     Waiting --> BookTable : Suchergebnis eingetroffen
-    
+
 
     state BookTable {
       [*] --> GefundeneBuecher : mind. 1 passendes Buch gefunden
@@ -33,6 +33,7 @@ state App {
   state BookDetail {
     [*] --> Details
     Details --> Edit : Button "Bearbeiten" [wenn eingeloggt]
+    Details --> Delete : Button "Löschen" [wenn eingeloggt]
   }
 
   state Edit {
