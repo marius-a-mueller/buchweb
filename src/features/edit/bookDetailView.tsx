@@ -11,13 +11,17 @@ import {
   Chip,
   CircularProgress,
   Container,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Grid,
   Paper,
   Rating,
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { deleteBook } from './api/deleteBook';
 
 const MAX_PERCENTAGE = 100;
 
@@ -28,7 +32,9 @@ const BookDetailView = () => {
   const [editMode, setEditMode] = useState(false);
   const [, setEditedBook] = useState<FullBookType | undefined>();
   const [etag, setEtag] = useState<string | undefined>();
+  const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const { token, isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   logger.debug(`BookDetailView: id=${id}`);
 
   useEffect(() => {
@@ -38,7 +44,7 @@ const BookDetailView = () => {
         const response = await AxiosInstance.get(`/rest/${id}`, {
           headers: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            Accept: '*/*',
+            Accept: 'application/json',
           },
         });
         logger.debug(`fetchBook: response=${JSON.stringify(response)}`);
@@ -68,7 +74,6 @@ const BookDetailView = () => {
         setLoading(false);
       }
     };
-
     // eslint-disable-next-line no-void
     void fetchBook();
   }, [id, token]);
@@ -78,6 +83,16 @@ const BookDetailView = () => {
     setBook(updatedBook);
     setEtag(newEtag ?? undefined);
     setEditMode(false);
+  };
+
+  const handleCancelAlert = () => {
+    setAlertOpen(false);
+  };
+
+  const handleOkAlert = async () => {
+    await deleteBook({ id, token });
+    setAlertOpen(false);
+    navigate('/buchweb/search');
   };
 
   if (loading) {
@@ -212,21 +227,46 @@ const BookDetailView = () => {
                   ))}
                 </Box>
                 {isLoggedIn() && (
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => setEditMode(true)}
-                    sx={{ mt: 2 }}
-                    data-cy="edit-button"
-                  >
-                    Bearbeiten
-                  </Button>
+                  <>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => setEditMode(true)}
+                      sx={{ mt: 2 }}
+                      data-cy="edit-button"
+                    >
+                      Bearbeiten
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setAlertOpen(true)}
+                      data-cy="edit-button"
+                      sx={{ ml: 2, mt: 2 }}
+                    >
+                      Löschen
+                    </Button>
+                  </>
                 )}
               </Grid>
             </Grid>
           </>
         )}
       </Paper>
+      <Dialog
+        open={alertOpen}
+        onClose={handleCancelAlert}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Eintrag löschen?'}</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleCancelAlert}>Abbrechen</Button>
+          <Button onClick={handleOkAlert} autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
